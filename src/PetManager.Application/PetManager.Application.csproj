@@ -10,4 +10,9 @@
       <ProjectReference Include="..\PetManager.Core\PetManager.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.0-rc.2.24474.3" />
+    </ItemGroup>
+
 </Project>
