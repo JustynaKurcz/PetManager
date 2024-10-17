@@ -14,6 +14,8 @@ var app = builder.Build();
 
 app.RegisterEndpoints();
 
+app.UseSeeder();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
