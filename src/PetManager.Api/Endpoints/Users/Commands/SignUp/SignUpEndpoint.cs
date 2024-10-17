@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.OpenApi.Models;
 using PetManager.Abstractions;
 using PetManager.Application.Users.Commands.SignUp;
 
@@ -13,9 +14,14 @@ public class SignUpEndpoint : IEndpointDefinition
                 {
                     var result = await mediator.Send(command);
                     return Results.Created("/users/sign-up", result);
-
                 })
             .Produces<SignUpResponse>(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status400BadRequest)
+            .WithTags("Users")
+            .WithOpenApi(o => new OpenApiOperation(o)
+            {
+                Summary = "Sign up",
+                Description = "Sign up to the application",
+            });
     }
 }
