@@ -7,6 +7,7 @@ using PetManager.Infrastructure.EF.Context;
 using PetManager.Infrastructure.EF.Users.Repositories;
 using PetManager.Infrastructure.EF.Users.Seeder;
 using PetManager.Infrastructure.Exceptions;
+using PetManager.Infrastructure.Security;
 
 namespace PetManager.Infrastructure;
 
@@ -25,6 +26,8 @@ public static class Extensions
             .AddScoped<IRoleRepository, RoleRepository>();
 
         services.AddScoped<RoleSeeder>();
+
+        services.AddSecurity();
 
         return services;
     }
