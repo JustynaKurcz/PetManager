@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using PetManager.Core.HealthRecords.Entitites;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Users.Entities;

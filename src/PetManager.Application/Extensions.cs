@@ -1,7 +1,3 @@
-using System.Reflection;
-using FluentValidation;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using PetManager.Application.Users.Commands.SignUp;
 
 namespace PetManager.Application;

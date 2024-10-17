@@ -1,4 +1,3 @@
-using MediatR;
 using PetManager.Application.Security;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;

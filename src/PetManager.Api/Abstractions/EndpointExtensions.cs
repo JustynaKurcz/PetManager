@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace PetManager.Abstractions;
 
 public static class EndpointExtensions

@@ -1,5 +1,3 @@
-using MediatR;
-using Microsoft.OpenApi.Models;
 using PetManager.Abstractions;
 using PetManager.Application.Users.Commands.SignUp;
 
