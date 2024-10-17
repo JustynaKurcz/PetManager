@@ -1,0 +1,30 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PetManager.Core.HealthRecords.Entitites;
+
+namespace PetManager.Infrastructure.EF.HealthRecords.Configuration;
+
+internal sealed class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
+{
+    public void Configure(EntityTypeBuilder<Appointment> builder)
+    {
+        builder.HasKey(x => x.AppointmentId);
+
+        builder.Property<string>("Title")
+            .IsRequired();
+
+        builder.Property<string>("Diagnosis")
+            .IsRequired();
+
+        builder.Property<DateTimeOffset>("AppointmentDate")
+            .IsRequired();
+
+        builder.Property<string>("Notes")
+            .IsRequired();
+
+        builder.Property<Guid>("HealthRecordId")
+            .IsRequired();
+
+        builder.ToTable("Appointments");
+    }
+}

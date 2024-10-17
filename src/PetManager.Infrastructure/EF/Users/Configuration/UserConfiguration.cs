@@ -8,13 +8,13 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.HasKey(x=>x.UserId);
-        
+        builder.HasKey(x => x.UserId);
+
         builder.Property<string>("FirstName")
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property<string>("LastName")
-            .IsRequired();
+            .IsRequired(false);
 
         builder.HasIndex(x => x.Email).IsUnique();
         builder.Property<string>("Email")
@@ -22,15 +22,20 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property<string>("Password")
             .IsRequired();
-        
+
         builder.Property<DateTimeOffset?>("LastChangePasswordDate");
-        
+
         builder.Property<DateTime>("CreatedAt")
             .IsRequired();
-        
+
         builder.Property<Guid>("RoleId")
             .IsRequired();
-        
+
+        builder.HasOne(x => x.Role)
+            .WithMany()
+            .HasForeignKey("RoleId")
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.ToTable("Users");
     }
 }

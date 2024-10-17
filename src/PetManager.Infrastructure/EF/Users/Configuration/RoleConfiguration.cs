@@ -8,8 +8,8 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {
-        builder.HasKey(x=>x.RoleId);
-        
+        builder.HasKey(x => x.RoleId);
+
         builder.Property<string>("Name")
             .IsRequired();
 
