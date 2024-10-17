@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetManager.Core.HealthRecords.Entitites;
 
 namespace PetManager.Infrastructure.EF.HealthRecords.Configuration;

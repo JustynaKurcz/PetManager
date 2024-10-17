@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace PetManager.Application.Users.Commands.SignUp;
 
 public class SignUpCommandValidator : AbstractValidator<SignUpCommand>

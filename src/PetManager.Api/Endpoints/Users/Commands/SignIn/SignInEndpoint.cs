@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Models;
 using PetManager.Abstractions;
 using PetManager.Application.Users.Commands.SignIn;
 

@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using PetManager.Application.Security;
 using PetManager.Core.Users.Entities;
 

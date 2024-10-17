@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace PetManager.Core.Pets.Enums;
 
 public enum Gender : short

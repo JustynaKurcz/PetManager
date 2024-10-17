@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Repositories;
 using PetManager.Infrastructure.EF.Context;

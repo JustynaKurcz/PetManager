@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetManager.Core.Users.Entities;
 
 namespace PetManager.Infrastructure.EF.Users.Configuration;
