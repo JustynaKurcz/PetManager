@@ -2,11 +2,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PetManager.Application.Security;
 using PetManager.Core.Users.Repositories;
+using PetManager.Infrastructure.Auth;
 using PetManager.Infrastructure.EF.Context;
 using PetManager.Infrastructure.EF.Users.Repositories;
 using PetManager.Infrastructure.EF.Users.Seeder;
 using PetManager.Infrastructure.Exceptions;
+using PetManager.Infrastructure.Security;
 
 namespace PetManager.Infrastructure;
 
@@ -25,6 +28,10 @@ public static class Extensions
             .AddScoped<IRoleRepository, RoleRepository>();
 
         services.AddScoped<RoleSeeder>();
+
+        services.AddSecurity();
+
+        services.AddSingleton<ITokenManager, TokenManager>();
 
         return services;
     }
