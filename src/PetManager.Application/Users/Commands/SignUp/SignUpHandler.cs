@@ -5,11 +5,10 @@ using PetManager.Core.Users.Repositories;
 
 namespace PetManager.Application.Users.Commands.SignUp;
 
-public class SignUpHandler(
+internal sealed class SignUpHandler(
     IUserRepository userRepository,
     IRoleRepository roleRepository,
-    IPasswordManager passwordManager)
-    : IRequestHandler<SignUpCommand, SignUpResponse>
+    IPasswordManager passwordManager) : IRequestHandler<SignUpCommand, SignUpResponse>
 {
     public async Task<SignUpResponse> Handle(SignUpCommand command, CancellationToken cancellationToken = default)
     {

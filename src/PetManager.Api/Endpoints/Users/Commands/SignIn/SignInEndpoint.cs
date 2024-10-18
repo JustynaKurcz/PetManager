@@ -1,4 +1,3 @@
-using PetManager.Abstractions;
 using PetManager.Application.Users.Commands.SignIn;
 
 namespace PetManager.Endpoints.Users.Commands.SignIn;
@@ -7,7 +6,7 @@ public class SignInEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("users/sign-in",
+        app.MapPost($"{UsersEndpoint.Url}/sign-in",
                 async ([FromBody] SignInCommand command, IMediator mediator) =>
                 {
                     var result = await mediator.Send(command);
@@ -15,7 +14,7 @@ public class SignInEndpoint : IEndpointDefinition
                 })
             .Produces<SignInResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
-            .WithTags("Users")
+            .WithTags(UsersEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Sign in",

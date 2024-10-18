@@ -6,7 +6,6 @@ using PetManager.Infrastructure.Auth;
 using PetManager.Infrastructure.EF.Context;
 using PetManager.Infrastructure.EF.Users.Repositories;
 using PetManager.Infrastructure.EF.Users.Seeder;
-using PetManager.Infrastructure.Exceptions;
 using PetManager.Infrastructure.Security;
 
 namespace PetManager.Infrastructure;
@@ -18,8 +17,6 @@ public static class Extensions
         var connectionString = configuration["PostgresConnection"];
         services.AddDbContext<PetManagerDbContext>(options =>
             options.UseNpgsql(connectionString));
-
-        services.AddSingleton<ExceptionMiddleware>();
 
         services
             .AddScoped<IUserRepository, UserRepository>()
