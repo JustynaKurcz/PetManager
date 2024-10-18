@@ -3,7 +3,7 @@ using PetManager.Core.Users.Repositories;
 
 namespace PetManager.Application.Users.Commands.SignIn;
 
-public class SignInHandler(IUserRepository userRepository, IPasswordManager passwordManager, ITokenManager tokenManager)
+internal sealed class SignInHandler(IUserRepository userRepository, IPasswordManager passwordManager, ITokenManager tokenManager)
     : IRequestHandler<SignInCommand, SignInResponse>
 {
     public async Task<SignInResponse> Handle(SignInCommand command, CancellationToken cancellationToken = default)
