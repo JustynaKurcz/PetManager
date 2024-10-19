@@ -1,11 +1,10 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using PetManager.Application.Security;
 using PetManager.Core.Users.Repositories;
 using PetManager.Infrastructure.Auth;
 using PetManager.Infrastructure.EF.Context;
 using PetManager.Infrastructure.EF.Users.Repositories;
 using PetManager.Infrastructure.EF.Users.Seeder;
+using PetManager.Infrastructure.Exceptions;
 using PetManager.Infrastructure.Security;
 
 namespace PetManager.Infrastructure;
@@ -18,6 +17,8 @@ public static class Extensions
         services.AddDbContext<PetManagerDbContext>(options =>
             options.UseNpgsql(connectionString));
 
+        services.AddSingleton<ExceptionMiddleware>();
+        
         services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IRoleRepository, RoleRepository>();
@@ -39,6 +40,13 @@ public static class Extensions
         var roleSeeder = new RoleSeeder(dbContext);
         roleSeeder.Seed();
 
+        return app;
+    }
+    
+    public static WebApplication UseInfrastructure(this WebApplication app)
+    {
+        app.UseMiddleware<ExceptionMiddleware>();
+        
         return app;
     }
 }
