@@ -1,6 +1,6 @@
 namespace PetManager.Core.Users.Exceptions;
 
-public sealed class UserAlreadyExistsException : CustomException
+public sealed class UserAlreadyExistsException : PetManagerException
 {
     public string Email { get; }
 

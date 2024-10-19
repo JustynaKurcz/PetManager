@@ -10,7 +10,7 @@ public class SignUpEndpoint : IEndpointDefinition
                 async (SignUpCommand command, IMediator mediator) =>
                 {
                     var result = await mediator.Send(command);
-                    return Results.Created("/users/sign-up", result);
+                    return Results.Created(UsersEndpoint.Url, result);
                 })
             .Produces<SignUpResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
