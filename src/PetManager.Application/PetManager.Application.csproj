@@ -5,9 +5,13 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\PetManager.Core\PetManager.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="PetManager.Tests.Unit" />
     </ItemGroup>
 
     <ItemGroup>
