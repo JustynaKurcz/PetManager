@@ -1,6 +1,6 @@
 namespace PetManager.Core.Users.Entities;
 
-public sealed class User
+public class User
 {
     public Guid UserId { get; private set; }
     private string FirstName { get; set; }
@@ -16,15 +16,16 @@ public sealed class User
     {
     }
 
-    private User(string email, string password, Guid roleId)
+    private User(string email, string password, Role role)
     {
         UserId = Guid.NewGuid();
         Email = email;
         Password = password;
         CreatedAt = DateTime.UtcNow;
-        RoleId = roleId;
+        RoleId = role.RoleId;
+        Role = role;
     }
 
-    public static User Create(string email, string password, Guid roleId)
-        => new(email, password, roleId);
+    public static User Create(string email, string password, Role role)
+        => new(email, password, role);
 }

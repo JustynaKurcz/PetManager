@@ -1,6 +1,8 @@
+using PetManager.Core.Users.Entities;
+
 namespace PetManager.Core.Users.Repositories;
 
 public interface IRoleRepository
 {
-    Task<Guid> GetRoleIdByNameAsync(string name, CancellationToken cancellationToken);
+    Task<Role> GetRoleByNameAsync(string name, CancellationToken cancellationToken);
 }

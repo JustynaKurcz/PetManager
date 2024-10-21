@@ -26,8 +26,8 @@ public class RoleSeeder(PetManagerDbContext dbContext)
         // todo: haslo admina powinno byc zahashowane
         if (!dbContext.Users.Any(u => u.Email == "admin@petmanager.com"))
         {
-            var adminRoleId = dbContext.Roles.First(r => r.Name == "Admin").RoleId;
-            var adminUser = User.Create("admin@petmanager.com", "!23Haslo", adminRoleId);
+            var role = dbContext.Roles.First(r => r.Name == "Admin");
+            var adminUser = User.Create("admin@petmanager.com", "!23Haslo", role);
             dbContext.Users.Add(adminUser);
         }
 

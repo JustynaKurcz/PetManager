@@ -4,20 +4,20 @@ namespace PetManager.Tests.Unit.Entities;
 
 public class UserTests()
 {
-    [Fact]
-    public void given_user_data_when_create_user_then_should_create_user()
+    [Theory]
+    [InlineData("test@petmanager.com", "TestPassword")]
+    [InlineData("test2@petmanager.com", "TestPassword2")]
+    [InlineData("test3@petmanager.com", "TestPassword3")]
+    public void given_user_data_when_create_user_then_should_create_user(string email, string password)
     {
-        // Arrange
-
-        var email = "test@petmanager.com";
-        var password = "TestPassword";
-
         // Act
-        var user = User.Create(email, password, Guid.NewGuid());
+        var user = User.Create(email, password, Role);
 
         // Assert
         user.ShouldNotBeNull();
         user.ShouldBeOfType<User>();
         user.UserId.ShouldNotBe(Guid.Empty);
     }
+
+    private Role Role => Role.Create("User");
 }

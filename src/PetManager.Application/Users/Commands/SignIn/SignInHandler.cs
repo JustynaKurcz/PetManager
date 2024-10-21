@@ -1,9 +1,14 @@
+using PetManager.Application.Auth;
 using PetManager.Application.Security;
+using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 
 namespace PetManager.Application.Users.Commands.SignIn;
 
-internal sealed class SignInHandler(IUserRepository userRepository, IPasswordManager passwordManager, ITokenManager tokenManager)
+internal sealed class SignInHandler(
+    IUserRepository userRepository,
+    IPasswordManager passwordManager,
+    ITokenManager tokenManager)
     : IRequestHandler<SignInCommand, SignInResponse>
 {
     public async Task<SignInResponse> Handle(SignInCommand command, CancellationToken cancellationToken = default)
@@ -12,11 +17,11 @@ internal sealed class SignInHandler(IUserRepository userRepository, IPasswordMan
 
         var user = await userRepository.GetByEmailAsync(email, cancellationToken);
         if (user is null)
-            throw new Exception("Invalid credentials");
+            throw new InvalidCredentialsException();
 
         var passwordIsValid = passwordManager.VerifyPassword(command.Password, user.Password);
         if (!passwordIsValid)
-            throw new Exception("Invalid credentials");
+            throw new InvalidCredentialsException();
 
         var token = tokenManager.GenerateToken(user.UserId, user.Role.Name, user.Email);
 

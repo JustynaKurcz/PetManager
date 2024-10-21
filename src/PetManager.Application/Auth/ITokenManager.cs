@@ -1,4 +1,4 @@
-namespace PetManager.Application.Security;
+namespace PetManager.Application.Auth;
 
 public interface ITokenManager
 {
