@@ -8,7 +8,7 @@ public class User
     public string Email { get; private set; }
     public string Password { get; set; }
     private DateTimeOffset? LastChangePasswordDate { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
     public Guid RoleId { get; private set; }
     public Role Role { get; private set; }
 
@@ -21,7 +21,7 @@ public class User
         UserId = Guid.NewGuid();
         Email = email;
         Password = password;
-        CreatedAt = DateTime.UtcNow;
+        CreatedAt = DateTimeOffset.Now;
         RoleId = role.RoleId;
         Role = role;
     }

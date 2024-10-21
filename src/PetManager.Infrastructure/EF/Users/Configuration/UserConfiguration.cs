@@ -23,7 +23,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property<DateTimeOffset?>("LastChangePasswordDate");
 
-        builder.Property<DateTime>("CreatedAt")
+        builder.Property<DateTimeOffset>("CreatedAt")
             .IsRequired();
 
         builder.Property<Guid>("RoleId")

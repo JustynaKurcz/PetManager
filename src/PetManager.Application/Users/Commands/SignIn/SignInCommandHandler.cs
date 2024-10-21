@@ -5,7 +5,7 @@ using PetManager.Core.Users.Repositories;
 
 namespace PetManager.Application.Users.Commands.SignIn;
 
-internal sealed class SignInHandler(
+internal sealed class SignInCommandHandler(
     IUserRepository userRepository,
     IPasswordManager passwordManager,
     ITokenManager tokenManager)

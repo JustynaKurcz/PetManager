@@ -6,9 +6,8 @@ public class HealthRecord
 {
     public Guid HealthRecordId { get; private set; }
     private string Notes { get; set; }
-
     public Guid PetId { get; private set; }
-    public virtual Pet Pet { get; private set; }
+    public Pet Pet { get; private set; }
     private HashSet<Appointment> _appointments = [];
     private HashSet<Vaccination> _vaccinations = [];
 
@@ -28,13 +27,12 @@ public class HealthRecord
     {
     }
 
-    private HealthRecord(string notes, Guid petId)
+    private HealthRecord(Guid petId)
     {
         HealthRecordId = Guid.NewGuid();
-        Notes = notes;
         PetId = petId;
     }
 
-    public static HealthRecord Create(string notes, Guid petId)
-        => new(notes, petId);
+    public static HealthRecord Create(Guid petId)
+        => new(petId);
 }
