@@ -8,7 +8,8 @@ namespace PetManager.Application.Users.Commands.SignUp;
 internal sealed class SignUpHandler(
     IUserRepository userRepository,
     IRoleRepository roleRepository,
-    IPasswordManager passwordManager) : IRequestHandler<SignUpCommand, SignUpResponse>
+    IPasswordManager passwordManager
+    ) : IRequestHandler<SignUpCommand, SignUpResponse>
 {
     public async Task<SignUpResponse> Handle(SignUpCommand command, CancellationToken cancellationToken = default)
     {
@@ -20,9 +21,9 @@ internal sealed class SignUpHandler(
 
         var hashPassword = passwordManager.HashPassword(command.Password);
 
-        var roleId = await roleRepository.GetRoleIdByNameAsync("User", cancellationToken);
+        var role = await roleRepository.GetRoleByNameAsync("User", cancellationToken);
 
-        var user = User.Create(email, hashPassword, roleId);
+        var user = User.Create(email, hashPassword, role);
         await userRepository.AddAsync(user, cancellationToken);
 
         return new SignUpResponse(user.UserId);

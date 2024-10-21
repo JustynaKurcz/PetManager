@@ -1,4 +1,4 @@
-using PetManager.Application.Security;
+using PetManager.Application.Auth;
 
 namespace PetManager.Infrastructure.Auth;
 

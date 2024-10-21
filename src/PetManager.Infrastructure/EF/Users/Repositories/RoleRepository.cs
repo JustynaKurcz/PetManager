@@ -8,7 +8,7 @@ internal class RoleRepository(PetManagerDbContext dbContext) : IRoleRepository
 {
     private readonly DbSet<Role> _roles = dbContext.Roles;
 
-    public async Task<Guid> GetRoleIdByNameAsync(string name, CancellationToken cancellationToken)
+    public async Task<Role> GetRoleByNameAsync(string name, CancellationToken cancellationToken)
         => (await _roles
-            .FirstAsync(x => x.Name == name, cancellationToken)).RoleId;
+            .FirstAsync(x => x.Name == name, cancellationToken));
 }

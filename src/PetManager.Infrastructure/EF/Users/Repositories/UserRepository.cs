@@ -16,6 +16,7 @@ internal class UserRepository(PetManagerDbContext dbContext) : IUserRepository
 
     public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
         => await _users
+            .Include(x => x.Role)
             .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
     
 

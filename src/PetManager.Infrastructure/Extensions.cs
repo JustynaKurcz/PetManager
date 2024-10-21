@@ -1,4 +1,4 @@
-using PetManager.Application.Security;
+using PetManager.Application.Auth;
 using PetManager.Core.Users.Repositories;
 using PetManager.Infrastructure.Auth;
 using PetManager.Infrastructure.EF.Context;
