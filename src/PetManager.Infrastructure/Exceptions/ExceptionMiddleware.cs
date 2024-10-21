@@ -13,7 +13,7 @@ internal class ExceptionMiddleware : IMiddleware
     {
         _logger = logger;
     }
-    
+
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
@@ -32,7 +32,8 @@ internal class ExceptionMiddleware : IMiddleware
         var (statusCode, error) = exception switch
         {
             PetManagerException => (StatusCodes.Status400BadRequest,
-                new Error(exception.GetType().Name.Underscore().Replace("_exception", string.Empty), exception.Message)),
+                new Error(exception.GetType().Name.Underscore().Replace("_exception", string.Empty),
+                    exception.Message)),
             _ => (StatusCodes.Status500InternalServerError, new Error("error", "There was an error."))
         };
 
@@ -41,6 +42,4 @@ internal class ExceptionMiddleware : IMiddleware
     }
 
     private record Error(string Code, string Reason);
-    
-    
 }

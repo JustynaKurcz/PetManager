@@ -8,7 +8,7 @@ using PetManager.Core.Users.Repositories;
 
 namespace PetManager.Tests.Unit.Handlers;
 
-public sealed class SignInHandlerTests
+public sealed class SignInCommandHandlerTests
 {
     [Fact]
     public async Task
@@ -84,7 +84,7 @@ public sealed class SignInHandlerTests
     {
         // Arrange
         var command = CreateSignInCommand();
-        var user = User.Create(TestEmail, TestPassword, CreateRole());
+        var user = User.Create(command.Email, command.Password, CreateRole());
 
         _userRepository
             .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
@@ -119,13 +119,11 @@ public sealed class SignInHandlerTests
 
 
     private SignInCommand CreateSignInCommand() =>
-        new(TestEmail, TestPassword);
+        new("test@petmanager.com", "TestPassword");
 
     private Role CreateRole() =>
         Role.Create(TestRole);
 
-    private const string TestEmail = "test@petmanager.com";
-    private const string TestPassword = "TestPassword";
     private const string TestRole = "User";
 
     private readonly IUserRepository _userRepository;
@@ -133,12 +131,12 @@ public sealed class SignInHandlerTests
     private readonly ITokenManager _tokenManager;
     private readonly IRequestHandler<SignInCommand, SignInResponse> _handler;
 
-    public SignInHandlerTests()
+    public SignInCommandHandlerTests()
     {
         _userRepository = Substitute.For<IUserRepository>();
         _passwordManager = Substitute.For<IPasswordManager>();
         _tokenManager = Substitute.For<ITokenManager>();
 
-        _handler = new SignInHandler(_userRepository, _passwordManager, _tokenManager);
+        _handler = new SignInCommandHandler(_userRepository, _passwordManager, _tokenManager);
     }
 }

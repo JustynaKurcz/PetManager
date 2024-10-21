@@ -6,7 +6,7 @@ using PetManager.Core.Users.Repositories;
 
 namespace PetManager.Tests.Unit.Handlers;
 
-public sealed class SignUpHandlerTests
+public sealed class SignUpCommandHandlerTests
 {
     [Fact]
     public async Task
@@ -61,7 +61,7 @@ public sealed class SignUpHandlerTests
         // Arrange
         var command = CreateSignUpCommand();
         _userRepository
-            .ExistsByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .ExistsByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
             .Returns(true);
 
         // Act
@@ -96,12 +96,12 @@ public sealed class SignUpHandlerTests
     private readonly IPasswordManager _passwordManager;
     private readonly IRequestHandler<SignUpCommand, SignUpResponse> _handler;
 
-    public SignUpHandlerTests()
+    public SignUpCommandHandlerTests()
     {
         _userRepository = Substitute.For<IUserRepository>();
         _roleRepository = Substitute.For<IRoleRepository>();
         _passwordManager = Substitute.For<IPasswordManager>();
 
-        _handler = new SignUpHandler(_userRepository, _roleRepository, _passwordManager);
+        _handler = new SignUpCommandHandler(_userRepository, _roleRepository, _passwordManager);
     }
 }

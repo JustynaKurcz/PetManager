@@ -9,7 +9,7 @@ internal sealed class HealthRecordConfiguration : IEntityTypeConfiguration<Healt
         builder.HasKey(x => x.HealthRecordId);
 
         builder.Property<string>("Notes")
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property<Guid>("PetId")
             .IsRequired();
