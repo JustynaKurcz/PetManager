@@ -1,7 +1,7 @@
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Enums;
 
-namespace PetManager.Tests.Unit.Entities;
+namespace PetManager.Tests.Unit.Pets.Entities;
 
 public class PetTests
 {

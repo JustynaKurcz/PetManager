@@ -1,3 +1,6 @@
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using MediatR;
 using PetManager.Application.Auth;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Core.Pets.Repositories;
@@ -11,9 +14,11 @@ using PetManager.Infrastructure.EF.Users.Seeder;
 using PetManager.Infrastructure.Exceptions;
 using PetManager.Infrastructure.Security;
 
+[assembly: InternalsVisibleTo("PetManager.Api")]
+
 namespace PetManager.Infrastructure;
 
-public static class Extensions
+internal static class Extensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
@@ -27,13 +32,15 @@ public static class Extensions
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<IPetRepository, PetRepository>()
-            .AddScoped<IHealthRepository, HealthRepository>();
+            .AddScoped<IHealthRecordRepository, HealthRecordRepository>();
 
         services.AddScoped<RoleSeeder>();
 
         services.AddSecurity();
 
         services.AddSingleton<ITokenManager, TokenManager>();
+
+        services.AddMediatR(Assembly.GetExecutingAssembly());
 
         return services;
     }

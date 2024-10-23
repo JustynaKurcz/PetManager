@@ -2,10 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <InvariantGlobalization>true</InvariantGlobalization>
-        <RootNamespace>PetManager</RootNamespace>
       <UserSecretsId>b4a4697a-59d4-4c8e-92d5-46a3cee2ce92</UserSecretsId>
   </PropertyGroup>
 

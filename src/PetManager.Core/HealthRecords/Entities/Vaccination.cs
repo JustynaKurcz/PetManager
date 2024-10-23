@@ -1,4 +1,4 @@
-namespace PetManager.Core.HealthRecords.Entitites;
+namespace PetManager.Core.HealthRecords.Entities;
 
 public class Vaccination
 {
@@ -6,9 +6,8 @@ public class Vaccination
     private string VaccinationName { get; set; }
     private DateTimeOffset VaccinationDate { get; set; }
     private DateTimeOffset NextVaccinationDate { get; set; }
-
     public Guid HealthRecordId { get; private set; }
-    public virtual HealthRecord HealthRecord { get; private set; }
+    public HealthRecord HealthRecord { get; set; }
 
     private Vaccination()
     {

@@ -8,5 +8,5 @@ public record CreatePetCommand(
     string Breed,
     Gender Gender,
     DateTimeOffset BirthDate,
-    Guid UserId)
-    : IRequest<CreatePetResponse>;
+    Guid UserId
+) : IRequest<CreatePetResponse>;

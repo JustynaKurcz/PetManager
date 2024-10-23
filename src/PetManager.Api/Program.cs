@@ -1,3 +1,4 @@
+using PetManager.Api.Abstractions;
 using PetManager.Application;
 using PetManager.Infrastructure;
 
