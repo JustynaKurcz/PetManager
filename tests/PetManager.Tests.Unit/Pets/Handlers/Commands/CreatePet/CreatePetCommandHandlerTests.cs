@@ -20,7 +20,7 @@ public sealed class CreatePetCommandHandlerTests
         given_invalid_user_id_when_create_pet_then_should_throw_user_not_found_exception()
     {
         // Arrange
-        var command = CreateCreatePetCommand();
+        var command = CreatePetCommand();
         _userRepository
             .GetByIdAsync(command.UserId, Arg.Any<CancellationToken>())
             .ReturnsNull();
@@ -42,7 +42,7 @@ public sealed class CreatePetCommandHandlerTests
     public async Task given_valid_data_when_create_pet_then_should_create_pet()
     {
         // Arrange
-        var command = CreateCreatePetCommand();
+        var command = CreatePetCommand();
         var user = User.Create("TestEmail", "TestPassword", Role.Create("User"));
         var pet = Pet.Create(command.Name, command.Species, command.Breed, command.Gender, command.BirthDate,
             command.UserId);
@@ -80,7 +80,7 @@ public sealed class CreatePetCommandHandlerTests
             .AddAsync(Arg.Any<HealthRecord>(), Arg.Any<CancellationToken>());
     }
 
-    private CreatePetCommand CreateCreatePetCommand() => new("TestName", Species.Dog, "TestBreed", Gender.Male,
+    private CreatePetCommand CreatePetCommand() => new("TestName", Species.Dog, "TestBreed", Gender.Male,
         DateTimeOffset.UtcNow, Guid.NewGuid());
 
     private readonly IUserRepository _userRepository;

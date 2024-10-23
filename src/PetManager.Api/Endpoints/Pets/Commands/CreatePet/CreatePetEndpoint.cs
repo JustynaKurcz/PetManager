@@ -3,7 +3,7 @@ using PetManager.Application.Pets.Commands.CreatePet;
 
 namespace PetManager.Api.Endpoints.Pets.Commands.CreatePet;
 
-public class CreatePetEndpoint : IEndpointDefinition
+internal sealed class CreatePetEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {

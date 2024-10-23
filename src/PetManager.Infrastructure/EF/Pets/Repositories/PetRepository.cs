@@ -21,4 +21,11 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
         => await _pets
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.PetId == petId, cancellationToken);
+
+    public async Task DeleteAsync(Pet pet, CancellationToken cancellationToken)
+    {
+        _pets.Remove(pet);
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+    
 }
