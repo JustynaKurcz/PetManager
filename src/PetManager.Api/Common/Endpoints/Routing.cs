@@ -1,4 +1,4 @@
-namespace PetManager.Common.Endpoints;
+namespace PetManager.Api.Common.Endpoints;
 
 internal static class Routing
 {

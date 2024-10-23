@@ -1,4 +1,4 @@
-using PetManager.Core.HealthRecords.Entitites;
+using PetManager.Core.HealthRecords.Entities;
 
 namespace PetManager.Infrastructure.EF.HealthRecords.Configuration;
 

@@ -1,4 +1,4 @@
-using PetManager.Core.HealthRecords.Entitites;
+using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Users.Entities;
 using PetManager.Infrastructure.EF.HealthRecords.Configuration;

@@ -1,4 +1,4 @@
-using PetManager.Core.HealthRecords.Entitites;
+using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Repositories;
@@ -10,7 +10,7 @@ namespace PetManager.Application.Pets.Commands.CreatePet;
 internal sealed class CreatePetCommandHandler(
     IUserRepository userRepository,
     IPetRepository petRepository,
-    IHealthRepository healthRepository)
+    IHealthRecordRepository healthRecordRepository)
     : IRequestHandler<CreatePetCommand, CreatePetResponse>
 {
     public async Task<CreatePetResponse> Handle(CreatePetCommand command, CancellationToken cancellationToken = default)
@@ -25,7 +25,7 @@ internal sealed class CreatePetCommandHandler(
 
         var healthRecord = HealthRecord.Create(pet.PetId);
         pet.AddHealthRecord(healthRecord.HealthRecordId);
-        await healthRepository.AddAsync(healthRecord, cancellationToken);
+        await healthRecordRepository.AddAsync(healthRecord, cancellationToken);
 
         return new CreatePetResponse(pet.PetId);
     }

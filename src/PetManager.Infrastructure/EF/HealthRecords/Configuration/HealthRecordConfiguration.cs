@@ -1,4 +1,4 @@
-using PetManager.Core.HealthRecords.Entitites;
+using PetManager.Core.HealthRecords.Entities;
 
 namespace PetManager.Infrastructure.EF.HealthRecords.Configuration;
 
@@ -16,12 +16,12 @@ internal sealed class HealthRecordConfiguration : IEntityTypeConfiguration<Healt
 
         builder.HasMany(x => x.Appointments)
             .WithOne(x => x.HealthRecord)
-            .HasForeignKey("HealthRecordId")
+            .HasForeignKey(x => x.HealthRecordId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Vaccinations)
             .WithOne(x => x.HealthRecord)
-            .HasForeignKey("HealthRecordId")
+            .HasForeignKey(x => x.HealthRecordId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(x => x.Pet)

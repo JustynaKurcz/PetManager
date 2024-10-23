@@ -1,4 +1,4 @@
-namespace PetManager.Core.HealthRecords.Entitites;
+namespace PetManager.Core.HealthRecords.Entities;
 
 public class Appointment
 {

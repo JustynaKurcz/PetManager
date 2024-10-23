@@ -1,6 +1,6 @@
 using PetManager.Core.Pets.Entities;
 
-namespace PetManager.Core.HealthRecords.Entitites;
+namespace PetManager.Core.HealthRecords.Entities;
 
 public class HealthRecord
 {
@@ -35,4 +35,13 @@ public class HealthRecord
 
     public static HealthRecord Create(Guid petId)
         => new(petId);
+
+    public void AddVaccination(Vaccination vaccination)
+        => _vaccinations.Add(vaccination);
+
+    public void DeleteVaccination(Vaccination vaccination)
+        => _vaccinations.Remove(vaccination);
+
+    public void AddAppointment(Appointment appointment)
+        => _appointments.Add(appointment);
 }

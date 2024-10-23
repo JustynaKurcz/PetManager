@@ -1,17 +1,20 @@
+using PetManager.Api.Abstractions;
 using PetManager.Application.Pets.Commands.CreatePet;
 
-namespace PetManager.Pets.Commands.CreatePet;
+namespace PetManager.Api.Endpoints.Pets.Commands.CreatePet;
 
 public class CreatePetEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost($"{PetsEndpoint.Url}",
-                async ([FromBody] CreatePetCommand command, IMediator mediator) =>
-                {
-                    var response = await mediator.Send(command);
-                    return Results.Created(PetsEndpoint.Url, response);
-                })
+        app.MapPost($"{PetsEndpoint.Url}", async (
+                [FromBody] CreatePetCommand command,
+                [FromServices] IMediator mediator,
+                CancellationToken cancellationToken) =>
+            {
+                var response = await mediator.Send(command, cancellationToken);
+                return Results.Created(PetsEndpoint.Url, response);
+            })
             .Produces<CreatePetResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithTags(PetsEndpoint.Tag)

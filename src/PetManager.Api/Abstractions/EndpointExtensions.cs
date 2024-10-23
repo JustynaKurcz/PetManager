@@ -1,4 +1,4 @@
-namespace PetManager.Abstractions;
+namespace PetManager.Api.Abstractions;
 
 public static class EndpointExtensions
 {

@@ -1,8 +1,11 @@
+using System.Runtime.CompilerServices;
 using PetManager.Application.Users.Commands.SignUp;
+
+[assembly: InternalsVisibleTo("PetManager.Api")]
 
 namespace PetManager.Application;
 
-public static class Extensions
+internal static class Extensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
