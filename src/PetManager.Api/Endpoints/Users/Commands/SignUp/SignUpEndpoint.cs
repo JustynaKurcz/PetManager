@@ -1,17 +1,20 @@
+using PetManager.Api.Abstractions;
 using PetManager.Application.Users.Commands.SignUp;
 
-namespace PetManager.Endpoints.Users.Commands.SignUp;
+namespace PetManager.Api.Endpoints.Users.Commands.SignUp;
 
 public class SignUpEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost($"{UsersEndpoint.Url}/sign-up",
-                async (SignUpCommand command, IMediator mediator) =>
-                {
-                    var result = await mediator.Send(command);
-                    return Results.Created(UsersEndpoint.Url, result);
-                })
+        app.MapPost($"{UsersEndpoint.Url}/sign-up", async (
+                [AsParameters] SignUpCommand command,
+                [FromServices] IMediator mediator,
+                CancellationToken cancellationToken) =>
+            {
+                var result = await mediator.Send(command, cancellationToken);
+                return Results.Created(UsersEndpoint.Url, result);
+            })
             .Produces<SignUpResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithTags(UsersEndpoint.Tag)

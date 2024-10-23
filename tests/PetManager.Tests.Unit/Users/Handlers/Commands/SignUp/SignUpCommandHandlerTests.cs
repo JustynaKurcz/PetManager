@@ -4,7 +4,7 @@ using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 
-namespace PetManager.Tests.Unit.Handlers;
+namespace PetManager.Tests.Unit.Users.Handlers.Commands.SignUp;
 
 public sealed class SignUpCommandHandlerTests
 {
@@ -79,17 +79,11 @@ public sealed class SignUpCommandHandlerTests
             .AddAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
 
-    private const string TestFirstName = "TestFirstName";
-    private const string TestLastName = "TestLastName";
-    private const string TestPassword = "TestPassword";
-    private const string TestEmail = "test@petmanager.com";
-    private const string TestRoleName = "User";
-
     private SignUpCommand CreateSignUpCommand() =>
-        new(TestFirstName, TestLastName, TestEmail, TestPassword);
+        new("TestFirstName", "TestLastName", "TestPassword", "test@petmanager.com");
 
     private Role CreateRole() =>
-        Role.Create(TestRoleName);
+        Role.Create("User");
 
     private readonly IUserRepository _userRepository;
     private readonly IRoleRepository _roleRepository;

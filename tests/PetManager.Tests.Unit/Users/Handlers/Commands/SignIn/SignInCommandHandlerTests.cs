@@ -6,7 +6,7 @@ using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 
-namespace PetManager.Tests.Unit.Handlers;
+namespace PetManager.Tests.Unit.Users.Handlers.Commands.SignIn;
 
 public sealed class SignInCommandHandlerTests
 {

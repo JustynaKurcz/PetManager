@@ -21,7 +21,7 @@ public class User
         UserId = Guid.NewGuid();
         Email = email;
         Password = password;
-        CreatedAt = DateTimeOffset.Now;
+        CreatedAt = DateTimeOffset.UtcNow;
         RoleId = role.RoleId;
         Role = role;
     }
