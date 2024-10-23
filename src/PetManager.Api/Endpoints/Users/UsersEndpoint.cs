@@ -1,6 +1,6 @@
-using PetManager.Common.Endpoints;
+using PetManager.Api.Common.Endpoints;
 
-namespace PetManager.Endpoints.Users;
+namespace PetManager.Api.Endpoints.Users;
 
 internal static class UsersEndpoint
 {

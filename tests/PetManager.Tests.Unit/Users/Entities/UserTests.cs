@@ -1,6 +1,6 @@
 using PetManager.Core.Users.Entities;
 
-namespace PetManager.Tests.Unit.Entities;
+namespace PetManager.Tests.Unit.Users.Entities;
 
 public class UserTests()
 {
