@@ -1,0 +1,3 @@
+namespace PetManager.Application.HealthRecords.Commands.AddVaccinationToHealthRecord;
+
+public record AddVaccinationToHealthRecordResponse(Guid VaccinationId);
