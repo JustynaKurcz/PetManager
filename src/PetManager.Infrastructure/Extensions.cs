@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using MediatR;
 using PetManager.Application.Auth;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Core.Pets.Repositories;
@@ -40,7 +39,7 @@ internal static class Extensions
 
         services.AddSingleton<ITokenManager, TokenManager>();
 
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
         return services;
     }
