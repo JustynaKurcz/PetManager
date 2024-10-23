@@ -1,4 +1,3 @@
-using NSubstitute.ReturnsExtensions;
 using PetManager.Application.Auth;
 using PetManager.Application.Security;
 using PetManager.Application.Users.Commands.SignIn;
@@ -10,9 +9,11 @@ namespace PetManager.Tests.Unit.Users.Handlers.Commands.SignIn;
 
 public sealed class SignInCommandHandlerTests
 {
+    private async Task<SignInResponse> Act(SignInCommand command)
+        => await _handler.Handle(command, CancellationToken.None);
+
     [Fact]
-    public async Task
-        given_sign_in_command_when_sign_in_and_user_with_given_email_does_not_exist_then_should_throw_invalid_credentials_exception()
+    public async Task given_invalid_email_when_sign_in_then_should_throw_invalid_credentials_exception()
     {
         // Arrange
         var command = CreateSignInCommand();
@@ -22,7 +23,7 @@ public sealed class SignInCommandHandlerTests
             .ReturnsNull();
 
         // Act
-        var exception = await Record.ExceptionAsync(() => _handler.Handle(command, CancellationToken.None));
+        var exception = await Record.ExceptionAsync(() => Act(command));
 
         // Assert
         exception.ShouldNotBeNull();
@@ -43,8 +44,7 @@ public sealed class SignInCommandHandlerTests
     }
 
     [Fact]
-    public async Task
-        given_sign_in_command_when_sign_in_and_password_is_invalid_then_should_throw_invalid_credentials_exception()
+    public async Task given_invalid_password_when_sign_in_then_should_throw_invalid_credentials_exception()
     {
         // Arrange
         var command = CreateSignInCommand();
@@ -59,7 +59,7 @@ public sealed class SignInCommandHandlerTests
 
         // Act
 
-        var exception = await Record.ExceptionAsync(() => _handler.Handle(command, CancellationToken.None));
+        var exception = await Record.ExceptionAsync(() => Act(command));
 
         // Assert
         exception.ShouldNotBeNull();
@@ -80,7 +80,7 @@ public sealed class SignInCommandHandlerTests
     }
 
     [Fact]
-    public async Task given_sign_in_command_when_sign_in_then_should_return_sign_in_response()
+    public async Task given_valid_credentials_when_sign_in_then_should_return_token()
     {
         // Arrange
         var command = CreateSignInCommand();
@@ -99,7 +99,7 @@ public sealed class SignInCommandHandlerTests
             .Returns("token");
 
         // Act
-        var response = await _handler.Handle(command, CancellationToken.None);
+        var response = await Act(command);
 
         // Assert
         response.ShouldNotBeNull();
@@ -122,9 +122,7 @@ public sealed class SignInCommandHandlerTests
         new("test@petmanager.com", "TestPassword");
 
     private Role CreateRole() =>
-        Role.Create(TestRole);
-
-    private const string TestRole = "User";
+        Role.Create("User");
 
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;

@@ -1,4 +1,3 @@
-using NSubstitute.ReturnsExtensions;
 using PetManager.Application.Pets.Commands.CreatePet;
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Repositories;

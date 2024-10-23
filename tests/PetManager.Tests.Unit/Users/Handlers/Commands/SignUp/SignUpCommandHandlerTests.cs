@@ -8,9 +8,12 @@ namespace PetManager.Tests.Unit.Users.Handlers.Commands.SignUp;
 
 public sealed class SignUpCommandHandlerTests
 {
+    
+    private async Task<SignUpResponse> Act(SignUpCommand command)
+        => await _handler.Handle(command, CancellationToken.None);
+    
     [Fact]
-    public async Task
-        given_sign_up_command_when_sign_up_and_user_with_given_email_does_not_exist_then_should_create_user()
+    public async Task given_valid_data_when_sign_up_then_should_create_user()
     {
         // Arrange
         var command = CreateSignUpCommand();
@@ -34,7 +37,7 @@ public sealed class SignUpCommandHandlerTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var response = await _handler.Handle(command, CancellationToken.None);
+        var response = await Act(command);
 
         // Assert
         response.ShouldNotBeNull();
@@ -53,10 +56,8 @@ public sealed class SignUpCommandHandlerTests
             .AddAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
 
-
     [Fact]
-    public async Task
-        given_sign_up_command_when_sign_up_and_user_with_given_email_exists_then_should_throw_user_already_exists_exception()
+    public async Task given_existing_user_email_when_sign_up_then_should_throw_user_already_exists_exception()
     {
         // Arrange
         var command = CreateSignUpCommand();
@@ -65,7 +66,7 @@ public sealed class SignUpCommandHandlerTests
             .Returns(true);
 
         // Act
-        var exception = await Record.ExceptionAsync(() => _handler.Handle(command, CancellationToken.None));
+        var exception = await Record.ExceptionAsync(() => Act(command));
 
         // Assert
         exception.ShouldNotBeNull();
