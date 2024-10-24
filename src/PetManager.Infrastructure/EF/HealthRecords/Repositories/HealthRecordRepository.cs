@@ -14,12 +14,19 @@ internal class HealthRecordRepository(PetManagerDbContext dbContext) : IHealthRe
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<HealthRecord?> GetHealthRecordByIdAsync(Guid healthRecordId, CancellationToken cancellationToken)
-        => await _healthRecords
-            .Include(x=>x.Appointments)
-            .Include(x=>x.Vaccinations)
-            .AsSplitQuery()
-            .SingleOrDefaultAsync(x => x.HealthRecordId == healthRecordId, cancellationToken);
+    public async Task<HealthRecord?> GetByIdAsync(Guid healthRecordId, CancellationToken cancellationToken,
+        bool asNoTracking = false)
+    {
+        var query = _healthRecords.AsQueryable()
+            .Include(x => x.Appointments)
+            .Include(x => x.Vaccinations)
+            .AsSplitQuery();
+
+        if (asNoTracking)
+            query = query.AsNoTracking();
+
+        return await query.SingleOrDefaultAsync(x => x.HealthRecordId == healthRecordId, cancellationToken);
+    }
 
     public async Task UpdateAsync(HealthRecord healthRecord, CancellationToken cancellationToken)
     {

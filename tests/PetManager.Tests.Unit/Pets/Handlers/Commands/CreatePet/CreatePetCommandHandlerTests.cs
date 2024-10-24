@@ -58,7 +58,7 @@ public sealed class CreatePetCommandHandlerTests
         _healthRecordRepository
             .AddAsync(healthRecord, Arg.Any<CancellationToken>())
             .Returns(Task.CompletedTask);
-        
+
         // Act
         var response = await Act(command);
 

@@ -8,10 +8,9 @@ namespace PetManager.Tests.Unit.Users.Handlers.Commands.SignUp;
 
 public sealed class SignUpCommandHandlerTests
 {
-    
     private async Task<SignUpResponse> Act(SignUpCommand command)
         => await _handler.Handle(command, CancellationToken.None);
-    
+
     [Fact]
     public async Task given_valid_data_when_sign_up_then_should_create_user()
     {

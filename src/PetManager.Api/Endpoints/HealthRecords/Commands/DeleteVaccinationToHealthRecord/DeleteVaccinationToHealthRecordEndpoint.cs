@@ -8,7 +8,7 @@ internal sealed class DeleteVaccinationToHealthRecordEndpoint : IEndpointDefinit
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
         app.MapDelete(
-                $"{HealthRecordsEndpoint.Url}/health-records/{{healthRecordId:guid}}/vaccinations/{{vaccinationId:guid}}",
+                $"{HealthRecordsEndpoint.Url}/{{healthRecordId:guid}}/vaccinations/{{vaccinationId:guid}}",
                 async (
                     [AsParameters] DeleteVaccinationToHealthRecordEndpointRequest request,
                     [FromServices] IMediator mediator,

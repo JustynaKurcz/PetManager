@@ -14,7 +14,7 @@ internal sealed class AddVaccinationToHealthRecordEndpoint : IEndpointDefinition
             {
                 var command = request.Command with { HealthRecordId = request.HealthRecordId };
                 var response = await mediator.Send(command, cancellationToken);
-                
+
                 return Results.Created(HealthRecordsEndpoint.Url, response);
             })
             .Produces<AddVaccinationToHealthRecordResponse>(StatusCodes.Status201Created)

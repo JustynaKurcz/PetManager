@@ -1,4 +1,3 @@
-using MediatR;
 using PetManager.Application.Pets.Queries.GetPetDetails;
 using PetManager.Application.Pets.Queries.GetPetDetails.DTO;
 using PetManager.Core.Pets.Exceptions;
