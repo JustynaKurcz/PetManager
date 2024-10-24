@@ -8,7 +8,7 @@ public class GetPetDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("pets/{petId:guid}", async (
+        app.MapGet($"{PetsEndpoint.Url}/{{petId:guid}}", async (
                 [FromRoute] Guid petId,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>

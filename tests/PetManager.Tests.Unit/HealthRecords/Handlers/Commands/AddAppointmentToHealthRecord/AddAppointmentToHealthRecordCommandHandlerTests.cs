@@ -1,4 +1,3 @@
-using NSubstitute.ReturnsExtensions;
 using PetManager.Application.HealthRecords.Commands.AddAppointmentToHealthRecord;
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
