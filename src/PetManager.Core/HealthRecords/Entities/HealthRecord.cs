@@ -45,6 +45,6 @@ public class HealthRecord
     public void AddAppointment(Appointment appointment)
         => _appointments.Add(appointment);
 
-    public void RemoveAppointment(Appointment appointment)
+    public void DeleteAppointment(Appointment appointment)
         => _appointments.Remove(appointment);
 }

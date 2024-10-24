@@ -15,7 +15,7 @@ internal sealed class DeleteAppointmentToHealthRecordCommandHandler(IHealthRecor
         var appointment = healthRecord.Appointments.SingleOrDefault(a => a.AppointmentId == command.AppointmentId)
                           ?? throw new AppointmentNotFoundException(command.AppointmentId);
 
-        healthRecord.RemoveAppointment(appointment);
+        healthRecord.DeleteAppointment(appointment);
 
         await healthRecordRepository.UpdateAsync(healthRecord, cancellationToken);
         await healthRecordRepository.SaveChangesAsync(cancellationToken);
