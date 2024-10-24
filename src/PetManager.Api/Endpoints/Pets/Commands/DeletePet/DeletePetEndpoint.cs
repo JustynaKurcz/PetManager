@@ -7,15 +7,15 @@ internal sealed class DeletePetEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete($"{PetsEndpoint.Url}/{{petId:guid}}", async(
-            [FromRoute] Guid petId,
-            [FromServices] IMediator mediator,
-            CancellationToken cancellationToken)=>
-        {
-            await mediator.Send(new DeletePetCommand(petId), cancellationToken);
-            return Results.NoContent();
-        })
-        .Produces(StatusCodes.Status204NoContent)
+        app.MapDelete($"{PetsEndpoint.Url}/{{petId:guid}}", async (
+                [FromRoute] Guid petId,
+                [FromServices] IMediator mediator,
+                CancellationToken cancellationToken) =>
+            {
+                await mediator.Send(new DeletePetCommand(petId), cancellationToken);
+                return Results.NoContent();
+            })
+            .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithTags(PetsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)

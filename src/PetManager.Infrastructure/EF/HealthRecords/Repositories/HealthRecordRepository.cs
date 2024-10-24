@@ -16,6 +16,8 @@ internal class HealthRecordRepository(PetManagerDbContext dbContext) : IHealthRe
 
     public async Task<HealthRecord?> GetHealthRecordByIdAsync(Guid healthRecordId, CancellationToken cancellationToken)
         => await _healthRecords
+            .Include(x=>x.Appointments)
+            .AsSplitQuery()
             .SingleOrDefaultAsync(x => x.HealthRecordId == healthRecordId, cancellationToken);
 
     public async Task UpdateAsync(HealthRecord healthRecord, CancellationToken cancellationToken)
