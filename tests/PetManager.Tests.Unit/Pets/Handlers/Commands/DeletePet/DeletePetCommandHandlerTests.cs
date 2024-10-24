@@ -32,7 +32,7 @@ public sealed class DeletePetCommandHandlerTests
             .Received(1)
             .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
     }
-    
+
     [Fact]
     public async Task given_valid_pet_id_when_delete_pet_then_should_delete_pet()
     {
@@ -54,10 +54,10 @@ public sealed class DeletePetCommandHandlerTests
 
     private DeletePetCommand DeletePetCommand()
         => new(Guid.NewGuid());
-    
+
     private readonly IPetRepository _petRepository;
     private readonly IRequestHandler<DeletePetCommand> _handler;
-    
+
     public DeletePetCommandHandlerTests()
     {
         _petRepository = Substitute.For<IPetRepository>();

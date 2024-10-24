@@ -11,7 +11,7 @@ internal sealed class AddAppointmentToHealthRecordCommandHandler(IHealthRecordRe
         CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetHealthRecordByIdAsync(command.HealthRecordId, cancellationToken)
+            await healthRecordRepository.GetByIdAsync(command.HealthRecordId, cancellationToken)
             ?? throw new HealthRecordNotFoundException(command.HealthRecordId);
 
         var appointment = Appointment.Create(command.Title, command.Diagnosis, command.AppointmentDate, command.Notes,

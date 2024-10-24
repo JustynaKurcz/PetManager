@@ -15,7 +15,7 @@ public class GetPetDetailsEndpoint : IEndpointDefinition
             {
                 var query = new GetPetDetailsQuery(petId);
                 var response = await mediator.Send(query, cancellationToken);
-                
+
                 return Results.Ok(response);
             })
             .Produces<PetDetailsDto>(StatusCodes.Status200OK)

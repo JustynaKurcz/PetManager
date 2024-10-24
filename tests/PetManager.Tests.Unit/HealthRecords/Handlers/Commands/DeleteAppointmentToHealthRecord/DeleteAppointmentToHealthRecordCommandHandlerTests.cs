@@ -18,7 +18,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         var command = DeleteAppointmentToHealthRecordCommand();
 
         _healthRecordRepository
-            .GetHealthRecordByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -31,7 +31,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetHealthRecordByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
 
         await _healthRecordRepository
             .DidNotReceive()
@@ -51,7 +51,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         var healthRecord = HealthRecord.Create(Guid.NewGuid());
 
         _healthRecordRepository
-            .GetHealthRecordByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
             .Returns(healthRecord);
 
         // Act
@@ -64,7 +64,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetHealthRecordByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
 
         await _healthRecordRepository
             .DidNotReceive()
@@ -84,11 +84,11 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         var appointment =
             Appointment.Create("Title", "Diagnosis", DateTimeOffset.UtcNow, "Notes", healthRecord.HealthRecordId);
         var command = DeleteAppointmentToHealthRecordCommand(healthRecord.HealthRecordId, appointment.AppointmentId);
-        
+
         healthRecord.AddAppointment(appointment);
 
         _healthRecordRepository
-            .GetHealthRecordByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
             .Returns(healthRecord);
 
         _healthRecordRepository
@@ -105,7 +105,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         // Assert
         await _healthRecordRepository
             .Received(1)
-            .GetHealthRecordByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
 
         await _healthRecordRepository
             .Received(1)

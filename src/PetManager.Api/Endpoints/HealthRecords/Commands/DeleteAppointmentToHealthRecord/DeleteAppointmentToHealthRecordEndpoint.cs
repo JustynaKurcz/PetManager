@@ -8,7 +8,7 @@ internal sealed class DeleteAppointmentToHealthRecordEndpoint : IEndpointDefinit
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
         app.MapDelete(
-                $"{HealthRecordsEndpoint.Url}/health-records/{{healthRecordId:guid}}/appointments/{{appointmentId:guid}}",
+                $"{HealthRecordsEndpoint.Url}/{{healthRecordId:guid}}/appointments/{{appointmentId:guid}}",
                 async (
                     [AsParameters] DeleteAppointmentToHealthRecordEndpointRequest request,
                     [FromServices] IMediator mediator,

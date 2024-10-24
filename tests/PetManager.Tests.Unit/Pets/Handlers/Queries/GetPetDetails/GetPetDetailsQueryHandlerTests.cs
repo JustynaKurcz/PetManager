@@ -41,9 +41,9 @@ public sealed class GetPetDetailsQueryHandlerTests
         // Arrange
         var query = GetPetDetailsQuery();
         var pet = Pet.Create("TestName", Species.Dog, "TestBreed", Gender.Female, DateTime.Now, Guid.NewGuid());
-        
+
         _petRepository
-            .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>(),Arg.Any<bool>())
+            .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .Returns(pet);
 
         // Act
@@ -56,16 +56,15 @@ public sealed class GetPetDetailsQueryHandlerTests
 
     private GetPetDetailsQuery GetPetDetailsQuery()
         => new(Guid.NewGuid());
-    
+
     private readonly IPetRepository _petRepository;
-    
+
     private readonly IRequestHandler<GetPetDetailsQuery, PetDetailsDto> _handler;
-    
+
     public GetPetDetailsQueryHandlerTests()
     {
         _petRepository = Substitute.For<IPetRepository>();
-        
+
         _handler = new GetPetDetailsQueryHandler(_petRepository);
     }
-    
 }

@@ -8,13 +8,13 @@ public class SignInEndpoint : IEndpointDefinition
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost($"{UsersEndpoint.Url}/sign-in", async (
-                [FromBody] SignInCommand command, 
+                [FromBody] SignInCommand command,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
-                {
-                    var result = await mediator.Send(command, cancellationToken);
-                    return Results.Ok(result);
-                })
+            {
+                var result = await mediator.Send(command, cancellationToken);
+                return Results.Ok(result);
+            })
             .Produces<SignInResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .WithTags(UsersEndpoint.Tag)

@@ -1,4 +1,3 @@
-using NSubstitute.ReturnsExtensions;
 using PetManager.Application.HealthRecords.Commands.AddVaccinationToHealthRecord;
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
@@ -19,7 +18,7 @@ public sealed class AddVaccinationToHealthRecordCommandHandlerTests
         var command = CreateAddVaccinationToHealthRecordCommand();
 
         _healthRecordRepository
-            .GetHealthRecordByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -32,7 +31,7 @@ public sealed class AddVaccinationToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetHealthRecordByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
 
         await _healthRecordRepository
             .DidNotReceive()
@@ -52,7 +51,7 @@ public sealed class AddVaccinationToHealthRecordCommandHandlerTests
         var healthRecord = HealthRecord.Create(Guid.NewGuid());
 
         _healthRecordRepository
-            .GetHealthRecordByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
             .Returns(healthRecord);
 
         _healthRecordRepository
@@ -73,7 +72,7 @@ public sealed class AddVaccinationToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetHealthRecordByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
 
         await _healthRecordRepository
             .Received(1)
