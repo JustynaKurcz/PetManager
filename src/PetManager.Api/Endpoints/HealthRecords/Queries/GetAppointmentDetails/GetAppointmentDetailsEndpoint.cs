@@ -4,7 +4,7 @@ using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails.DTO;
 
 namespace PetManager.Api.Endpoints.HealthRecords.Queries.GetAppointmentDetails;
 
-public class GetAppointmentDetailsEndpoint : IEndpointDefinition
+internal sealed class GetAppointmentDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
