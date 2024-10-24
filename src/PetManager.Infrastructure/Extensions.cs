@@ -9,7 +9,6 @@ using PetManager.Infrastructure.EF.Context;
 using PetManager.Infrastructure.EF.HealthRecords.Repositories;
 using PetManager.Infrastructure.EF.Pets.Repositories;
 using PetManager.Infrastructure.EF.Users.Repositories;
-using PetManager.Infrastructure.EF.Users.Seeder;
 using PetManager.Infrastructure.Exceptions;
 using PetManager.Infrastructure.Security;
 
@@ -29,11 +28,8 @@ internal static class Extensions
 
         services
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<IPetRepository, PetRepository>()
             .AddScoped<IHealthRecordRepository, HealthRecordRepository>();
-
-        services.AddScoped<RoleSeeder>();
 
         services.AddSecurity();
 
@@ -42,17 +38,6 @@ internal static class Extensions
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
         return services;
-    }
-
-    public static IApplicationBuilder UseSeeder(this IApplicationBuilder app)
-    {
-        using var scope = app.ApplicationServices.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<PetManagerDbContext>();
-
-        var roleSeeder = new RoleSeeder(dbContext);
-        roleSeeder.Seed();
-
-        return app;
     }
 
     public static WebApplication UseInfrastructure(this WebApplication app)

@@ -10,7 +10,6 @@ namespace PetManager.Infrastructure.EF.Context;
 public class PetManagerDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<Role> Roles { get; set; }
     public DbSet<Pet> Pets { get; set; }
     public DbSet<HealthRecord> HealthRecords { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
@@ -23,7 +22,6 @@ public class PetManagerDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserConfiguration());
-        modelBuilder.ApplyConfiguration(new RoleConfiguration());
         modelBuilder.ApplyConfiguration(new PetConfiguration());
         modelBuilder.ApplyConfiguration(new HealthRecordConfiguration());
         modelBuilder.ApplyConfiguration(new AppointmentConfiguration());

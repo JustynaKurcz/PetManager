@@ -1,6 +1,7 @@
 using PetManager.Application.Security;
 using PetManager.Application.Users.Commands.SignUp;
 using PetManager.Core.Users.Entities;
+using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 
@@ -16,8 +17,7 @@ public sealed class SignUpCommandHandlerTests
     {
         // Arrange
         var command = CreateSignUpCommand();
-        var role = CreateRole();
-        var user = User.Create(command.Email, command.Password, role);
+        var user = User.Create(command.Email, command.Password, UserRole.Client);
 
         _userRepository
             .ExistsByEmailAsync(command.Email, Arg.Any<CancellationToken>())
@@ -26,10 +26,6 @@ public sealed class SignUpCommandHandlerTests
         _passwordManager
             .HashPassword(command.Password)
             .Returns("hashedPassword");
-
-        _roleRepository
-            .GetRoleByNameAsync(role.Name, Arg.Any<CancellationToken>())
-            .Returns(role);
 
         _userRepository
             .AddAsync(user, Arg.Any<CancellationToken>())
@@ -82,20 +78,15 @@ public sealed class SignUpCommandHandlerTests
     private SignUpCommand CreateSignUpCommand() =>
         new("TestFirstName", "TestLastName", "TestPassword", "test@petmanager.com");
 
-    private Role CreateRole() =>
-        Role.Create("User");
-
     private readonly IUserRepository _userRepository;
-    private readonly IRoleRepository _roleRepository;
     private readonly IPasswordManager _passwordManager;
     private readonly IRequestHandler<SignUpCommand, SignUpResponse> _handler;
 
     public SignUpCommandHandlerTests()
     {
         _userRepository = Substitute.For<IUserRepository>();
-        _roleRepository = Substitute.For<IRoleRepository>();
         _passwordManager = Substitute.For<IPasswordManager>();
 
-        _handler = new SignUpCommandHandler(_userRepository, _roleRepository, _passwordManager);
+        _handler = new SignUpCommandHandler(_userRepository, _passwordManager);
     }
 }

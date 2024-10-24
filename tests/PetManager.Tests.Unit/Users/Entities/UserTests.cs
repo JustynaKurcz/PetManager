@@ -1,4 +1,5 @@
 using PetManager.Core.Users.Entities;
+using PetManager.Core.Users.Enums;
 
 namespace PetManager.Tests.Unit.Users.Entities;
 
@@ -11,13 +12,11 @@ public class UserTests()
     public void given_user_data_when_create_user_then_should_create_user(string email, string password)
     {
         // Act
-        var user = User.Create(email, password, Role);
+        var user = User.Create(email, password, UserRole.Client);
 
         // Assert
         user.ShouldNotBeNull();
         user.ShouldBeOfType<User>();
         user.UserId.ShouldNotBe(Guid.Empty);
     }
-
-    private Role Role => Role.Create("User");
 }

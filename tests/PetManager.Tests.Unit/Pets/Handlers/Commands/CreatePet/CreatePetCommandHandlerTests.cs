@@ -5,6 +5,7 @@ using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Enums;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Core.Users.Entities;
+using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 
@@ -43,7 +44,7 @@ public sealed class CreatePetCommandHandlerTests
     {
         // Arrange
         var command = CreatePetCommand();
-        var user = User.Create("TestEmail", "TestPassword", Role.Create("User"));
+        var user = User.Create("TestEmail", "TestPassword", UserRole.Client);
         var pet = Pet.Create(command.Name, command.Species, command.Breed, command.Gender, command.BirthDate,
             command.UserId);
         var healthRecord = HealthRecord.Create(pet.PetId);
