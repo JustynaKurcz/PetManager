@@ -19,7 +19,7 @@ public sealed class GetPetDetailsQueryHandlerTests
         // Arrange
         var query = GetPetDetailsQuery();
         _petRepository
-            .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .ReturnsNull();
 
         // Act
@@ -32,7 +32,7 @@ public sealed class GetPetDetailsQueryHandlerTests
 
         await _petRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public sealed class GetPetDetailsQueryHandlerTests
         var pet = Pet.Create("TestName", Species.Dog, "TestBreed", Gender.Female, DateTime.Now, Guid.NewGuid());
         
         _petRepository
-            .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>(),Arg.Any<bool>())
             .Returns(pet);
 
         // Act

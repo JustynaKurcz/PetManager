@@ -17,15 +17,19 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
         => await dbContext.SaveChangesAsync(cancellationToken);
 
-    public async Task<Pet> GetByIdAsync(Guid petId, CancellationToken cancellationToken)
-        => await _pets
-            .AsNoTracking()
-            .SingleOrDefaultAsync(x => x.PetId == petId, cancellationToken);
+    public async Task<Pet> GetByIdAsync(Guid petId, CancellationToken cancellationToken, bool asNoTracking = false)
+    {
+        var query = _pets.AsQueryable();
+
+        if (asNoTracking)
+            query = query.AsNoTracking();
+
+        return await query.SingleOrDefaultAsync(x => x.PetId == petId, cancellationToken);
+    }
 
     public async Task DeleteAsync(Pet pet, CancellationToken cancellationToken)
     {
         _pets.Remove(pet);
         await dbContext.SaveChangesAsync(cancellationToken);
     }
-    
 }
