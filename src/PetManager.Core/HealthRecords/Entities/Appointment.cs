@@ -3,9 +3,9 @@ namespace PetManager.Core.HealthRecords.Entities;
 public class Appointment
 {
     public Guid AppointmentId { get; private set; }
-    private string Title { get; set; }
-    private string Diagnosis { get; set; }
-    private DateTimeOffset AppointmentDate { get; set; }
+    public string Title { get; set; }
+    public string Diagnosis { get; set; }
+    public DateTimeOffset AppointmentDate { get; set; }
     public string Notes { get; private set; }
 
     public Guid HealthRecordId { get; private set; }
