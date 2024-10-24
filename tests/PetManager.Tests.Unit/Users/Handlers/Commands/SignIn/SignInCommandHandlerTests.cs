@@ -2,6 +2,7 @@ using PetManager.Application.Auth;
 using PetManager.Application.Security;
 using PetManager.Application.Users.Commands.SignIn;
 using PetManager.Core.Users.Entities;
+using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 
@@ -51,7 +52,7 @@ public sealed class SignInCommandHandlerTests
 
         _userRepository
             .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
-            .Returns(User.Create(command.Email, command.Password, CreateRole()));
+            .Returns(User.Create(command.Email, command.Password, UserRole.Client));
 
         _passwordManager
             .VerifyPassword(command.Password, Arg.Any<string>())
@@ -84,7 +85,7 @@ public sealed class SignInCommandHandlerTests
     {
         // Arrange
         var command = CreateSignInCommand();
-        var user = User.Create(command.Email, command.Password, CreateRole());
+        var user = User.Create(command.Email, command.Password, UserRole.Client);
 
         _userRepository
             .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
@@ -95,7 +96,7 @@ public sealed class SignInCommandHandlerTests
             .Returns(true);
 
         _tokenManager
-            .GenerateToken(user.UserId, user.Role.Name, user.Email)
+            .GenerateToken(user.UserId, user.Role.ToString(), user.Email)
             .Returns("token");
 
         // Act
@@ -120,9 +121,6 @@ public sealed class SignInCommandHandlerTests
 
     private SignInCommand CreateSignInCommand() =>
         new("test@petmanager.com", "TestPassword");
-
-    private Role CreateRole() =>
-        Role.Create("User");
 
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;

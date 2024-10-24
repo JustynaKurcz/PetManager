@@ -1,5 +1,6 @@
 using PetManager.Application.Security;
 using PetManager.Core.Users.Entities;
+using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 
@@ -7,7 +8,6 @@ namespace PetManager.Application.Users.Commands.SignUp;
 
 internal sealed class SignUpCommandHandler(
     IUserRepository userRepository,
-    IRoleRepository roleRepository,
     IPasswordManager passwordManager
 ) : IRequestHandler<SignUpCommand, SignUpResponse>
 {
@@ -21,9 +21,7 @@ internal sealed class SignUpCommandHandler(
 
         var hashPassword = passwordManager.HashPassword(command.Password);
 
-        var role = await roleRepository.GetRoleByNameAsync("User", cancellationToken);
-
-        var user = User.Create(email, hashPassword, role);
+        var user = User.Create(email, hashPassword, UserRole.Client);
         await userRepository.AddAsync(user, cancellationToken);
 
         return new SignUpResponse(user.UserId);

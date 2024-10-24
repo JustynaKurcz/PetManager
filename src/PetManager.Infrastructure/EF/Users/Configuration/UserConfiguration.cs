@@ -1,4 +1,5 @@
 using PetManager.Core.Users.Entities;
+using PetManager.Core.Users.Enums;
 
 namespace PetManager.Infrastructure.EF.Users.Configuration;
 
@@ -26,13 +27,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property<DateTimeOffset>("CreatedAt")
             .IsRequired();
 
-        builder.Property<Guid>("RoleId")
+        builder.Property<UserRole>("Role")
             .IsRequired();
-
-        builder.HasOne(x => x.Role)
-            .WithMany()
-            .HasForeignKey("RoleId")
-            .OnDelete(DeleteBehavior.Cascade);
 
         builder.ToTable("Users");
     }
