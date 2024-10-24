@@ -18,6 +18,6 @@ internal sealed class GetAppointmentDetailsQueryHandler(IHealthRecordRepository 
         var appointment = healthRecord.Appointments.FirstOrDefault(a => a.AppointmentId == query.AppointmentId)
                           ?? throw new AppointmentNotFoundException(query.AppointmentId);
 
-        return appointment.AsDetailsDto();
+        return appointment.AsAppointmentDetailsDto();
     }
 }

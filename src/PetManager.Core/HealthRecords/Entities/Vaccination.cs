@@ -3,9 +3,9 @@ namespace PetManager.Core.HealthRecords.Entities;
 public class Vaccination
 {
     public Guid VaccinationId { get; private set; }
-    private string VaccinationName { get; set; }
-    private DateTimeOffset VaccinationDate { get; set; }
-    private DateTimeOffset NextVaccinationDate { get; set; }
+    public string VaccinationName { get; set; }
+    public DateTimeOffset VaccinationDate { get; set; }
+    public DateTimeOffset NextVaccinationDate { get; set; }
     public Guid HealthRecordId { get; private set; }
     public HealthRecord HealthRecord { get; set; }
 
