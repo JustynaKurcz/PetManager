@@ -2,7 +2,7 @@ using PetManager.Core.Pets.Enums;
 
 namespace PetManager.Application.Pets.Commands.CreatePet;
 
-public record CreatePetCommand(
+internal record CreatePetCommand(
     string Name,
     Species Species,
     string Breed,

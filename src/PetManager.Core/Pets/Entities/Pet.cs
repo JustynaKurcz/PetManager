@@ -38,4 +38,13 @@ public class Pet
 
     public void AddHealthRecord(Guid healthRecordId)
         => HealthRecordId = healthRecordId;
+
+    public void ChangeInformation(string name, Species species, string breed, Gender gender, DateTimeOffset birthDate)
+    {
+        Name = name;
+        Species = species;
+        Breed = breed;
+        Gender = gender;
+        BirthDate = birthDate;
+    }
 }
