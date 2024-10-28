@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using PetManager.Application.Auth;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Core.Users.Repositories;
@@ -32,8 +31,7 @@ internal static class Extensions
             .AddScoped<IHealthRecordRepository, HealthRecordRepository>();
 
         services.AddSecurity();
-
-        services.AddSingleton<ITokenManager, TokenManager>();
+        services.AddAuth(configuration);
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 

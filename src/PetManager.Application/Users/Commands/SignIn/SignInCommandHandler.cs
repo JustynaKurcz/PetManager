@@ -8,7 +8,8 @@ namespace PetManager.Application.Users.Commands.SignIn;
 internal sealed class SignInCommandHandler(
     IUserRepository userRepository,
     IPasswordManager passwordManager,
-    ITokenManager tokenManager)
+    IAuthManager authManager
+)
     : IRequestHandler<SignInCommand, SignInResponse>
 {
     public async Task<SignInResponse> Handle(SignInCommand command, CancellationToken cancellationToken = default)
@@ -23,7 +24,7 @@ internal sealed class SignInCommandHandler(
         if (!passwordIsValid)
             throw new InvalidCredentialsException();
 
-        var token = tokenManager.GenerateToken(user.UserId, user.Role.ToString(), user.Email);
+        var token = authManager.GenerateToken(user.UserId, user.Role.ToString());
 
         return new SignInResponse(token);
     }

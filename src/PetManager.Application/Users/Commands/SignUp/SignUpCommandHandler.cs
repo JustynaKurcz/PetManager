@@ -21,7 +21,8 @@ internal sealed class SignUpCommandHandler(
 
         var hashPassword = passwordManager.HashPassword(command.Password);
 
-        var user = User.Create(email, hashPassword, UserRole.Client);
+        var user = User.Create(email, hashPassword, UserRole.User);
+
         await userRepository.AddAsync(user, cancellationToken);
 
         return new SignUpResponse(user.UserId);
