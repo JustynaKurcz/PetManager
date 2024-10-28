@@ -17,7 +17,7 @@ public sealed class SignUpCommandHandlerTests
     {
         // Arrange
         var command = CreateSignUpCommand();
-        var user = User.Create(command.Email, command.Password, UserRole.Client);
+        var user = User.Create(command.Email, command.Password, UserRole.User);
 
         _userRepository
             .ExistsByEmailAsync(command.Email, Arg.Any<CancellationToken>())

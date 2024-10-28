@@ -8,7 +8,7 @@ public class SignUpEndpoint : IEndpointDefinition
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost($"{UsersEndpoint.Url}/sign-up", async (
-                [AsParameters] SignUpCommand command,
+                SignUpCommand command,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
             {

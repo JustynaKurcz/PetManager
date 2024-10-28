@@ -39,9 +39,9 @@ public sealed class SignInCommandHandlerTests
             .DidNotReceive()
             .VerifyPassword(Arg.Any<string>(), Arg.Any<string>());
 
-        _tokenManager
+        _authManager
             .DidNotReceive()
-            .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>(), Arg.Any<string>());
+            .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
 
     [Fact]
@@ -52,7 +52,7 @@ public sealed class SignInCommandHandlerTests
 
         _userRepository
             .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
-            .Returns(User.Create(command.Email, command.Password, UserRole.Client));
+            .Returns(User.Create(command.Email, command.Password, UserRole.User));
 
         _passwordManager
             .VerifyPassword(command.Password, Arg.Any<string>())
@@ -75,9 +75,9 @@ public sealed class SignInCommandHandlerTests
             .Received(1)
             .VerifyPassword(Arg.Any<string>(), Arg.Any<string>());
 
-        _tokenManager
+        _authManager
             .DidNotReceive()
-            .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>(), Arg.Any<string>());
+            .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
 
     [Fact]
@@ -85,7 +85,7 @@ public sealed class SignInCommandHandlerTests
     {
         // Arrange
         var command = CreateSignInCommand();
-        var user = User.Create(command.Email, command.Password, UserRole.Client);
+        var user = User.Create(command.Email, command.Password, UserRole.User);
 
         _userRepository
             .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
@@ -95,8 +95,8 @@ public sealed class SignInCommandHandlerTests
             .VerifyPassword(command.Password, Arg.Any<string>())
             .Returns(true);
 
-        _tokenManager
-            .GenerateToken(user.UserId, user.Role.ToString(), user.Email)
+        _authManager
+            .GenerateToken(user.UserId, user.Role.ToString())
             .Returns("token");
 
         // Act
@@ -113,9 +113,9 @@ public sealed class SignInCommandHandlerTests
             .Received(1)
             .VerifyPassword(Arg.Any<string>(), Arg.Any<string>());
 
-        _tokenManager
+        _authManager
             .Received(1)
-            .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>(), Arg.Any<string>());
+            .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
 
 
@@ -124,15 +124,15 @@ public sealed class SignInCommandHandlerTests
 
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
-    private readonly ITokenManager _tokenManager;
+    private readonly IAuthManager _authManager;
     private readonly IRequestHandler<SignInCommand, SignInResponse> _handler;
 
     public SignInCommandHandlerTests()
     {
         _userRepository = Substitute.For<IUserRepository>();
         _passwordManager = Substitute.For<IPasswordManager>();
-        _tokenManager = Substitute.For<ITokenManager>();
+        _authManager = Substitute.For<IAuthManager>();
 
-        _handler = new SignInCommandHandler(_userRepository, _passwordManager, _tokenManager);
+        _handler = new SignInCommandHandler(_userRepository, _passwordManager, _authManager);
     }
 }

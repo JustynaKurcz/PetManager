@@ -44,7 +44,7 @@ public sealed class CreatePetCommandHandlerTests
     {
         // Arrange
         var command = CreatePetCommand();
-        var user = User.Create("TestEmail", "TestPassword", UserRole.Client);
+        var user = User.Create("TestEmail", "TestPassword", UserRole.User);
         var pet = Pet.Create(command.Name, command.Species, command.Breed, command.Gender, command.BirthDate,
             command.UserId);
         var healthRecord = HealthRecord.Create(pet.PetId);

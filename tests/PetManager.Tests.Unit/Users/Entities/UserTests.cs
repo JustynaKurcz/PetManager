@@ -12,7 +12,7 @@ public class UserTests()
     public void given_user_data_when_create_user_then_should_create_user(string email, string password)
     {
         // Act
-        var user = User.Create(email, password, UserRole.Client);
+        var user = User.Create(email, password, UserRole.User);
 
         // Assert
         user.ShouldNotBeNull();
