@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using PetManager.Infrastructure.Auth;
-using PetManager.Infrastructure.Contexts;
+using PetManager.Infrastructure.Context;
 using PetManager.Infrastructure.EF;
 using PetManager.Infrastructure.EF.DbContext;
 using PetManager.Infrastructure.Exceptions;

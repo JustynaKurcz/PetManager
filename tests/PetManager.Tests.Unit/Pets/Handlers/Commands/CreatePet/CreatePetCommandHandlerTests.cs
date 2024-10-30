@@ -1,3 +1,4 @@
+using PetManager.Application.Context;
 using PetManager.Application.Pets.Commands.CreatePet;
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Repositories;
@@ -23,7 +24,7 @@ public sealed class CreatePetCommandHandlerTests
         // Arrange
         var command = CreatePetCommand();
         _userRepository
-            .GetByIdAsync(command.UserId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -32,7 +33,7 @@ public sealed class CreatePetCommandHandlerTests
         // Assert
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<UserNotFoundException>();
-        exception.Message.ShouldBe($"User with id {command.UserId} was not found.");
+        exception.Message.ShouldBe($"User with id {_context.UserId} was not found.");
 
         await _userRepository
             .Received(1)
@@ -46,10 +47,10 @@ public sealed class CreatePetCommandHandlerTests
         var command = CreatePetCommand();
         var user = User.Create("TestEmail", "TestPassword", UserRole.User);
         var pet = Pet.Create(command.Name, command.Species, command.Breed, command.Gender, command.BirthDate,
-            command.UserId);
+            _context.UserId);
         var healthRecord = HealthRecord.Create(pet.PetId);
         _userRepository
-            .GetByIdAsync(command.UserId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
             .Returns(user);
 
         _petRepository
@@ -82,8 +83,9 @@ public sealed class CreatePetCommandHandlerTests
     }
 
     private CreatePetCommand CreatePetCommand() => new("TestName", Species.Dog, "TestBreed", Gender.Male,
-        DateTimeOffset.UtcNow, Guid.NewGuid());
+        DateTimeOffset.UtcNow);
 
+    private readonly IContext _context;
     private readonly IUserRepository _userRepository;
     private readonly IPetRepository _petRepository;
     private readonly IHealthRecordRepository _healthRecordRepository;
@@ -92,10 +94,11 @@ public sealed class CreatePetCommandHandlerTests
 
     public CreatePetCommandHandlerTests()
     {
+        _context = Substitute.For<IContext>();
         _userRepository = Substitute.For<IUserRepository>();
         _petRepository = Substitute.For<IPetRepository>();
         _healthRecordRepository = Substitute.For<IHealthRecordRepository>();
 
-        _handler = new CreatePetCommandHandler(_userRepository, _petRepository, _healthRecordRepository);
+        _handler = new CreatePetCommandHandler(_context, _userRepository, _petRepository, _healthRecordRepository);
     }
 }
