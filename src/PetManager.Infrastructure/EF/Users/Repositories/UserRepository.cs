@@ -25,4 +25,7 @@ internal class UserRepository(PetManagerDbContext dbContext) : IUserRepository
     public async Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken)
         => await _users
             .AnyAsync(x => x.Email == email, cancellationToken);
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+        => await dbContext.SaveChangesAsync(cancellationToken);
 }

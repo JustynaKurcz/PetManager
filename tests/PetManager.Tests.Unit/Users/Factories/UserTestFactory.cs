@@ -1,4 +1,5 @@
 using Bogus;
+using PetManager.Application.Users.Commands.ChangeUserInformation;
 using PetManager.Application.Users.Commands.SignIn;
 using PetManager.Application.Users.Commands.SignUp;
 using PetManager.Core.Users.Entities;
@@ -18,4 +19,7 @@ internal sealed class UserTestFactory
 
     internal SignInCommand CreateSignInCommand()
         => new(_faker.Person.Email, _faker.Internet.Password());
+    
+    internal ChangeUserInformationCommand ChangeUserInformationCommand()
+        => new(_faker.Person.FirstName, _faker.Person.LastName);
 }

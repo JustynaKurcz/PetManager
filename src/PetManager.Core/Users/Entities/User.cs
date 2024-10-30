@@ -28,4 +28,10 @@ public class User
 
     public static User Create(string email, string password, UserRole role)
         => new(email, password, role);
+
+    public void ChangeInformation(string firstName, string lastName)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+    }
 }
