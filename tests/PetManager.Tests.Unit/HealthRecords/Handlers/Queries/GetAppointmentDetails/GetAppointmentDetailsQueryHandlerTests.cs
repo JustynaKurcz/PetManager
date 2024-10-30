@@ -4,6 +4,7 @@ using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Infrastructure.EF.HealthRecords.Queries.GetAppointmentDetails;
+using PetManager.Tests.Unit.HealthRecords.Factories;
 
 namespace PetManager.Tests.Unit.HealthRecords.Handlers.Queries.GetAppointmentDetails;
 
@@ -17,7 +18,7 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         given_invalid_healthRecord_id_when_get_appointment_details_then_should_throw_appointment_not_found_exception()
     {
         // Arrange
-        var query = GetAppointmentDetailsQuery();
+        var query = _appointmentFactory.GetAppointmentDetailsQuery();
         _healthRecordRepository
             .GetByIdAsync(query.HealthRecordId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .ReturnsNull();
@@ -40,8 +41,8 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         given_valid_healthRecord_id_and_invalid_appointment_id_when_get_appointment_details_then_should_throw_appointment_not_found_exception()
     {
         // Arrange
-        var query = GetAppointmentDetailsQuery();
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
+        var query = _appointmentFactory.GetAppointmentDetailsQuery();
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
         _healthRecordRepository
             .GetByIdAsync(query.HealthRecordId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .Returns(healthRecord);
@@ -64,10 +65,9 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         given_valid_healthRecord_id_and_valid_appointment_id_when_get_appointment_details_then_should_return_appointment_details()
     {
         // Arrange
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
-        var appointment =
-            Appointment.Create("Title", "Diagnosis", DateTimeOffset.Now, "Notes", healthRecord.HealthRecordId);
-        var query = GetAppointmentDetailsQuery(healthRecord.HealthRecordId, appointment.AppointmentId);
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
+        var appointment = _appointmentFactory.CreateAppointment();
+        var query = _appointmentFactory.GetAppointmentDetailsQuery(healthRecord.HealthRecordId, appointment.AppointmentId);
         healthRecord.AddAppointment(appointment);
 
         _healthRecordRepository
@@ -82,14 +82,12 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         response.ShouldBeOfType<AppointmentDetailsDto>();
     }
 
-    private GetAppointmentDetailsQuery GetAppointmentDetailsQuery(Guid healthRecordId = default,
-        Guid appointmentId = default)
-        => new(healthRecordId == default ? Guid.NewGuid() : healthRecordId,
-            appointmentId == default ? Guid.NewGuid() : appointmentId);
-
     private readonly IHealthRecordRepository _healthRecordRepository;
 
-    private IRequestHandler<GetAppointmentDetailsQuery, AppointmentDetailsDto> _handler;
+    private readonly IRequestHandler<GetAppointmentDetailsQuery, AppointmentDetailsDto> _handler;
+
+    private readonly AppointmentTestFactory _appointmentFactory = new();
+    private readonly HealthRecordTestFactory _healthRecordFactory = new();
 
     public GetAppointmentDetailsQueryHandlerTests()
     {

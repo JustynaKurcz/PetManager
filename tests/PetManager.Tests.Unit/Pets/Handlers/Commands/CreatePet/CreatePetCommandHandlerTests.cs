@@ -9,6 +9,9 @@ using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
+using PetManager.Tests.Unit.HealthRecords.Factories;
+using PetManager.Tests.Unit.Pets.Factories;
+using PetManager.Tests.Unit.Users.Factories;
 
 namespace PetManager.Tests.Unit.Pets.Handlers.Commands.CreatePet;
 
@@ -22,7 +25,7 @@ public sealed class CreatePetCommandHandlerTests
         given_invalid_user_id_when_create_pet_then_should_throw_user_not_found_exception()
     {
         // Arrange
-        var command = CreatePetCommand();
+        var command = _petFactory.CreatePetCommand();
         _userRepository
             .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
             .ReturnsNull();
@@ -44,11 +47,11 @@ public sealed class CreatePetCommandHandlerTests
     public async Task given_valid_data_when_create_pet_then_should_create_pet()
     {
         // Arrange
-        var command = CreatePetCommand();
-        var user = User.Create("TestEmail", "TestPassword", UserRole.User);
-        var pet = Pet.Create(command.Name, command.Species, command.Breed, command.Gender, command.BirthDate,
-            _context.UserId);
-        var healthRecord = HealthRecord.Create(pet.PetId);
+        var command = _petFactory.CreatePetCommand();
+        var user = _userFactory.CreateUser();
+        var pet = _petFactory.CreatePet();
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
+        
         _userRepository
             .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
             .Returns(user);
@@ -81,16 +84,17 @@ public sealed class CreatePetCommandHandlerTests
             .Received(1)
             .AddAsync(Arg.Any<HealthRecord>(), Arg.Any<CancellationToken>());
     }
-
-    private CreatePetCommand CreatePetCommand() => new("TestName", Species.Dog, "TestBreed", Gender.Male,
-        DateTimeOffset.UtcNow);
-
+    
     private readonly IContext _context;
     private readonly IUserRepository _userRepository;
     private readonly IPetRepository _petRepository;
     private readonly IHealthRecordRepository _healthRecordRepository;
 
     private readonly IRequestHandler<CreatePetCommand, CreatePetResponse> _handler;
+    
+    private readonly PetTestFactory _petFactory = new();
+    private readonly UserTestFactory _userFactory = new(); 
+    private readonly HealthRecordTestFactory _healthRecordFactory = new();
 
     public CreatePetCommandHandlerTests()
     {

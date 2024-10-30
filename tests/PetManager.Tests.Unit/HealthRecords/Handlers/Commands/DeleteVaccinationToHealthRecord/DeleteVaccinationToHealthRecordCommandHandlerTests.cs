@@ -2,6 +2,7 @@ using PetManager.Application.HealthRecords.Commands.DeleteVaccinationToHealthRec
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
 using PetManager.Core.HealthRecords.Repositories;
+using PetManager.Tests.Unit.HealthRecords.Factories;
 
 namespace PetManager.Tests.Unit.HealthRecords.Handlers.Commands.DeleteVaccinationToHealthRecord;
 
@@ -15,7 +16,7 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
         given_invalid_health_record_id_when_delete_vaccination_to_health_record_then_should_throw_health_record_not_found_exception()
     {
         // Arrange
-        var command = DeleteVaccinationToHealthRecordCommand();
+        var command = _healthRecordFactory.DeleteVaccinationToHealthRecordCommand();
 
         _healthRecordRepository
             .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
@@ -47,8 +48,8 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
         given_invalid_vaccination_id_when_delete_vaccination_to_health_record_then_should_throw_vaccination_not_found_exception()
     {
         // Arrange
-        var command = DeleteVaccinationToHealthRecordCommand();
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
+        var command = _healthRecordFactory.DeleteVaccinationToHealthRecordCommand();
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
 
         _healthRecordRepository
             .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
@@ -80,10 +81,9 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
         given_valid_data_when_delete_vaccination_to_health_record_then_should_delete_vaccination_to_health_record()
     {
         // Arrange
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
-        var vaccination = Vaccination.Create("Name", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(30),
-            healthRecord.HealthRecordId);
-        var command = DeleteVaccinationToHealthRecordCommand(healthRecord.HealthRecordId, vaccination.VaccinationId);
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
+        var vaccination = _vaccinationFactory.CreateVaccination();
+        var command = _healthRecordFactory.DeleteVaccinationToHealthRecordCommand(healthRecord.HealthRecordId, vaccination.VaccinationId);
 
         healthRecord.AddVaccination(vaccination);
 
@@ -108,14 +108,13 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
             .SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    private DeleteVaccinationToHealthRecordCommand DeleteVaccinationToHealthRecordCommand(Guid healthRecordId = default,
-        Guid vaccinationId = default)
-        => new(healthRecordId == default ? Guid.NewGuid() : healthRecordId,
-            vaccinationId == default ? Guid.NewGuid() : vaccinationId);
-
     private readonly IHealthRecordRepository _healthRecordRepository;
 
     private readonly IRequestHandler<DeleteVaccinationToHealthRecordCommand> _handler;
+
+    private readonly HealthRecordTestFactory _healthRecordFactory = new();
+    private readonly VaccinationTestFactory _vaccinationFactory = new();
+
 
     public DeleteVaccinationToHealthRecordCommandHandlerTests()
     {

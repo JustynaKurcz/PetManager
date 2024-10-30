@@ -7,7 +7,6 @@ public class Appointment
     public string Diagnosis { get; set; }
     public DateTimeOffset AppointmentDate { get; set; }
     public string Notes { get; private set; }
-
     public Guid HealthRecordId { get; private set; }
     public virtual HealthRecord HealthRecord { get; private set; }
 

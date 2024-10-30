@@ -4,6 +4,7 @@ using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Infrastructure.EF.HealthRecords.Queries.GetVaccinationDetails;
+using PetManager.Tests.Unit.HealthRecords.Factories;
 
 namespace PetManager.Tests.Unit.HealthRecords.Handlers.Queries.GetVaccinationDetails;
 
@@ -12,13 +13,12 @@ public sealed class GetVaccinationDetailsQueryHandlerTests
     private async Task<VaccinationDetailsDto> Act(GetVaccinationDetailsQuery query)
         => await _handler.Handle(query, CancellationToken.None);
 
-
     [Fact]
     public async Task
         given_invalid_healthRecord_id_when_get_vaccination_details_then_should_throw_health_record_not_found_exception()
     {
         // Arrange
-        var query = GetVaccinationDetailsQuery();
+        var query = _vaccinationFactory.GetVaccinationDetailsQuery();
         _healthRecordRepository
             .GetByIdAsync(query.HealthRecordId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .ReturnsNull();
@@ -41,8 +41,8 @@ public sealed class GetVaccinationDetailsQueryHandlerTests
         given_valid_healthRecord_id_and_invalid_vaccination_id_when_get_vaccination_details_then_should_throw_vaccination_not_found_exception()
     {
         // Arrange
-        var query = GetVaccinationDetailsQuery();
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
+        var query = _vaccinationFactory.GetVaccinationDetailsQuery();
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
         _healthRecordRepository
             .GetByIdAsync(query.HealthRecordId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .Returns(healthRecord);
@@ -65,10 +65,9 @@ public sealed class GetVaccinationDetailsQueryHandlerTests
         given_valid_healthRecord_id_and_valid_vaccination_id_when_get_vaccination_details_then_should_return_vaccination_details()
     {
         // Arrange
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
-        var vaccination = Vaccination.Create("Name", DateTimeOffset.Now, DateTimeOffset.Now.AddDays(30),
-            healthRecord.HealthRecordId);
-        var query = GetVaccinationDetailsQuery(healthRecord.HealthRecordId, vaccination.VaccinationId);
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
+        var vaccination = _vaccinationFactory.CreateVaccination();
+        var query = _vaccinationFactory.GetVaccinationDetailsQuery(healthRecord.HealthRecordId, vaccination.VaccinationId);
         healthRecord.AddVaccination(vaccination);
 
         _healthRecordRepository
@@ -83,15 +82,12 @@ public sealed class GetVaccinationDetailsQueryHandlerTests
         response.ShouldBeOfType<VaccinationDetailsDto>();
     }
 
-
-    private GetVaccinationDetailsQuery GetVaccinationDetailsQuery(Guid healthRecordId = default,
-        Guid vaccinationId = default)
-        => new(healthRecordId == default ? Guid.NewGuid() : healthRecordId,
-            vaccinationId == default ? Guid.NewGuid() : vaccinationId);
-
     private readonly IHealthRecordRepository _healthRecordRepository;
 
-    private IRequestHandler<GetVaccinationDetailsQuery, VaccinationDetailsDto> _handler;
+    private readonly IRequestHandler<GetVaccinationDetailsQuery, VaccinationDetailsDto> _handler;
+
+    private readonly HealthRecordTestFactory _healthRecordFactory = new();
+    private readonly VaccinationTestFactory _vaccinationFactory = new();
 
     public GetVaccinationDetailsQueryHandlerTests()
     {

@@ -16,8 +16,8 @@ public sealed class SignUpCommandHandlerTests
     public async Task given_valid_data_when_sign_up_then_should_create_user()
     {
         // Arrange
-        var command = _factory.CreateSignUpCommand();
-        var user = _factory.CreateUser();
+        var command = _userFactory.CreateSignUpCommand();
+        var user = _userFactory.CreateUser();
 
         _userRepository
             .ExistsByEmailAsync(command.Email, Arg.Any<CancellationToken>())
@@ -55,7 +55,7 @@ public sealed class SignUpCommandHandlerTests
     public async Task given_existing_user_email_when_sign_up_then_should_throw_user_already_exists_exception()
     {
         // Arrange
-        var command = _factory.CreateSignUpCommand();
+        var command = _userFactory.CreateSignUpCommand();
         _userRepository
             .ExistsByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
             .Returns(true);
@@ -80,7 +80,7 @@ public sealed class SignUpCommandHandlerTests
     
     private readonly IRequestHandler<SignUpCommand, SignUpResponse> _handler;
     
-    private readonly UserTestFactory _factory = new();
+    private readonly UserTestFactory _userFactory = new();
 
     public SignUpCommandHandlerTests()
     {

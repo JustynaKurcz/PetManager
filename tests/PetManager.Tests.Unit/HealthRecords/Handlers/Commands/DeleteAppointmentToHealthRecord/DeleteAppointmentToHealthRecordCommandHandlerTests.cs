@@ -2,6 +2,7 @@ using PetManager.Application.HealthRecords.Commands.DeleteAppointmentToHealthRec
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
 using PetManager.Core.HealthRecords.Repositories;
+using PetManager.Tests.Unit.HealthRecords.Factories;
 
 namespace PetManager.Tests.Unit.HealthRecords.Handlers.Commands.DeleteAppointmentToHealthRecord;
 
@@ -15,7 +16,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         given_invalid_health_record_id_when_delete_appointment_to_health_record_then_should_throw_health_record_not_found_exception()
     {
         // Arrange
-        var command = DeleteAppointmentToHealthRecordCommand();
+        var command = _healthRecordFactory.DeleteAppointmentToHealthRecordCommand();
 
         _healthRecordRepository
             .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
@@ -47,8 +48,8 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         given_invalid_appointment_id_when_delete_appointment_to_health_record_then_should_throw_appointment_not_found_exception()
     {
         // Arrange
-        var command = DeleteAppointmentToHealthRecordCommand();
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
+        var command = _healthRecordFactory.DeleteAppointmentToHealthRecordCommand();
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
 
         _healthRecordRepository
             .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
@@ -80,10 +81,9 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         given_valid_data_when_delete_appointment_to_health_record_then_should_delete_appointment_to_health_record()
     {
         // Arrange
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
-        var appointment =
-            Appointment.Create("Title", "Diagnosis", DateTimeOffset.UtcNow, "Notes", healthRecord.HealthRecordId);
-        var command = DeleteAppointmentToHealthRecordCommand(healthRecord.HealthRecordId, appointment.AppointmentId);
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
+        var appointment = _appointmentFactory.CreateAppointment();
+        var command = _healthRecordFactory.DeleteAppointmentToHealthRecordCommand(healthRecord.HealthRecordId, appointment.AppointmentId);
 
         healthRecord.AddAppointment(appointment);
 
@@ -116,14 +116,12 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
             .SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    private DeleteAppointmentToHealthRecordCommand DeleteAppointmentToHealthRecordCommand(Guid healthRecordId = default,
-        Guid appointmentId = default)
-        => new(healthRecordId == default ? Guid.NewGuid() : healthRecordId,
-            appointmentId == default ? Guid.NewGuid() : appointmentId);
-
     private readonly IHealthRecordRepository _healthRecordRepository;
 
     private readonly IRequestHandler<DeleteAppointmentToHealthRecordCommand> _handler;
+
+    private readonly HealthRecordTestFactory _healthRecordFactory = new();
+    private readonly AppointmentTestFactory _appointmentFactory = new();
 
     public DeleteAppointmentToHealthRecordCommandHandlerTests()
     {

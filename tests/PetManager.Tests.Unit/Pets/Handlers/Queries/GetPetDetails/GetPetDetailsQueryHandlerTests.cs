@@ -5,6 +5,7 @@ using PetManager.Core.Pets.Enums;
 using PetManager.Core.Pets.Exceptions;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Infrastructure.EF.Pets.Queries.GetPetDetails;
+using PetManager.Tests.Unit.Pets.Factories;
 
 namespace PetManager.Tests.Unit.Pets.Handlers.Queries.GetPetDetails;
 
@@ -17,7 +18,7 @@ public sealed class GetPetDetailsQueryHandlerTests
     public async Task given_invalid_pet_id_when_get_pet_details_then_should_throw_pet_not_found_exception()
     {
         // Arrange
-        var query = GetPetDetailsQuery();
+        var query = _petFactory.GetPetDetailsQuery();
         _petRepository
             .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .ReturnsNull();
@@ -39,8 +40,8 @@ public sealed class GetPetDetailsQueryHandlerTests
     public async Task given_valid_pet_id_when_get_pet_details_then_should_return_pet_details()
     {
         // Arrange
-        var query = GetPetDetailsQuery();
-        var pet = Pet.Create("TestName", Species.Dog, "TestBreed", Gender.Female, DateTime.Now, Guid.NewGuid());
+        var query = _petFactory.GetPetDetailsQuery();
+        var pet = _petFactory.CreatePet();
 
         _petRepository
             .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
@@ -53,13 +54,11 @@ public sealed class GetPetDetailsQueryHandlerTests
         response.ShouldNotBeNull();
         response.ShouldBeOfType<PetDetailsDto>();
     }
-
-    private GetPetDetailsQuery GetPetDetailsQuery()
-        => new(Guid.NewGuid());
-
     private readonly IPetRepository _petRepository;
 
     private readonly IRequestHandler<GetPetDetailsQuery, PetDetailsDto> _handler;
+    
+    private readonly PetTestFactory _petFactory = new();
 
     public GetPetDetailsQueryHandlerTests()
     {

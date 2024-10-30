@@ -2,6 +2,7 @@ using PetManager.Application.HealthRecords.Commands.AddVaccinationToHealthRecord
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
 using PetManager.Core.HealthRecords.Repositories;
+using PetManager.Tests.Unit.HealthRecords.Factories;
 
 namespace PetManager.Tests.Unit.HealthRecords.Handlers.Commands.AddVaccinationToHealthRecord;
 
@@ -15,7 +16,7 @@ public sealed class AddVaccinationToHealthRecordCommandHandlerTests
         given_invalid_health_record_id_when_add_vaccination_to_health_record_then_should_throw_health_record_not_found_exception()
     {
         // Arrange
-        var command = CreateAddVaccinationToHealthRecordCommand();
+        var command = _healthRecordFactory.AddVaccinationToHealthRecordCommand();
 
         _healthRecordRepository
             .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
@@ -47,8 +48,8 @@ public sealed class AddVaccinationToHealthRecordCommandHandlerTests
         given_valid_data_when_add_vaccination_to_health_record_then_should_add_vaccination_to_health_record()
     {
         // Arrange
-        var command = CreateAddVaccinationToHealthRecordCommand();
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
+        var command = _healthRecordFactory.AddVaccinationToHealthRecordCommand();
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
 
         _healthRecordRepository
             .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
@@ -83,13 +84,12 @@ public sealed class AddVaccinationToHealthRecordCommandHandlerTests
             .SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    private AddVaccinationToHealthRecordCommand CreateAddVaccinationToHealthRecordCommand()
-        => new("VaccinationNameTest", DateTimeOffset.Now, DateTimeOffset.Now.AddDays(30));
-
     private readonly IHealthRecordRepository _healthRecordRepository;
 
     private readonly IRequestHandler<AddVaccinationToHealthRecordCommand, AddVaccinationToHealthRecordResponse>
         _handler;
+
+    private readonly HealthRecordTestFactory _healthRecordFactory = new();
 
     public AddVaccinationToHealthRecordCommandHandlerTests()
     {
