@@ -1,9 +1,9 @@
 using PetManager.Application.Security;
 using PetManager.Application.Users.Commands.SignUp;
 using PetManager.Core.Users.Entities;
-using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
+using PetManager.Tests.Unit.Users.Factories;
 
 namespace PetManager.Tests.Unit.Users.Handlers.Commands.SignUp;
 
@@ -16,8 +16,8 @@ public sealed class SignUpCommandHandlerTests
     public async Task given_valid_data_when_sign_up_then_should_create_user()
     {
         // Arrange
-        var command = CreateSignUpCommand();
-        var user = User.Create(command.Email, command.Password, UserRole.User);
+        var command = _factory.CreateSignUpCommand();
+        var user = _factory.CreateUser();
 
         _userRepository
             .ExistsByEmailAsync(command.Email, Arg.Any<CancellationToken>())
@@ -55,7 +55,7 @@ public sealed class SignUpCommandHandlerTests
     public async Task given_existing_user_email_when_sign_up_then_should_throw_user_already_exists_exception()
     {
         // Arrange
-        var command = CreateSignUpCommand();
+        var command = _factory.CreateSignUpCommand();
         _userRepository
             .ExistsByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
             .Returns(true);
@@ -74,13 +74,13 @@ public sealed class SignUpCommandHandlerTests
             .DidNotReceive()
             .AddAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
-
-    private SignUpCommand CreateSignUpCommand() =>
-        new("TestFirstName", "TestLastName", "TestPassword", "test@petmanager.com");
-
+    
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
+    
     private readonly IRequestHandler<SignUpCommand, SignUpResponse> _handler;
+    
+    private readonly UserTestFactory _factory = new();
 
     public SignUpCommandHandlerTests()
     {
