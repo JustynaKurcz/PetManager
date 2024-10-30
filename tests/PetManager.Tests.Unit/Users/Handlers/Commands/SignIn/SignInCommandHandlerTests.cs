@@ -5,6 +5,7 @@ using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
+using PetManager.Tests.Unit.Users.Factories;
 
 namespace PetManager.Tests.Unit.Users.Handlers.Commands.SignIn;
 
@@ -17,7 +18,7 @@ public sealed class SignInCommandHandlerTests
     public async Task given_invalid_email_when_sign_in_then_should_throw_invalid_credentials_exception()
     {
         // Arrange
-        var command = CreateSignInCommand();
+        var command = _factory.CreateSignInCommand();
 
         _userRepository
             .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
@@ -48,14 +49,15 @@ public sealed class SignInCommandHandlerTests
     public async Task given_invalid_password_when_sign_in_then_should_throw_invalid_credentials_exception()
     {
         // Arrange
-        var command = CreateSignInCommand();
+        var command = _factory.CreateSignInCommand();
+        var user = _factory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
-            .Returns(User.Create(command.Email, command.Password, UserRole.User));
+            .GetByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
+            .Returns(user);
 
         _passwordManager
-            .VerifyPassword(command.Password, Arg.Any<string>())
+            .VerifyPassword(command.Password, user.Password)
             .Returns(false);
 
         // Act
@@ -84,15 +86,15 @@ public sealed class SignInCommandHandlerTests
     public async Task given_valid_credentials_when_sign_in_then_should_return_token()
     {
         // Arrange
-        var command = CreateSignInCommand();
-        var user = User.Create(command.Email, command.Password, UserRole.User);
+        var command = _factory.CreateSignInCommand();
+        var user = _factory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .GetByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         _passwordManager
-            .VerifyPassword(command.Password, Arg.Any<string>())
+            .VerifyPassword(command.Password, user.Password)
             .Returns(true);
 
         _authManager
@@ -117,15 +119,14 @@ public sealed class SignInCommandHandlerTests
             .Received(1)
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
-
-
-    private SignInCommand CreateSignInCommand() =>
-        new("test@petmanager.com", "TestPassword");
-
+    
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
     private readonly IAuthManager _authManager;
+    
     private readonly IRequestHandler<SignInCommand, SignInResponse> _handler;
+    
+    private readonly UserTestFactory _factory = new();
 
     public SignInCommandHandlerTests()
     {
