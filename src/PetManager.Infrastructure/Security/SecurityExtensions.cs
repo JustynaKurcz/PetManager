@@ -3,7 +3,7 @@ using PetManager.Core.Users.Entities;
 
 namespace PetManager.Infrastructure.Security;
 
-internal static class Extensions
+internal static class SecurityExtensions
 {
     public static IServiceCollection AddSecurity(this IServiceCollection services)
     {

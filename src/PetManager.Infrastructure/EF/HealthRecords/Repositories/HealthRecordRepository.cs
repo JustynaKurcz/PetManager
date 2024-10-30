@@ -1,6 +1,6 @@
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Repositories;
-using PetManager.Infrastructure.EF.Context;
+using PetManager.Infrastructure.EF.DbContext;
 
 namespace PetManager.Infrastructure.EF.HealthRecords.Repositories;
 

@@ -5,9 +5,9 @@ using PetManager.Infrastructure.EF.HealthRecords.Configuration;
 using PetManager.Infrastructure.EF.Pets.Configuration;
 using PetManager.Infrastructure.EF.Users.Configuration;
 
-namespace PetManager.Infrastructure.EF.Context;
+namespace PetManager.Infrastructure.EF.DbContext;
 
-public class PetManagerDbContext : DbContext
+public class PetManagerDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Pet> Pets { get; set; }
