@@ -1,4 +1,4 @@
-namespace PetManager.Infrastructure.Contexts;
+namespace PetManager.Application.Context;
 
 public interface IContext
 {

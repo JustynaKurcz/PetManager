@@ -17,11 +17,13 @@ internal sealed class CreatePetEndpoint : IEndpointDefinition
             })
             .Produces<CreatePetResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status401Unauthorized)
             .WithTags(PetsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Create a pet",
                 Description = "Create a pet in the application",
-            });
+            })
+            .RequireAuthorization();
     }
 }

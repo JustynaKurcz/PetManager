@@ -7,6 +7,5 @@ internal record CreatePetCommand(
     Species Species,
     string Breed,
     Gender Gender,
-    DateTimeOffset BirthDate,
-    Guid UserId
+    DateTimeOffset BirthDate
 ) : IRequest<CreatePetResponse>;
