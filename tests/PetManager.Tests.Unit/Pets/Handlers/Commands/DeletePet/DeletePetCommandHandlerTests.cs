@@ -3,6 +3,7 @@ using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Enums;
 using PetManager.Core.Pets.Exceptions;
 using PetManager.Core.Pets.Repositories;
+using PetManager.Tests.Unit.Pets.Factories;
 
 namespace PetManager.Tests.Unit.Pets.Handlers.Commands.DeletePet;
 
@@ -15,7 +16,7 @@ public sealed class DeletePetCommandHandlerTests
     public async Task given_invalid_pet_id_when_delete_pet_then_should_throw_pet_not_found_exception()
     {
         // Arrange
-        var command = DeletePetCommand();
+        var command = _petFactory.DeletePetCommand();
         _petRepository
             .GetByIdAsync(command.PetId, Arg.Any<CancellationToken>())
             .ReturnsNull();
@@ -37,8 +38,8 @@ public sealed class DeletePetCommandHandlerTests
     public async Task given_valid_pet_id_when_delete_pet_then_should_delete_pet()
     {
         // Arrange
-        var command = DeletePetCommand();
-        var pet = Pet.Create("TestName", Species.Dog, "TestBreed", Gender.Female, DateTime.Now, Guid.NewGuid());
+        var command = _petFactory.DeletePetCommand();
+        var pet = _petFactory.CreatePet();
         _petRepository
             .GetByIdAsync(command.PetId, Arg.Any<CancellationToken>())
             .Returns(pet);
@@ -51,12 +52,11 @@ public sealed class DeletePetCommandHandlerTests
             .Received(1)
             .DeleteAsync(Arg.Any<Pet>(), Arg.Any<CancellationToken>());
     }
-
-    private DeletePetCommand DeletePetCommand()
-        => new(Guid.NewGuid());
-
+    
     private readonly IPetRepository _petRepository;
     private readonly IRequestHandler<DeletePetCommand> _handler;
+    
+    private readonly PetTestFactory _petFactory = new();
 
     public DeletePetCommandHandlerTests()
     {

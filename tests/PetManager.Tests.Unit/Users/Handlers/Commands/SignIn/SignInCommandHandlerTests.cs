@@ -18,7 +18,7 @@ public sealed class SignInCommandHandlerTests
     public async Task given_invalid_email_when_sign_in_then_should_throw_invalid_credentials_exception()
     {
         // Arrange
-        var command = _factory.CreateSignInCommand();
+        var command = _userFactory.CreateSignInCommand();
 
         _userRepository
             .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
@@ -49,8 +49,8 @@ public sealed class SignInCommandHandlerTests
     public async Task given_invalid_password_when_sign_in_then_should_throw_invalid_credentials_exception()
     {
         // Arrange
-        var command = _factory.CreateSignInCommand();
-        var user = _factory.CreateUser();
+        var command = _userFactory.CreateSignInCommand();
+        var user = _userFactory.CreateUser();
 
         _userRepository
             .GetByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
@@ -86,8 +86,8 @@ public sealed class SignInCommandHandlerTests
     public async Task given_valid_credentials_when_sign_in_then_should_return_token()
     {
         // Arrange
-        var command = _factory.CreateSignInCommand();
-        var user = _factory.CreateUser();
+        var command = _userFactory.CreateSignInCommand();
+        var user = _userFactory.CreateUser();
 
         _userRepository
             .GetByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
@@ -126,7 +126,7 @@ public sealed class SignInCommandHandlerTests
     
     private readonly IRequestHandler<SignInCommand, SignInResponse> _handler;
     
-    private readonly UserTestFactory _factory = new();
+    private readonly UserTestFactory _userFactory = new();
 
     public SignInCommandHandlerTests()
     {

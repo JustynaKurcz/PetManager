@@ -2,6 +2,7 @@ using PetManager.Application.HealthRecords.Commands.AddAppointmentToHealthRecord
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
 using PetManager.Core.HealthRecords.Repositories;
+using PetManager.Tests.Unit.HealthRecords.Factories;
 
 namespace PetManager.Tests.Unit.HealthRecords.Handlers.Commands.AddAppointmentToHealthRecord;
 
@@ -15,7 +16,7 @@ public sealed class AddAppointmentToHealthRecordCommandHandlerTests
         given_invalid_health_record_id_when_add_appointment_to_health_record_then_should_throw_health_record_not_found_exception()
     {
         // Arrange
-        var command = CreateAddAppointmentToHealthRecordCommand();
+        var command = _healthRecordFactory.AddAppointmentToHealthRecordCommand();
 
         _healthRecordRepository
             .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
@@ -47,8 +48,8 @@ public sealed class AddAppointmentToHealthRecordCommandHandlerTests
         given_valid_data_when_add_appointment_to_health_record_then_should_add_appointment_to_health_record()
     {
         // Arrange
-        var command = CreateAddAppointmentToHealthRecordCommand();
-        var healthRecord = HealthRecord.Create(Guid.NewGuid());
+        var command = _healthRecordFactory.AddAppointmentToHealthRecordCommand();
+        var healthRecord = _healthRecordFactory.CreateHealthRecord();
 
         _healthRecordRepository
             .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
@@ -83,13 +84,12 @@ public sealed class AddAppointmentToHealthRecordCommandHandlerTests
             .SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
-    private AddAppointmentToHealthRecordCommand CreateAddAppointmentToHealthRecordCommand()
-        => new("TitleTest", "DiagnosisTest", DateTimeOffset.UtcNow, "NotesTest");
-
     private readonly IHealthRecordRepository _healthRecordRepository;
 
     private readonly IRequestHandler<AddAppointmentToHealthRecordCommand, AddAppointmentToHealthRecordResponse>
         _handler;
+
+    private readonly HealthRecordTestFactory _healthRecordFactory = new();
 
     public AddAppointmentToHealthRecordCommandHandlerTests()
     {
