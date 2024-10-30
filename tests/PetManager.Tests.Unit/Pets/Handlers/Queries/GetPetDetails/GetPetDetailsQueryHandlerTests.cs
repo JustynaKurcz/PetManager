@@ -1,7 +1,5 @@
 using PetManager.Application.Pets.Queries.GetPetDetails;
 using PetManager.Application.Pets.Queries.GetPetDetails.DTO;
-using PetManager.Core.Pets.Entities;
-using PetManager.Core.Pets.Enums;
 using PetManager.Core.Pets.Exceptions;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Infrastructure.EF.Pets.Queries.GetPetDetails;
