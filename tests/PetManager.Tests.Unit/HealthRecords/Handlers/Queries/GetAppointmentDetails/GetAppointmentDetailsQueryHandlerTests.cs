@@ -1,6 +1,5 @@
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails;
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails.DTO;
-using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Infrastructure.EF.HealthRecords.Queries.GetAppointmentDetails;
@@ -67,7 +66,8 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         // Arrange
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
         var appointment = _appointmentFactory.CreateAppointment();
-        var query = _appointmentFactory.GetAppointmentDetailsQuery(healthRecord.HealthRecordId, appointment.AppointmentId);
+        var query = _appointmentFactory.GetAppointmentDetailsQuery(healthRecord.HealthRecordId,
+            appointment.AppointmentId);
         healthRecord.AddAppointment(appointment);
 
         _healthRecordRepository

@@ -3,10 +3,7 @@ using PetManager.Application.Pets.Commands.CreatePet;
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Core.Pets.Entities;
-using PetManager.Core.Pets.Enums;
 using PetManager.Core.Pets.Repositories;
-using PetManager.Core.Users.Entities;
-using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 using PetManager.Tests.Unit.HealthRecords.Factories;
@@ -51,7 +48,7 @@ public sealed class CreatePetCommandHandlerTests
         var user = _userFactory.CreateUser();
         var pet = _petFactory.CreatePet();
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
-        
+
         _userRepository
             .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
             .Returns(user);
@@ -84,16 +81,16 @@ public sealed class CreatePetCommandHandlerTests
             .Received(1)
             .AddAsync(Arg.Any<HealthRecord>(), Arg.Any<CancellationToken>());
     }
-    
+
     private readonly IContext _context;
     private readonly IUserRepository _userRepository;
     private readonly IPetRepository _petRepository;
     private readonly IHealthRecordRepository _healthRecordRepository;
 
     private readonly IRequestHandler<CreatePetCommand, CreatePetResponse> _handler;
-    
+
     private readonly PetTestFactory _petFactory = new();
-    private readonly UserTestFactory _userFactory = new(); 
+    private readonly UserTestFactory _userFactory = new();
     private readonly HealthRecordTestFactory _healthRecordFactory = new();
 
     public CreatePetCommandHandlerTests()

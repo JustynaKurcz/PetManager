@@ -24,6 +24,7 @@ internal sealed class AddVaccinationToHealthRecordEndpoint : IEndpointDefinition
             {
                 Summary = "Add Vaccination to Health Record",
                 Description = "Adds a vaccination to a health record."
-            });
+            })
+            .RequireAuthorization();
     }
 }

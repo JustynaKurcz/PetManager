@@ -27,6 +27,7 @@ internal sealed class GetAppointmentDetailsEndpoint : IEndpointDefinition
             {
                 Summary = "Get Appointment Details",
                 Description = "Retrieves the details of an appointment by its unique identifier."
-            });
+            })
+            .RequireAuthorization();
     }
 }

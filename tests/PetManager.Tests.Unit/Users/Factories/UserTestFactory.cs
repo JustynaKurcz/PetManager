@@ -19,7 +19,7 @@ internal sealed class UserTestFactory
 
     internal SignInCommand CreateSignInCommand()
         => new(_faker.Person.Email, _faker.Internet.Password());
-    
+
     internal ChangeUserInformationCommand ChangeUserInformationCommand()
         => new(_faker.Person.FirstName, _faker.Person.LastName);
 }

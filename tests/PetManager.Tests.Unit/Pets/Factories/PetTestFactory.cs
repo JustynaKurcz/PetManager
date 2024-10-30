@@ -26,7 +26,7 @@ internal sealed class PetTestFactory
 
     internal DeletePetCommand DeletePetCommand()
         => new(_faker.Random.Guid());
-    
+
     internal GetPetDetailsQuery GetPetDetailsQuery()
         => new(_faker.Random.Guid());
 }
