@@ -25,6 +25,7 @@ internal static class Extensions
 
         services.AddSecurity();
         services.AddAuth(configuration);
+        services.AddContext();
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
