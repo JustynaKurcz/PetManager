@@ -1,6 +1,5 @@
 using PetManager.Application.HealthRecords.Queries.GetVaccinationDetails;
 using PetManager.Application.HealthRecords.Queries.GetVaccinationDetails.DTO;
-using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Infrastructure.EF.HealthRecords.Queries.GetVaccinationDetails;
@@ -67,7 +66,8 @@ public sealed class GetVaccinationDetailsQueryHandlerTests
         // Arrange
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
         var vaccination = _vaccinationFactory.CreateVaccination();
-        var query = _vaccinationFactory.GetVaccinationDetailsQuery(healthRecord.HealthRecordId, vaccination.VaccinationId);
+        var query = _vaccinationFactory.GetVaccinationDetailsQuery(healthRecord.HealthRecordId,
+            vaccination.VaccinationId);
         healthRecord.AddVaccination(vaccination);
 
         _healthRecordRepository

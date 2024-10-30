@@ -22,6 +22,7 @@ internal sealed class DeletePetEndpoint : IEndpointDefinition
             {
                 Summary = "Delete a pet",
                 Description = "Delete a pet in the application",
-            });
+            })
+            .RequireAuthorization();
     }
 }

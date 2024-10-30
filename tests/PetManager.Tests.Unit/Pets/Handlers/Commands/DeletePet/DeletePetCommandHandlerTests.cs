@@ -1,6 +1,5 @@
 using PetManager.Application.Pets.Commands.DeletePet;
 using PetManager.Core.Pets.Entities;
-using PetManager.Core.Pets.Enums;
 using PetManager.Core.Pets.Exceptions;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Tests.Unit.Pets.Factories;
@@ -52,10 +51,10 @@ public sealed class DeletePetCommandHandlerTests
             .Received(1)
             .DeleteAsync(Arg.Any<Pet>(), Arg.Any<CancellationToken>());
     }
-    
+
     private readonly IPetRepository _petRepository;
     private readonly IRequestHandler<DeletePetCommand> _handler;
-    
+
     private readonly PetTestFactory _petFactory = new();
 
     public DeletePetCommandHandlerTests()

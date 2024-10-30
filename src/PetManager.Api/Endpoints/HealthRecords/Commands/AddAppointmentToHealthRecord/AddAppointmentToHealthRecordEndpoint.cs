@@ -24,6 +24,7 @@ internal sealed class AddAppointmentToHealthRecordEndpoint : IEndpointDefinition
             {
                 Summary = "Add Appointment to Health Record",
                 Description = "Adds an appointment to a health record."
-            });
+            })
+            .RequireAuthorization();
     }
 }

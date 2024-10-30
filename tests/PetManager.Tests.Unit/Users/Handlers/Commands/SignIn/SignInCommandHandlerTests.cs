@@ -1,8 +1,6 @@
 using PetManager.Application.Auth;
 using PetManager.Application.Security;
 using PetManager.Application.Users.Commands.SignIn;
-using PetManager.Core.Users.Entities;
-using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 using PetManager.Tests.Unit.Users.Factories;
@@ -119,13 +117,13 @@ public sealed class SignInCommandHandlerTests
             .Received(1)
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
-    
+
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
     private readonly IAuthManager _authManager;
-    
+
     private readonly IRequestHandler<SignInCommand, SignInResponse> _handler;
-    
+
     private readonly UserTestFactory _userFactory = new();
 
     public SignInCommandHandlerTests()

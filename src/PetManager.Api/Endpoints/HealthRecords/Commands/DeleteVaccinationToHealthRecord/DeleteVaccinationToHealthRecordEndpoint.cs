@@ -27,6 +27,7 @@ internal sealed class DeleteVaccinationToHealthRecordEndpoint : IEndpointDefinit
             {
                 Summary = "Delete Vaccination to Health Record",
                 Description = "Delete a vaccination to a health record."
-            });
+            })
+            .RequireAuthorization();
     }
 }

@@ -27,6 +27,7 @@ internal sealed class DeleteAppointmentToHealthRecordEndpoint : IEndpointDefinit
             {
                 Summary = "Delete Appointment to Health Record",
                 Description = "Delete an appointment to a health record."
-            });
+            })
+            .RequireAuthorization();
     }
 }

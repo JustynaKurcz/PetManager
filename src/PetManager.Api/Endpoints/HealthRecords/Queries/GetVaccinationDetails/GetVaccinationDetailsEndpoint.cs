@@ -27,6 +27,7 @@ internal sealed class GetVaccinationDetailsEndpoint : IEndpointDefinition
             {
                 Summary = "Get vaccination details",
                 Description = "Retrieves the details of an vaccination by its unique identifier."
-            });
+            })
+            .RequireAuthorization();
     }
 }

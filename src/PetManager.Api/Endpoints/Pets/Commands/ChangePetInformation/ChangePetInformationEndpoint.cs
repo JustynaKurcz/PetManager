@@ -23,6 +23,7 @@ internal sealed class ChangePetInformationEndpoint : IEndpointDefinition
             {
                 Summary = "Change Pet Information",
                 Description = "Changes the information of a pet."
-            });
+            })
+            .RequireAuthorization();
     }
 }

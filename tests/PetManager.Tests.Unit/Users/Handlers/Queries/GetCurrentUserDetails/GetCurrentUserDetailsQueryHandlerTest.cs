@@ -34,7 +34,7 @@ public sealed class GetCurrentUserDetailsQueryHandlerTest
             .Received(1)
             .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
     }
-    
+
     [Fact]
     public async Task given_valid_user_id_when_get_current_user_details_then_should_return_current_user_details()
     {

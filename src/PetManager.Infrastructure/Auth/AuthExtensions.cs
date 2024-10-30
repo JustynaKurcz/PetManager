@@ -14,7 +14,7 @@ internal static class AuthExtensions
 
         services.AddSingleton(authOptions);
         services.AddSingleton<IAuthManager, AuthManager>();
-        
+
         services
             .AddAuthentication(o =>
             {

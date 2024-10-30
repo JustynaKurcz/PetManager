@@ -74,12 +74,12 @@ public sealed class SignUpCommandHandlerTests
             .DidNotReceive()
             .AddAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
-    
+
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
-    
+
     private readonly IRequestHandler<SignUpCommand, SignUpResponse> _handler;
-    
+
     private readonly UserTestFactory _userFactory = new();
 
     public SignUpCommandHandlerTests()

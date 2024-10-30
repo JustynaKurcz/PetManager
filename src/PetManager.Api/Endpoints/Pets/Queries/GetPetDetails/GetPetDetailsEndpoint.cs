@@ -25,6 +25,7 @@ public class GetPetDetailsEndpoint : IEndpointDefinition
             {
                 Summary = "Get Pet Details",
                 Description = "Retrieves the details of a pet by its unique identifier."
-            });
+            })
+            .RequireAuthorization();
     }
 }

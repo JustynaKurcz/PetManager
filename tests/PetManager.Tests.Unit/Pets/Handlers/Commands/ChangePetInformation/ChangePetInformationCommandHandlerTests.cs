@@ -1,6 +1,4 @@
 using PetManager.Application.Pets.Commands.ChangePetInformation;
-using PetManager.Core.Pets.Entities;
-using PetManager.Core.Pets.Enums;
 using PetManager.Core.Pets.Exceptions;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Tests.Unit.Pets.Factories;
@@ -11,7 +9,7 @@ public sealed class ChangePetInformationCommandHandlerTests
 {
     private async Task Act(ChangePetInformationCommand command)
         => await _handler.Handle(command, CancellationToken.None);
-    
+
     [Fact]
     public async Task given_invalid_pet_id_when_change_pet_information_then_should_throw_pet_not_found_exception()
     {
@@ -53,10 +51,10 @@ public sealed class ChangePetInformationCommandHandlerTests
             .Received(1)
             .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
     }
-    
+
     private readonly IPetRepository _petRepository;
     private readonly IRequestHandler<ChangePetInformationCommand> _handler;
-    
+
     private readonly PetTestFactory _petFactory = new();
 
     public ChangePetInformationCommandHandlerTests()

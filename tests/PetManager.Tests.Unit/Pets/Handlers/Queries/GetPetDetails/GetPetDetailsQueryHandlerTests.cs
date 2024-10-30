@@ -52,10 +52,11 @@ public sealed class GetPetDetailsQueryHandlerTests
         response.ShouldNotBeNull();
         response.ShouldBeOfType<PetDetailsDto>();
     }
+
     private readonly IPetRepository _petRepository;
 
     private readonly IRequestHandler<GetPetDetailsQuery, PetDetailsDto> _handler;
-    
+
     private readonly PetTestFactory _petFactory = new();
 
     public GetPetDetailsQueryHandlerTests()
