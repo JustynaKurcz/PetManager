@@ -2,7 +2,7 @@ using PetManager.Application.Auth;
 
 namespace PetManager.Infrastructure.Auth;
 
-internal static class Extensions
+internal static class AuthExtensions
 {
     private const string SectionName = "Authentication";
 

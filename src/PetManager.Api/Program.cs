@@ -1,6 +1,7 @@
 using PetManager.Api.Abstractions;
 using PetManager.Application;
 using PetManager.Infrastructure;
+using PetManager.Infrastructure.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 

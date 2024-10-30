@@ -1,6 +1,6 @@
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Repositories;
-using PetManager.Infrastructure.EF.Context;
+using PetManager.Infrastructure.EF.DbContext;
 
 namespace PetManager.Infrastructure.EF.Pets.Repositories;
 

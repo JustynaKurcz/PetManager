@@ -16,7 +16,7 @@ public class User
     private User()
     {
     }
-    
+
     private User(string email, string password, UserRole role)
     {
         UserId = Guid.NewGuid();
@@ -25,7 +25,7 @@ public class User
         CreatedAt = DateTimeOffset.UtcNow;
         Role = role;
     }
-    
+
     public static User Create(string email, string password, UserRole role)
         => new(email, password, role);
 }
