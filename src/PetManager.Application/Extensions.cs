@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using PetManager.Application.Users.Commands.SignUp;
 
 [assembly: InternalsVisibleTo("PetManager.Api")]
+[assembly: InternalsVisibleTo("PetManager.Infrastructure")]
 
 namespace PetManager.Application;
 

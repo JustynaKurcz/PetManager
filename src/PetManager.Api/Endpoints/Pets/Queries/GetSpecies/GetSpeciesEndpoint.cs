@@ -1,0 +1,30 @@
+using PetManager.Api.Abstractions;
+using PetManager.Application.EnumHelper;
+using PetManager.Application.Pets.Queries.GetSpecies.DTO;
+using PetManager.Core.Pets.Enums;
+
+namespace PetManager.Api.Endpoints.Pets.Queries.GetSpecies;
+
+internal sealed class GetSpeciesEndpoint : IEndpointDefinition
+{
+    public void DefineEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapGet($"{PetsEndpoint.Url}/species-types", async (
+                CancellationToken cancellationToken) =>
+            {
+                var species = EnumHelper.GetEnumValues<Species>();
+                var response = new SpeciesDto(species);
+                return Results.Ok(response);
+            })
+            .Produces<SpeciesDto>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status401Unauthorized)
+            .WithTags(PetsEndpoint.Tag)
+            .WithOpenApi(o => new OpenApiOperation(o)
+            {
+                Summary = "Get Species",
+                Description = "Retrieves the list of all available species."
+            })
+            .RequireAuthorization();
+    }
+}
