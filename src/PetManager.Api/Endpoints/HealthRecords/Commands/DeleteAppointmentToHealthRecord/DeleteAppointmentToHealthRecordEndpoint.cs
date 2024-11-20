@@ -25,8 +25,8 @@ internal sealed class DeleteAppointmentToHealthRecordEndpoint : IEndpointDefinit
             .WithTags(HealthRecordsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Delete Appointment to Health Record",
-                Description = "Delete an appointment to a health record."
+                Summary = "Delete an appointment to a health record",
+                Description = "This endpoint allows users to delete an appointment to a health record.",
             })
             .RequireAuthorization();
     }

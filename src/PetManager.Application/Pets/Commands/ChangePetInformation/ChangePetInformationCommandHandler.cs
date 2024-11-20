@@ -11,7 +11,7 @@ internal sealed class ChangePetInformationCommandHandler(IPetRepository petRepos
         var pet = await petRepository.GetByIdAsync(command.PetId, cancellationToken)
                   ?? throw new PetNotFoundException(command.PetId);
 
-        pet.ChangeInformation(command.Name, command.Species, command.Breed, command.Gender, command.BirthDate);
+        pet.ChangeInformation(command.Species, command.Breed, command.Gender);
 
         await petRepository.SaveChangesAsync(cancellationToken);
     }

@@ -3,11 +3,9 @@ using PetManager.Core.Pets.Enums;
 namespace PetManager.Application.Pets.Commands.ChangePetInformation;
 
 internal record ChangePetInformationCommand(
-    string Name,
     Species Species,
     string Breed,
-    Gender Gender,
-    DateTimeOffset BirthDate
+    Gender Gender
 ) : IRequest
 {
     internal Guid PetId { get; init; }

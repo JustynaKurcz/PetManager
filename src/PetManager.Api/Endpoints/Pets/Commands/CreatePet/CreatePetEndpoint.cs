@@ -22,7 +22,7 @@ internal sealed class CreatePetEndpoint : IEndpointDefinition
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Create a pet",
-                Description = "Create a pet in the application",
+                Description = "This endpoint allows users to create a pet.",
             })
             .RequireAuthorization();
     }

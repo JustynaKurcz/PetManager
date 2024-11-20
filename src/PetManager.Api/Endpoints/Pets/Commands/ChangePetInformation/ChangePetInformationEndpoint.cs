@@ -21,8 +21,8 @@ internal sealed class ChangePetInformationEndpoint : IEndpointDefinition
             .WithTags(PetsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Change Pet Information",
-                Description = "Changes the information of a pet."
+                Summary = "Change pet information",
+                Description = "This endpoint allows users to change the information of a pet.",
             })
             .RequireAuthorization();
     }

@@ -21,7 +21,7 @@ internal sealed class DeletePetEndpoint : IEndpointDefinition
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Delete a pet",
-                Description = "Delete a pet in the application",
+                Description = "This endpoint allows users to delete a pet.",
             })
             .RequireAuthorization();
     }

@@ -25,8 +25,8 @@ internal sealed class DeleteVaccinationToHealthRecordEndpoint : IEndpointDefinit
             .WithTags(HealthRecordsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Delete Vaccination to Health Record",
-                Description = "Delete a vaccination to a health record."
+                Summary = "Delete a vaccination to a health record",
+                Description = "This endpoint allows users to delete a vaccination to a health record.",
             })
             .RequireAuthorization();
     }
