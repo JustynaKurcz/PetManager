@@ -1,4 +1,5 @@
 using PetManager.Api.Abstractions;
+using PetManager.Application.Pagination;
 using PetManager.Application.Pets.Queries.BrowsePets;
 using PetManager.Application.Pets.Queries.BrowsePets.DTO;
 
@@ -10,22 +11,20 @@ internal sealed class BrowsePetsEndpoint : IEndpointDefinition
     {
         app.MapGet(PetsEndpoint.Url, async (
                 [FromServices] IMediator mediator,
-                [FromQuery] string search,
+                [AsParameters] BrowsePetsQuery query,
                 CancellationToken cancellationToken) =>
             {
-                var query = new BrowsePetsQuery(search);
                 var response = await mediator.Send(query, cancellationToken);
 
                 return Results.Ok(response);
             })
-            .Produces<List<PetDto>>(StatusCodes.Status200OK)
+            .Produces<PaginationResult<PetDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .WithTags(PetsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Browse Pets",
-                Description = "Retrieves a list of pets."
-            })
-            .RequireAuthorization();
+                Summary = "Browse pets",
+                Description = "This endpoint allows users to browse pets.",
+            });
     }
 }
