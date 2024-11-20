@@ -22,8 +22,8 @@ internal sealed class AddVaccinationToHealthRecordEndpoint : IEndpointDefinition
             .WithTags(HealthRecordsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Add Vaccination to Health Record",
-                Description = "Adds a vaccination to a health record."
+                Summary = "Add a vaccination to a health record",
+                Description = "This endpoint allows users to add a vaccination to a health record.",
             })
             .RequireAuthorization();
     }

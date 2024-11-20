@@ -25,8 +25,8 @@ internal sealed class GetAppointmentDetailsEndpoint : IEndpointDefinition
             .WithTags(HealthRecordsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Get Appointment Details",
-                Description = "Retrieves the details of an appointment by its unique identifier."
+                Summary = "Get appointment details",
+                Description = "This endpoint allows users to get details of an appointment.",
             })
             .RequireAuthorization();
     }

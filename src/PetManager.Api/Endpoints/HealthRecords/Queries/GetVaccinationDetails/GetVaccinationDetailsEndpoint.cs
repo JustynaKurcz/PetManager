@@ -26,7 +26,7 @@ internal sealed class GetVaccinationDetailsEndpoint : IEndpointDefinition
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Get vaccination details",
-                Description = "Retrieves the details of an vaccination by its unique identifier."
+                Description = "This endpoint allows users to get details of a vaccination.",
             })
             .RequireAuthorization();
     }

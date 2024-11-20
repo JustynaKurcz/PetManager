@@ -23,8 +23,8 @@ public class GetPetDetailsEndpoint : IEndpointDefinition
             .WithTags(PetsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Get Pet Details",
-                Description = "Retrieves the details of a pet by its unique identifier."
+                Summary = "Get pet details",
+                Description = "This endpoint allows users to get details of a pet.",
             })
             .RequireAuthorization();
     }

@@ -21,7 +21,7 @@ public class SignInEndpoint : IEndpointDefinition
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Sign in",
-                Description = "Sign in to the application",
+                Description = "This endpoint allows users to sign in to the application.",
             });
     }
 }

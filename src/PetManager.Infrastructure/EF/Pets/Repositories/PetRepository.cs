@@ -27,6 +27,9 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
         return await query.SingleOrDefaultAsync(x => x.PetId == petId, cancellationToken);
     }
 
+    public async Task<IQueryable<Pet>> BrowseAsync(CancellationToken cancellationToken)
+        =>  _pets.AsQueryable();
+
     public async Task DeleteAsync(Pet pet, CancellationToken cancellationToken)
     {
         _pets.Remove(pet);

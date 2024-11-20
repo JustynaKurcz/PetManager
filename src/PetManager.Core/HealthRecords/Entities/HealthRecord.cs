@@ -5,7 +5,7 @@ namespace PetManager.Core.HealthRecords.Entities;
 public class HealthRecord
 {
     public Guid HealthRecordId { get; private set; }
-    private string Notes { get; set; }
+    public string Notes { get; set; }
     public Guid PetId { get; private set; }
     public Pet Pet { get; private set; }
     private HashSet<Appointment> _appointments = [];

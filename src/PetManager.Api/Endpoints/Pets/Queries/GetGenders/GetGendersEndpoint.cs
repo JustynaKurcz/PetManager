@@ -22,8 +22,8 @@ internal sealed class GetGendersEndpoint : IEndpointDefinition
             .WithTags(PetsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Get Genders",
-                Description = "Retrieves the list of all available genders."
+                Summary = "Get list of gender types",
+                Description = "This endpoint allows users to get a list of genders.",
             })
             .RequireAuthorization();
     }

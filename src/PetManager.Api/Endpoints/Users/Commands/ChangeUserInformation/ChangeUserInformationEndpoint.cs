@@ -21,8 +21,8 @@ internal sealed class ChangeUserInformationEndpoint : IEndpointDefinition
             .WithTags(UsersEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Change User Information",
-                Description = "Changes the information of a user."
+                Summary = "Change user information",
+                Description = "This endpoint allows users to change their information.",
             })
             .RequireAuthorization();
     }

@@ -22,8 +22,8 @@ internal sealed class GetSpeciesEndpoint : IEndpointDefinition
             .WithTags(PetsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Get Species",
-                Description = "Retrieves the list of all available species."
+                Summary = "Get list of species types",
+                Description = "This endpoint allows users to get a list of species.",
             })
             .RequireAuthorization();
     }

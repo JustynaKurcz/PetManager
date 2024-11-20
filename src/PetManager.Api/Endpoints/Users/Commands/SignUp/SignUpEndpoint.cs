@@ -21,7 +21,7 @@ public class SignUpEndpoint : IEndpointDefinition
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Sign up",
-                Description = "Sign up to the application",
+                Description = "This endpoint allows users to sign up to the application.",
             });
     }
 }

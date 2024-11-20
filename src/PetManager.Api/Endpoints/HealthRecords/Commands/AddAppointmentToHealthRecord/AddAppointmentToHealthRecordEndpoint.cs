@@ -22,8 +22,8 @@ internal sealed class AddAppointmentToHealthRecordEndpoint : IEndpointDefinition
             .WithTags(HealthRecordsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
-                Summary = "Add Appointment to Health Record",
-                Description = "Adds an appointment to a health record."
+                Summary = "Add an appointment to a health record",
+                Description = "This endpoint allows users to add an appointment to a health record.",
             })
             .RequireAuthorization();
     }
