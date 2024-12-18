@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using PetManager.Application.Users.Commands.SignUp;
+using PetManager.Application.Validation;
 
 [assembly: InternalsVisibleTo("PetManager.Api")]
 [assembly: InternalsVisibleTo("PetManager.Infrastructure")]
@@ -12,8 +12,9 @@ internal static class Extensions
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-        services.AddValidatorsFromAssemblyContaining<SignUpCommandValidator>();
-
+        services
+            .AddValidators(Assembly.GetExecutingAssembly());
+        
         return services;
     }
 }

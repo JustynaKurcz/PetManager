@@ -16,6 +16,7 @@ internal static class Extensions
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration["PostgresConnection"];
+       
         services.AddDbContext<PetManagerDbContext>(options =>
             options.UseNpgsql(connectionString));
 
