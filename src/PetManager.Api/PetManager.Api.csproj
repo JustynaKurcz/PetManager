@@ -19,4 +19,8 @@
       <ProjectReference Include="..\PetManager.Infrastructure\PetManager.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="PetManager.Tests.Integration" />
+    </ItemGroup>
+
 </Project>

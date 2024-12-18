@@ -3,11 +3,12 @@ using PetManager.Core.Pets.Enums;
 
 namespace PetManager.Tests.Unit.Pets.Entities;
 
-public class PetTests
+public sealed class PetTests
 {
+    private static readonly Faker Faker = new();
+    
     [Theory]
-    [InlineData("TestName", Species.Dog, "TestBreed", Gender.Male)]
-    [InlineData("TestName2", Species.Hamster, "TestBreed2", Gender.Female)]
+    [MemberData(nameof(GetValidPetData))]
     public void given_pet_data_when_create_pet_then_should_create_pet(string name, Species species, string breed,
         Gender gender)
     {
@@ -23,5 +24,15 @@ public class PetTests
         pet.ShouldBeOfType<Pet>();
         pet.PetId.ShouldNotBe(Guid.Empty);
         pet.UserId.ShouldBe(userId);
+    }
+    
+    public static IEnumerable<object[]> GetValidPetData()
+    {
+        return Enumerable.Range(0, 5).Select(_ => (object[])[
+            Faker.Name.FullName(),
+            Faker.PickRandom<Species>(),
+            Faker.Random.Word(),
+            Faker.PickRandom<Gender>()
+        ]);
     }
 }

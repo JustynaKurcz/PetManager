@@ -19,6 +19,7 @@ public class GetPetDetailsEndpoint : IEndpointDefinition
                 return Results.Ok(response);
             })
             .Produces<PetDetailsDto>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status404NotFound)
             .WithTags(PetsEndpoint.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)

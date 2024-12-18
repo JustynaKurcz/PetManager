@@ -11,6 +11,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="PetManager.Tests.Unit" />
+        <InternalsVisibleTo Include="PetManager.Tests.Integration" />
     </ItemGroup>
 
     <ItemGroup>

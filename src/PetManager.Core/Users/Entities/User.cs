@@ -5,13 +5,13 @@ namespace PetManager.Core.Users.Entities;
 public class User
 {
     public Guid UserId { get; private set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public DateTimeOffset? LastChangePasswordDate { get; set; }
-    public DateTimeOffset CreatedAt { get; set; }
-    public UserRole Role { get; set; }
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public string Email { get; private set; }
+    public string Password { get; private set; }
+    public DateTimeOffset? LastChangePasswordDate { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
+    public UserRole Role { get; private set; }
 
     private User()
     {
