@@ -1,22 +1,24 @@
 namespace PetManager.Application.Shared.Validation;
 
-public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
-    : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+public static class ValidationExtensions
 {
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+    public static IServiceCollection AddValidators(this IServiceCollection services, Assembly assembly)
     {
-        var context = new ValidationContext<TRequest>(request);
+        var validatorTypes = assembly.GetTypes()
+            .Where(t => t.GetInterfaces()
+                .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IValidator<>)))
+            .ToList();
 
-        foreach (var validator in validators)
+        foreach (var validatorType in validatorTypes)
         {
-            var result = await validator.ValidateAsync(context, cancellationToken);
-            if (!result.IsValid)
-            {
-                throw new ValidationException(result.Errors);
-            }
+            var validatorInterface = validatorType.GetInterfaces()
+                .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IValidator<>));
+            services.AddScoped(validatorInterface, validatorType);
         }
 
-        return await next();
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+
+        return services;
     }
 }
