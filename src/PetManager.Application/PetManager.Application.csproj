@@ -21,9 +21,5 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-rc.2.24474.1" />
       <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.0-rc.2.24474.3" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Admin\Commands\" />
-    </ItemGroup>
     
 </Project>

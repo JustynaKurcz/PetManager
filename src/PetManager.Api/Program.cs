@@ -1,4 +1,4 @@
-using PetManager.Api.Configuration;
+using PetManager.Api.Configuration.Api;
 using PetManager.Api.Configuration.Cors;
 using PetManager.Api.Configuration.Swagger;
 using PetManager.Application;
@@ -24,7 +24,5 @@ app.Run();
 
 namespace PetManager.Api
 {
-    public partial class Program
-    {
-    }
+    public partial class Program;
 }

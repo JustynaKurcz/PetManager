@@ -1,11 +1,12 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using PetManager.Infrastructure.Auth;
-using PetManager.Infrastructure.Context;
 using PetManager.Infrastructure.EF;
 using PetManager.Infrastructure.EF.DbContext;
-using PetManager.Infrastructure.Exceptions;
-using PetManager.Infrastructure.Security;
+using PetManager.Infrastructure.Shared.Context;
+using PetManager.Infrastructure.Shared.Exceptions;
+using PetManager.Infrastructure.Shared.Security;
+using PetManager.Infrastructure.Shared.Security.Auth;
+using PetManager.Infrastructure.Shared.Security.Passwords;
 
 [assembly: InternalsVisibleTo("PetManager.Api")]
 

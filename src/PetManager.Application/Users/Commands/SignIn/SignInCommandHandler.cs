@@ -1,5 +1,6 @@
-using PetManager.Application.Auth;
-using PetManager.Application.Security;
+using PetManager.Application.Shared.Security;
+using PetManager.Application.Shared.Security.Auth;
+using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 

@@ -1,6 +1,6 @@
-using PetManager.Application.Pagination;
 using PetManager.Application.Pets.Queries.BrowsePets;
 using PetManager.Application.Pets.Queries.BrowsePets.DTO;
+using PetManager.Application.Shared.Pagination;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Repositories;
 

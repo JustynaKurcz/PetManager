@@ -1,3 +1,5 @@
+using PetManager.Core.Common.Exceptions;
+
 namespace PetManager.Core.Users.Exceptions;
 
 public sealed class UserNotFoundException : PetManagerException

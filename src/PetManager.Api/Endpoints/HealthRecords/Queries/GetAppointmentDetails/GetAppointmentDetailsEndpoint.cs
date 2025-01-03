@@ -1,4 +1,4 @@
-using PetManager.Api.Abstractions;
+using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails;
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails.DTO;
 

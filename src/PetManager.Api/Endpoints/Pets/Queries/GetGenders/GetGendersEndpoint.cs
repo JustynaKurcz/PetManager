@@ -1,6 +1,6 @@
-using PetManager.Api.Abstractions;
-using PetManager.Application.EnumHelper;
+using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Pets.Queries.GetGenders.DTO;
+using PetManager.Core.Common.EnumHelper;
 using PetManager.Core.Pets.Enums;
 
 namespace PetManager.Api.Endpoints.Pets.Queries.GetGenders;

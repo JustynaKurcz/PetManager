@@ -1,3 +1,5 @@
+using PetManager.Core.Common.Exceptions;
+
 namespace PetManager.Core.HealthRecords.Exceptions;
 
 public sealed class VaccinationNotFoundException : PetManagerException

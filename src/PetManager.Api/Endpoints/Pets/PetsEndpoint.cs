@@ -1,5 +1,3 @@
-using PetManager.Api.Common.Endpoints;
-
 namespace PetManager.Api.Endpoints.Pets;
 
 internal static class PetsEndpoint

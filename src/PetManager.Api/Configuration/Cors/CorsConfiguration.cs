@@ -3,12 +3,13 @@ namespace PetManager.Api.Configuration.Cors;
 public static class CorsConfiguration
 {
     private const string DefaultPolicyName = "AllowAngularApp";
+    private const string CorsSectionName = "Cors";
 
     public static void AddCorsConfiguration(this IServiceCollection services,
         IConfiguration configuration)
     {
         var corsOptions = configuration
-            .GetSection("Cors")
+            .GetSection(CorsSectionName)
             .Get<CorsOptions>() ?? new CorsOptions();
 
         services

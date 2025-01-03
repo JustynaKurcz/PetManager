@@ -1,5 +1,3 @@
-using PetManager.Api.Common.Endpoints;
-
 namespace PetManager.Api.Endpoints.Admin;
 
 internal static class AdminEndpoint

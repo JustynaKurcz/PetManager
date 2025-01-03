@@ -1,4 +1,4 @@
-using PetManager.Api.Abstractions;
+using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Pets.Commands.CreatePet;
 
 namespace PetManager.Api.Endpoints.Pets.Commands.CreatePet;

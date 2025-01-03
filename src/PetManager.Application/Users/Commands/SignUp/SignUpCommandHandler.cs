@@ -1,4 +1,5 @@
-using PetManager.Application.Security;
+using PetManager.Application.Shared.Security;
+using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;

@@ -1,3 +1,5 @@
+using PetManager.Core.Common.Exceptions;
+
 namespace PetManager.Core.Pets.Exceptions;
 
 public sealed class PetNotFoundException : PetManagerException

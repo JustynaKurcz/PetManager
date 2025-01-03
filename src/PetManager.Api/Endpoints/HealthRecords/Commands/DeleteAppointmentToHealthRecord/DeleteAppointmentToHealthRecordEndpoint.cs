@@ -1,4 +1,4 @@
-using PetManager.Api.Abstractions;
+using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Commands.DeleteAppointmentToHealthRecord;
 
 namespace PetManager.Api.Endpoints.HealthRecords.Commands.DeleteAppointmentToHealthRecord;

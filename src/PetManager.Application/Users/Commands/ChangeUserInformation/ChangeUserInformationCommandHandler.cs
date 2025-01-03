@@ -1,4 +1,4 @@
-using PetManager.Application.Context;
+using PetManager.Application.Shared.Context;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 

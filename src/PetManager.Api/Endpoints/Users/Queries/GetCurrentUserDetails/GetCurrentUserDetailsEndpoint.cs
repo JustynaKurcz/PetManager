@@ -1,4 +1,4 @@
-using PetManager.Api.Abstractions;
+using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 

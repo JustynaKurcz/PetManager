@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using PetManager.Application.Validation;
+using PetManager.Application.Shared.Validation;
 
 [assembly: InternalsVisibleTo("PetManager.Api")]
 [assembly: InternalsVisibleTo("PetManager.Infrastructure")]

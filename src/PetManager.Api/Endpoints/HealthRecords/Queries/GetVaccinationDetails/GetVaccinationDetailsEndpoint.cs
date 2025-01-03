@@ -1,4 +1,4 @@
-using PetManager.Api.Abstractions;
+using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Queries.GetVaccinationDetails;
 using PetManager.Application.HealthRecords.Queries.GetVaccinationDetails.DTO;
 
