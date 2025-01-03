@@ -7,13 +7,13 @@ internal sealed class CreatePetEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost($"{PetsEndpoint.Url}", async (
+        app.MapPost(PetsEndpoint.CreatePet, async (
                 [FromBody] CreatePetCommand command,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
                 var response = await mediator.Send(command, cancellationToken);
-                return Results.Created(PetsEndpoint.Url, response);
+                return Results.Created(PetsEndpoint.Base, response);
             })
             .Produces<CreatePetResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)

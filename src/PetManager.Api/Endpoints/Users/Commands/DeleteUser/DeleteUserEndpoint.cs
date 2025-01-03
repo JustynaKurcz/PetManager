@@ -3,11 +3,11 @@ using PetManager.Application.Users.Commands.DeleteUser;
 
 namespace PetManager.Api.Endpoints.Users.Commands.DeleteUser;
 
-internal sealed class DeleteUserEndpoint  : IEndpointDefinition
+internal sealed class DeleteUserEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete($"{UsersEndpoint.Url}/{{userId:guid}}", async (
+        app.MapDelete(UsersEndpoint.DeleteUser, async (
                 [FromRoute] Guid userId,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>

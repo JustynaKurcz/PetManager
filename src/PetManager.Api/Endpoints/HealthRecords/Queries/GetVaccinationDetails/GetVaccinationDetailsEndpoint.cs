@@ -8,18 +8,16 @@ internal sealed class GetVaccinationDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(
-                $"{HealthRecordsEndpoint.Url}/{{healthRecordId:guid}}/vaccinations/{{vaccinationId:guid}}",
-                async (
-                    [AsParameters] GetVaccinationDetailsEndpointRequest request,
-                    [FromServices] IMediator mediator,
-                    CancellationToken cancellationToken) =>
-                {
-                    var query = new GetVaccinationDetailsQuery(request.HealthRecordId, request.VaccinationId);
-                    var response = await mediator.Send(query, cancellationToken);
+        app.MapGet(HealthRecordsEndpoint.GetVaccinationDetails, async (
+                [AsParameters] GetVaccinationDetailsEndpointRequest request,
+                [FromServices] IMediator mediator,
+                CancellationToken cancellationToken) =>
+            {
+                var query = new GetVaccinationDetailsQuery(request.HealthRecordId, request.VaccinationId);
+                var response = await mediator.Send(query, cancellationToken);
 
-                    return Results.Ok(response);
-                })
+                return Results.Ok(response);
+            })
             .Produces<VaccinationDetailsDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithTags(HealthRecordsEndpoint.Tag)

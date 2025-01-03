@@ -6,11 +6,11 @@ using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 
 namespace PetManager.Api.Endpoints.Admin.Queries.BrowseUsers;
 
-internal sealed  class BrowseUsersEndpoint : IEndpointDefinition
+internal sealed class BrowseUsersEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(AdminEndpoint.Url, async (
+        app.MapGet(AdminEndpoint.BrowseUsers, async (
                 [FromServices] IMediator mediator,
                 [AsParameters] BrowseUsersQuery query,
                 CancellationToken cancellationToken) =>

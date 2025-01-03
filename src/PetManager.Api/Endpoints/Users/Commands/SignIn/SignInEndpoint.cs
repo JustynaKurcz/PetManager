@@ -7,7 +7,7 @@ public class SignInEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost($"{UsersEndpoint.Url}/sign-in", async (
+        app.MapPost(UsersEndpoint.SignIn, async (
                 [FromBody] SignInCommand command,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>

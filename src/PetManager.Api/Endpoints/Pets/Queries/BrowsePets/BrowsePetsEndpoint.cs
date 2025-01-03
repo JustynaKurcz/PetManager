@@ -9,7 +9,7 @@ internal sealed class BrowsePetsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(PetsEndpoint.Url, async (
+        app.MapGet(PetsEndpoint.BrowsePets, async (
                 [FromServices] IMediator mediator,
                 [AsParameters] BrowsePetsQuery query,
                 CancellationToken cancellationToken) =>

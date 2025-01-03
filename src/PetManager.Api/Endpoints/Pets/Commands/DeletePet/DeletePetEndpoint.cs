@@ -7,7 +7,7 @@ internal sealed class DeletePetEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete($"{PetsEndpoint.Url}/{{petId:guid}}", async (
+        app.MapDelete(PetsEndpoint.DeletePet, async (
                 [FromRoute] Guid petId,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>

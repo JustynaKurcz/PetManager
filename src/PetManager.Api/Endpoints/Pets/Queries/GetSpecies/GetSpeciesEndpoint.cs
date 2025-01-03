@@ -9,7 +9,7 @@ internal sealed class GetSpeciesEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{PetsEndpoint.Url}/species-types", async (
+        app.MapGet(PetsEndpoint.GetSpecies, async (
                 CancellationToken cancellationToken) =>
             {
                 var species = EnumHelper.GetEnumValues<Species>();

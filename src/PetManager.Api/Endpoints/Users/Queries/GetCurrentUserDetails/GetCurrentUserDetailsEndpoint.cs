@@ -8,7 +8,7 @@ internal sealed class GetCurrentUserDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{UsersEndpoint.Url}/user", async (
+        app.MapGet(UsersEndpoint.GetCurrentUser, async (
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
             {

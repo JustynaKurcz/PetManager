@@ -6,7 +6,7 @@ internal sealed class ChangePetInformationEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut($"{PetsEndpoint.Url}/{{petId:guid}}", async (
+        app.MapPut(PetsEndpoint.ChangePetInformation, async (
                 [AsParameters] ChangePetInformationEndpointRequest request,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>

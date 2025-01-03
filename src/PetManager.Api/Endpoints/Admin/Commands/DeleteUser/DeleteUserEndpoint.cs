@@ -7,7 +7,7 @@ internal sealed class DeleteUserEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete($"{AdminEndpoint.Url}/users/{{userId:guid}}", async (
+        app.MapDelete(AdminEndpoint.DeleteUser, async (
                 [FromRoute] Guid userId,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>

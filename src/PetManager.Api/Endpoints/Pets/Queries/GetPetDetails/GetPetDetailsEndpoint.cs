@@ -4,11 +4,11 @@ using PetManager.Application.Pets.Queries.GetPetDetails.DTO;
 
 namespace PetManager.Api.Endpoints.Pets.Queries.GetPetDetails;
 
-public class GetPetDetailsEndpoint : IEndpointDefinition
+internal sealed class GetPetDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{PetsEndpoint.Url}/{{petId:guid}}", async (
+        app.MapGet(PetsEndpoint.GetPetDetails, async (
                 [FromRoute] Guid petId,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>

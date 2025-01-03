@@ -7,7 +7,7 @@ internal sealed class AddVaccinationToHealthRecordEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost($"{HealthRecordsEndpoint.Url}/{{healthRecordId:guid}}/vaccinations", async (
+        app.MapPost(HealthRecordsEndpoint.AddVaccination, async (
                 [AsParameters] AddVaccinationToHealthRecordEndpointRequest request,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -15,7 +15,7 @@ internal sealed class AddVaccinationToHealthRecordEndpoint : IEndpointDefinition
                 var command = request.Command with { HealthRecordId = request.HealthRecordId };
                 var response = await mediator.Send(command, cancellationToken);
 
-                return Results.Created(HealthRecordsEndpoint.Url, response);
+                return Results.Created(HealthRecordsEndpoint.Base, response);
             })
             .Produces<AddVaccinationToHealthRecordResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)

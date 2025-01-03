@@ -8,7 +8,7 @@ internal sealed class GetHealthRecordDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{HealthRecordsEndpoint.Url}/{{healthRecordId:guid}}", async (
+        app.MapGet(HealthRecordsEndpoint.GetHealthRecordDetails, async (
                 [FromRoute] Guid healthRecordId,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>

@@ -8,18 +8,16 @@ internal sealed class GetAppointmentDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(
-                $"{HealthRecordsEndpoint.Url}/{{healthRecordId:guid}}/appointments/{{appointmentId:guid}}",
-                async (
-                    [AsParameters] GetAppointmentDetailsEndpointRequest request,
-                    [FromServices] IMediator mediator,
-                    CancellationToken cancellationToken) =>
-                {
-                    var query = new GetAppointmentDetailsQuery(request.HealthRecordId, request.AppointmentId);
-                    var response = await mediator.Send(query, cancellationToken);
+        app.MapGet(HealthRecordsEndpoint.GetAppointmentDetails, async (
+                [AsParameters] GetAppointmentDetailsEndpointRequest request,
+                [FromServices] IMediator mediator,
+                CancellationToken cancellationToken) =>
+            {
+                var query = new GetAppointmentDetailsQuery(request.HealthRecordId, request.AppointmentId);
+                var response = await mediator.Send(query, cancellationToken);
 
-                    return Results.Ok(response);
-                })
+                return Results.Ok(response);
+            })
             .Produces<AppointmentDetailsDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithTags(HealthRecordsEndpoint.Tag)

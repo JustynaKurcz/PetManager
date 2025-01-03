@@ -3,17 +3,17 @@ using PetManager.Application.Users.Commands.SignUp;
 
 namespace PetManager.Api.Endpoints.Users.Commands.SignUp;
 
-public class SignUpEndpoint : IEndpointDefinition
+internal sealed class SignUpEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost($"{UsersEndpoint.Url}/sign-up", async (
-                SignUpCommand command,
+        app.MapPost(UsersEndpoint.SignUp, async (
+                [FromBody] SignUpCommand command,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
                 var result = await mediator.Send(command, cancellationToken);
-                return Results.Created(UsersEndpoint.Url, result);
+                return Results.Created(UsersEndpoint.Base, result);
             })
             .Produces<SignUpResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)

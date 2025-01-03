@@ -9,7 +9,7 @@ internal sealed class GetGendersEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{PetsEndpoint.Url}/gender-types", async (
+        app.MapGet(PetsEndpoint.GetGenders, async (
                 CancellationToken cancellationToken) =>
             {
                 var genders = EnumHelper.GetEnumValues<Gender>();

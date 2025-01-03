@@ -7,7 +7,7 @@ internal sealed class ChangeUserInformationEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut($"{UsersEndpoint.Url}", async (
+        app.MapPut(UsersEndpoint.ChangeUserInformation, async (
                 [FromBody] ChangeUserInformationCommand command,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>

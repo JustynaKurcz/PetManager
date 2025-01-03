@@ -4,6 +4,20 @@ namespace PetManager.Api.Endpoints.HealthRecords;
 
 internal static class HealthRecordsEndpoint
 {
-    internal const string Url = $"{Routing.BaseUrl}/health-records";
+    internal const string Base = $"{Routing.BaseUrl}/health-records";
     internal const string Tag = "HealthRecords";
+
+    internal static string AddAppointment => $"{Base}/{{healthRecordId:guid}}/appointments";
+    internal static string DeleteAppointment => $"{Base}/{{healthRecordId:guid}}/appointments/{{appointmentId:guid}}";
+
+    internal static string GetAppointmentDetails =>
+        $"{Base}/{{healthRecordId:guid}}/appointments/{{appointmentId:guid}}";
+
+    internal static string AddVaccination => $"{Base}/{{healthRecordId:guid}}/vaccinations";
+    internal static string DeleteVaccination => $"{Base}/{{healthRecordId:guid}}/vaccinations/{{vaccinationId:guid}}";
+
+    internal static string GetVaccinationDetails =>
+        $"{Base}/{{healthRecordId:guid}}/vaccinations/{{vaccinationId:guid}}";
+
+    internal static string GetHealthRecordDetails => $"{Base}/{{healthRecordId:guid}}";
 }
