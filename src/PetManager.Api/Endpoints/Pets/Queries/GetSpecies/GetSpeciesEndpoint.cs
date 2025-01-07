@@ -9,7 +9,7 @@ internal sealed class GetSpeciesEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(PetsEndpoint.GetSpecies, async (
+        app.MapGet(PetEndpoints.GetSpecies, async (
                 CancellationToken cancellationToken) =>
             {
                 var species = EnumHelper.GetEnumValues<Species>();
@@ -19,7 +19,7 @@ internal sealed class GetSpeciesEndpoint : IEndpointDefinition
             .Produces<SpeciesDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized)
-            .WithTags(PetsEndpoint.Tag)
+            .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Get list of species types",

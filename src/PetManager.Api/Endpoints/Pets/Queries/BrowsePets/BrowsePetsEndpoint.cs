@@ -9,7 +9,7 @@ internal sealed class BrowsePetsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(PetsEndpoint.BrowsePets, async (
+        app.MapGet(PetEndpoints.BrowsePets, async (
                 [FromServices] IMediator mediator,
                 [AsParameters] BrowsePetsQuery query,
                 CancellationToken cancellationToken) =>
@@ -20,7 +20,7 @@ internal sealed class BrowsePetsEndpoint : IEndpointDefinition
             })
             .Produces<PaginationResult<PetDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
-            .WithTags(PetsEndpoint.Tag)
+            .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Browse pets",

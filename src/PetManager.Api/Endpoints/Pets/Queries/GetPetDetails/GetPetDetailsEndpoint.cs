@@ -8,7 +8,7 @@ internal sealed class GetPetDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(PetsEndpoint.GetPetDetails, async (
+        app.MapGet(PetEndpoints.GetPetDetails, async (
                 [FromRoute] Guid petId,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -21,7 +21,7 @@ internal sealed class GetPetDetailsEndpoint : IEndpointDefinition
             .Produces<PetDetailsDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status404NotFound)
-            .WithTags(PetsEndpoint.Tag)
+            .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Get pet details",

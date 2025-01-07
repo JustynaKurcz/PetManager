@@ -1,9 +1,11 @@
+using PetManager.Application.Pets.Commands.ChangePetInformation;
 using PetManager.Application.Pets.Commands.CreatePet;
+using PetManager.Application.Pets.Commands.DeletePet;
 using PetManager.Application.Pets.Queries.GetPetDetails;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Enums;
 
-namespace PetManager.Tests.Integration.Common;
+namespace PetManager.Tests.Integration.Pets.Factories;
 
 internal sealed class PetTestFactory
 {
@@ -25,4 +27,10 @@ internal sealed class PetTestFactory
         => Enumerable.Range(0, count)
             .Select(_ => CreatePet(userId))
             .ToList();
+
+    public ChangePetInformationCommand ChangePetInformationCommand(Guid? petId = null)
+        => new(_faker.PickRandom<Species>(), _faker.Random.Word(), _faker.PickRandom<Gender>());
+
+    internal DeletePetCommand DeletePetCommand()
+        => new(_faker.Random.Guid());
 }

@@ -1,4 +1,3 @@
-using Bogus;
 using PetManager.Application.Pets.Commands.ChangePetInformation;
 using PetManager.Application.Pets.Commands.CreatePet;
 using PetManager.Application.Pets.Commands.DeletePet;

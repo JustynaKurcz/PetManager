@@ -1,4 +1,5 @@
 using PetManager.Application.Pets.Commands.ChangePetInformation;
+using PetManager.Application.Shared.Context;
 using PetManager.Core.Pets.Exceptions;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Tests.Unit.Pets.Factories;
@@ -52,6 +53,7 @@ public sealed class ChangePetInformationCommandHandlerTests
             .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
     }
 
+    private readonly IContext _context;
     private readonly IPetRepository _petRepository;
     private readonly IRequestHandler<ChangePetInformationCommand> _handler;
 
@@ -59,8 +61,9 @@ public sealed class ChangePetInformationCommandHandlerTests
 
     public ChangePetInformationCommandHandlerTests()
     {
+        _context = Substitute.For<IContext>();
         _petRepository = Substitute.For<IPetRepository>();
 
-        _handler = new ChangePetInformationCommandHandler(_petRepository);
+        _handler = new ChangePetInformationCommandHandler(_context, _petRepository);
     }
 }

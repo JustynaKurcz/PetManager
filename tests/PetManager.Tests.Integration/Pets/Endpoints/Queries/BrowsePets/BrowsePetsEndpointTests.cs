@@ -1,57 +1,53 @@
-using System.Net.Http.Json;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using PetManager.Application.Pagination;
-using PetManager.Application.Pets.Queries.BrowsePets.DTO;
-using PetManager.Infrastructure.EF.DbContext;
-using PetManager.Tests.Integration.Common;
-using PetManager.Tests.Integration.Users;
+using PetManager.Api.Endpoints.Pets;
+using PetManager.Tests.Integration.Pets.Factories;
+using PetManager.Tests.Integration.Users.Factories;
 
 namespace PetManager.Tests.Integration.Pets.Endpoints.Queries.BrowsePets;
 
-public class BrowsePetsEndpointTests : IClassFixture<PetManagerTestFactory>, IAsyncLifetime
+public class BrowsePetsEndpointTests : IntegrationTestBase
 {
-    private readonly IServiceScope _scope;
     private readonly UserTestFactory _userFactory = new();
     private readonly PetTestFactory _petFactory = new();
-    private readonly HttpClient _client;
-    private readonly PetManagerDbContext _dbContext;
 
-    public BrowsePetsEndpointTests()
-    {
-        var factory = new PetManagerTestFactory();
-        _scope = factory.Services.CreateScope();
-        _client = factory.CreateClient();
-        _dbContext = _scope.ServiceProvider.GetRequiredService<PetManagerDbContext>();
-    }
+    private const int PetsToCreate = 10;
 
-    [Fact]
-    public async Task GetAll_WithQueryParameters_ReturnsPaginatedList()
+    [Theory]
+    [InlineData(1, 10, "")]
+    [InlineData(2, 5, "a")]
+    [InlineData(-3, 5, " ")]
+    [InlineData(0, 0, ".")]
+    public async Task get_browse_pets_with_valid_pagination_should_return_200_status_code(int pageNumber, int pageSize,
+        string search)
     {
         // Arrange
         var user = _userFactory.CreateUser();
-        await _dbContext.Users.AddAsync(user);
+        await AddAsync(user);
 
-        var petCount = 10;
-        var pets = _petFactory.CreatePets(user.UserId, petCount);
-        await _dbContext.Pets.AddRangeAsync(pets);
-        await _dbContext.SaveChangesAsync();
+        var pets = _petFactory.CreatePets(user.UserId, PetsToCreate);
+        await AddRangeAsync(pets);
 
         // Act
-        var response = await _client.GetAsync("api/v1/pets?PageNumber=2&PageSize=5");
+        var response = await _client.GetAsync(PetEndpoints.BrowsePets +
+                                              $"?Search={search}&PageNumber={pageNumber}&PageSize={pageSize}");
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 
-    public async Task InitializeAsync()
+    [Theory]
+    [InlineData(1, 10)]
+    [InlineData(2, 5)]
+    public async Task get_browse_pets_with_empty_database_should_return_empty_list(int pageNumber, int pageSize)
     {
-        await _dbContext.Database.EnsureCreatedAsync();
-    }
+        // Arrange
+        var user = _userFactory.CreateUser();
+        await AddAsync(user);
 
-    public async Task DisposeAsync()
-    {
-        await _dbContext.Database.EnsureDeletedAsync();
-        await _dbContext.DisposeAsync();
+        // Act
+        var response =
+            await _client.GetAsync(PetEndpoints.BrowsePets + $"?PageNumber={pageNumber}&PageSize={pageSize}");
+
+        // Assert
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 }

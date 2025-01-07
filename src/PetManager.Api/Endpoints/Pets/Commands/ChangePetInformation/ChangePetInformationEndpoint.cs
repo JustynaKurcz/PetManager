@@ -6,7 +6,7 @@ internal sealed class ChangePetInformationEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut(PetsEndpoint.ChangePetInformation, async (
+        app.MapPut(PetEndpoints.ChangePetInformation, async (
                 [AsParameters] ChangePetInformationEndpointRequest request,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -18,7 +18,7 @@ internal sealed class ChangePetInformationEndpoint : IEndpointDefinition
             })
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status400BadRequest)
-            .WithTags(PetsEndpoint.Tag)
+            .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Change pet information",

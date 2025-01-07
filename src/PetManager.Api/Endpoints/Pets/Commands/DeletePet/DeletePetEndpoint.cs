@@ -7,7 +7,7 @@ internal sealed class DeletePetEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete(PetsEndpoint.DeletePet, async (
+        app.MapDelete(PetEndpoints.DeletePet, async (
                 [FromRoute] Guid petId,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -17,7 +17,7 @@ internal sealed class DeletePetEndpoint : IEndpointDefinition
             })
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
-            .WithTags(PetsEndpoint.Tag)
+            .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Delete a pet",
