@@ -1,4 +1,4 @@
-using PetManager.Application.Context;
+using PetManager.Application.Shared.Context;
 using PetManager.Application.Users.Commands.ChangeUserInformation;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
@@ -12,7 +12,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         => await _handler.Handle(command, CancellationToken.None);
 
     [Fact]
-    public async Task given_invalid_user_id_when_change_user_information_then_should_throw_unauthorized_exception()
+    public async Task given_user_not_found_when_change_user_information_then_should_throw_user_not_found_exception()
     {
         // Arrange
         var command = _userFactory.ChangeUserInformationCommand();
@@ -27,7 +27,6 @@ public sealed class ChangeUserInformationCommandHandlerTests
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<UserNotFoundException>();
         exception.Message.ShouldBe($"User with id {_context.UserId} was not found.");
-
 
         await _userRepository
             .Received(1)
@@ -60,13 +59,71 @@ public sealed class ChangeUserInformationCommandHandlerTests
         await _userRepository
             .Received(1)
             .SaveChangesAsync(Arg.Any<CancellationToken>());
+        
+        user.FirstName.ShouldBe(command.FirstName);
+        user.LastName.ShouldBe(command.LastName);
     }
+    
+    [Fact]
+    public async Task given_only_first_name_when_change_user_information_then_should_update_only_first_name()
+    {
+        // Arrange
+        var user = _userFactory.CreateUser();
+        var existingLastName = user.LastName;
+        var command = _userFactory.ChangeUserInformationCommandWithoutLastName();
 
+        _userRepository
+            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
+            .Returns(user);
+
+        // Act
+        await Act(command);
+
+        // Assert
+        await _userRepository
+            .Received(1)
+            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+
+        await _userRepository
+            .Received(1)
+            .SaveChangesAsync(Arg.Any<CancellationToken>());
+        
+        user.FirstName.ShouldBe(command.FirstName);
+        user.LastName.ShouldBe(existingLastName);
+    }
+    
+    [Fact]
+    public async Task given_only_last_name_when_change_user_information_then_should_update_only_last_name()
+    {
+        // Arrange
+        var user = _userFactory.CreateUser();
+        var existingFirstName = user.FirstName;
+        var command = _userFactory.ChangeUserInformationCommandWithoutFirstName();
+
+        _userRepository
+            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
+            .Returns(user);
+
+        // Act
+        await Act(command);
+
+        // Assert
+        await _userRepository
+            .Received(1)
+            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+
+        await _userRepository
+            .Received(1)
+            .SaveChangesAsync(Arg.Any<CancellationToken>());
+        
+        user.FirstName.ShouldBe(existingFirstName);
+        user.LastName.ShouldBe(command.LastName);
+    }
+    
     private readonly IUserRepository _userRepository;
     private readonly IContext _context;
 
     private readonly IRequestHandler<ChangeUserInformationCommand> _handler;
-
     private readonly UserTestFactory _userFactory = new();
 
     public ChangeUserInformationCommandHandlerTests()

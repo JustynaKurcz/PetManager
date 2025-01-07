@@ -1,5 +1,5 @@
-using PetManager.Application.Auth;
-using PetManager.Application.Security;
+using PetManager.Application.Shared.Security.Auth;
+using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Application.Users.Commands.SignIn;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
@@ -116,6 +116,38 @@ public sealed class SignInCommandHandlerTests
         _authManager
             .Received(1)
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
+    }
+    
+    [Fact]
+    public async Task given_email_with_uppercase_letters_when_sign_in_then_should_convert_to_lowercase()
+    {
+        // Arrange
+        const string upperCaseEmail = "TEST@EMAIL.COM";
+        const string lowerCaseEmail = "test@email.com";
+        
+        var command = _userFactory.CreateSignInCommand() with { Email = upperCaseEmail };
+        var user = _userFactory.CreateUser();
+
+        _userRepository
+            .GetByEmailAsync(lowerCaseEmail, Arg.Any<CancellationToken>())
+            .Returns(user);
+
+        _passwordManager
+            .VerifyPassword(command.Password, user.Password)
+            .Returns(true);
+
+        _authManager
+            .GenerateToken(user.UserId, user.Role.ToString())
+            .Returns("token");
+
+        // Act
+        var response = await Act(command);
+
+        // Assert
+        response.ShouldNotBeNull();
+        await _userRepository
+            .Received(1)
+            .GetByEmailAsync(lowerCaseEmail, Arg.Any<CancellationToken>());
     }
 
     private readonly IUserRepository _userRepository;

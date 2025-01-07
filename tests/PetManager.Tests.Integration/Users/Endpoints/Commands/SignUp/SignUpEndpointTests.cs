@@ -1,36 +1,21 @@
-using System.Net.Http.Json;
-using Microsoft.Extensions.DependencyInjection;
-using PetManager.Application.Security;
+using PetManager.Api.Endpoints.Users;
 using PetManager.Application.Users.Commands.SignUp;
-using PetManager.Infrastructure.EF.DbContext;
+using PetManager.Tests.Integration.Users.Factories;
 
 namespace PetManager.Tests.Integration.Users.Endpoints.Commands.SignUp;
 
-public class SignUpEndpointTests : IClassFixture<PetManagerTestFactory>, IAsyncLifetime
+public class SignUpEndpointTests : IntegrationTestBase
 {
-    private readonly IServiceScope _scope;
     private readonly UserTestFactory _userFactory = new();
-    private readonly HttpClient _client;
-    private readonly PetManagerDbContext _dbContext;
-    private readonly IPasswordManager _passwordManager;
-
-    public SignUpEndpointTests()
-    {
-        var factory = new PetManagerTestFactory();
-        _scope = factory.Services.CreateScope();
-        _client = factory.CreateClient();
-        _dbContext = _scope.ServiceProvider.GetRequiredService<PetManagerDbContext>();
-        _passwordManager = _scope.ServiceProvider.GetRequiredService<IPasswordManager>();
-    }
 
     [Fact]
-    public async Task RegisterUser_ForValidModel_ReturnsOk()
+    public async Task post_sign_up_with_valid_credentials_should_return_201_status_code()
     {
         // Arrange
         var command = _userFactory.CreateSignUpCommand();
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/v1/users/sign-up", command);
+        var response = await _client.PostAsJsonAsync(UserEndpoints.SignUp, command);
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.Created);
@@ -38,31 +23,17 @@ public class SignUpEndpointTests : IClassFixture<PetManagerTestFactory>, IAsyncL
     }
 
     [Fact]
-    public async Task RegisterUser_ForDuplicateEmail_ReturnsBadRequest()
+    public async Task post_sign_up_with_existing_email_should_return_400_status_code()
     {
         // Arrange
-        var command = _userFactory.CreateSignUpCommand();
-        var hashedPassword = _passwordManager.HashPassword(command.Password);
-        var user = _userFactory.CreateUser(command.Email.ToLowerInvariant(), hashedPassword);
-        
-        await _dbContext.Users.AddAsync(user);
-        await _dbContext.SaveChangesAsync();
+        var command = _userFactory.CreateSignInCommand();
+        var user = _userFactory.CreateUser(command.Email, command.Password);
+        await AddAsync(user);
 
         // Act 
-        var response = await _client.PostAsJsonAsync("api/v1/users/sign-up", command);
+        var response = await _client.PostAsJsonAsync(UserEndpoints.SignUp, command);
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
-    }
-
-    public async Task InitializeAsync()
-    {
-       await _dbContext.Database.EnsureCreatedAsync();
-    }
-
-    public async Task DisposeAsync()
-    {
-        await _dbContext.Database.EnsureDeletedAsync();
-        await _dbContext.DisposeAsync();
     }
 }

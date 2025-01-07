@@ -8,7 +8,7 @@ internal sealed class GetCurrentUserDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(UsersEndpoint.GetCurrentUser, async (
+        app.MapGet(UserEndpoints.GetCurrentUser, async (
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
@@ -20,7 +20,7 @@ internal sealed class GetCurrentUserDetailsEndpoint : IEndpointDefinition
             .Produces<CurrentUserDetailsDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status404NotFound)
-            .WithTags(UsersEndpoint.Tag)
+            .WithTags(UserEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Get details of the currently logged user",

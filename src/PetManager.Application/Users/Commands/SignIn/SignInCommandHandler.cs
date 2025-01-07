@@ -1,4 +1,3 @@
-using PetManager.Application.Shared.Security;
 using PetManager.Application.Shared.Security.Auth;
 using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Core.Users.Exceptions;
@@ -10,8 +9,7 @@ internal sealed class SignInCommandHandler(
     IUserRepository userRepository,
     IPasswordManager passwordManager,
     IAuthManager authManager
-)
-    : IRequestHandler<SignInCommand, SignInResponse>
+) : IRequestHandler<SignInCommand, SignInResponse>
 {
     public async Task<SignInResponse> Handle(SignInCommand command, CancellationToken cancellationToken = default)
     {

@@ -1,44 +1,23 @@
-using System.Net.Http.Json;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using PetManager.Application.Security;
+using PetManager.Api.Endpoints.Users;
 using PetManager.Application.Users.Commands.SignIn;
-using PetManager.Infrastructure.EF.DbContext;
+using PetManager.Tests.Integration.Users.Factories;
 
 namespace PetManager.Tests.Integration.Users.Endpoints.Commands.SignIn;
 
-public class SignInEndpointTests : IClassFixture<PetManagerTestFactory>, IAsyncLifetime
+public class SignInEndpointTests : IntegrationTestBase
 {
-    private readonly IServiceScope _scope;
     private readonly UserTestFactory _userFactory = new();
-    private readonly HttpClient _client;
-    private readonly PetManagerDbContext _dbContext;
-    private readonly IPasswordManager _passwordManager;
-
-    public SignInEndpointTests()
-    {
-        var factory = new PetManagerTestFactory();
-        _scope = factory.Services.CreateScope();
-        _client = factory.CreateClient();
-        _dbContext = _scope.ServiceProvider.GetRequiredService<PetManagerDbContext>();
-        _passwordManager = _scope.ServiceProvider.GetRequiredService<IPasswordManager>();
-    }
 
     [Fact]
-    public async Task SignIn_ForValidCredentials_ReturnsOkWithToken()
+    public async Task post_sign_in_with_valid_credentials_should_return_200_status_code()
     {
         // Arrange
-        var command = _userFactory.CreateSignUpCommand();
-        var hashedPassword = _passwordManager.HashPassword(command.Password);
-        var user = _userFactory.CreateUser(command.Email.ToLowerInvariant(), hashedPassword);
-        
-        await _dbContext.Users.AddAsync(user);
-        await _dbContext.SaveChangesAsync();
-        
-        var signInCommand = _userFactory.CreateSignInCommand(command.Email, command.Password);
+        var command = _userFactory.CreateSignInCommand();
+        var user = _userFactory.CreateUser(command.Email, command.Password);
+        await AddAsync(user);
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/v1/users/sign-in", signInCommand);
+        var response = await _client.PostAsJsonAsync(UserEndpoints.SignIn, command);
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
@@ -46,26 +25,49 @@ public class SignInEndpointTests : IClassFixture<PetManagerTestFactory>, IAsyncL
     }
 
     [Fact]
-    public async Task SignIn_ForInvalidEmail_ReturnsBadRequest()
+    public async Task post_sign_in_with_invalid_credentials_should_return_400_status_code()
     {
         // Arrange
         var signInCommand = _userFactory.CreateSignInCommand();
 
         // Act
-        var response = await _client.PostAsJsonAsync("api/v1/users/sign-in", signInCommand);
+        var response = await _client.PostAsJsonAsync(UserEndpoints.SignIn, signInCommand);
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
     }
 
-    public async Task InitializeAsync()
+    [Fact]
+    public async Task post_sign_in_with_invalid_password_should_return_400_status_code()
     {
-        await _dbContext.Database.EnsureCreatedAsync();
+        // Arrange
+        var user = _userFactory.CreateUser();
+        await AddAsync(user);
+
+        var signInCommand = _userFactory.CreateSignInCommand() with { Email = user.Email };
+
+        // Act
+        var response = await _client.PostAsJsonAsync(UserEndpoints.SignIn, signInCommand);
+
+        // Assert
+        response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
     }
 
-    public async Task DisposeAsync()
+    [Fact]
+    public async Task post_sign_in_with_uppercase_email_should_return_200_status_code()
     {
-        await _dbContext.Database.EnsureDeletedAsync();
-        await _dbContext.DisposeAsync();
+        // Arrange
+        var command = _userFactory.CreateSignInCommand();
+        var user = _userFactory.CreateUser(command.Email, command.Password);
+        await AddAsync(user);
+
+        command = command with { Email = command.Email.ToUpperInvariant() };
+
+        // Act
+        var response = await _client.PostAsJsonAsync(UserEndpoints.SignIn, command);
+
+        // Assert
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
+        await response.Content.ReadFromJsonAsync<SignInResponse>().ShouldNotBeNull();
     }
 }

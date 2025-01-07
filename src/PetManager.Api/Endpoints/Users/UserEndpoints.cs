@@ -1,6 +1,6 @@
 namespace PetManager.Api.Endpoints.Users;
 
-internal static class UsersEndpoint
+internal static class UserEndpoints
 {
     internal static string Base => $"{Routing.BaseUrl}/users";
     internal const string Tag = "Users";

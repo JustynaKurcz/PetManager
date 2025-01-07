@@ -6,14 +6,19 @@ using PetManager.Core.Users.Repositories;
 
 namespace PetManager.Infrastructure.EF.Users.Queries.GetCurrentUserDetails;
 
-internal sealed class GetCurrentUserDetailsQueryHandler(IUserRepository userRepository, IContext context)
-    : IRequestHandler<GetCurrentUserDetailsQuery, CurrentUserDetailsDto>
+internal sealed class GetCurrentUserDetailsQueryHandler(
+    IUserRepository userRepository,
+    IContext context
+) : IRequestHandler<GetCurrentUserDetailsQuery, CurrentUserDetailsDto>
 {
     public async Task<CurrentUserDetailsDto> Handle(GetCurrentUserDetailsQuery query,
         CancellationToken cancellationToken)
     {
         var user = await userRepository.GetByIdAsync(context.UserId, cancellationToken)
                    ?? throw new UserNotFoundException(context.UserId);
+
+        if (user is null)
+            throw new UserNotFoundException(context.UserId);
 
         return user.AsDetailsDto();
     }

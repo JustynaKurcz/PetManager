@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
 using PetManager.Infrastructure.EF.DbContext;
 
 namespace PetManager.Tests.Integration;
 
-public class PetManagerTestFactory : WebApplicationFactory<Program>
+public class PetManagerTestFactory : WebApplicationFactory<Api.Program>
 {
     private const string AppSettings = "appsettings.test.json";
     private const string ConnectionString = "PetManagerDbTest";

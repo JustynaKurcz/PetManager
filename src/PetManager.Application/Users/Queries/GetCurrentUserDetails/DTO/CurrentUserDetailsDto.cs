@@ -2,7 +2,7 @@ using PetManager.Core.Users.Enums;
 
 namespace PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 
-public record CurrentUserDetailsDto(
+internal record CurrentUserDetailsDto(
     Guid UserId,
     string FirstName,
     string LastName,

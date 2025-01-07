@@ -4,7 +4,9 @@ using PetManager.Core.Users.Repositories;
 
 namespace PetManager.Application.Users.Commands.ChangeUserInformation;
 
-internal sealed class ChangeUserInformationCommandHandler(IUserRepository userRepository, IContext context)
+internal sealed class ChangeUserInformationCommandHandler(
+    IUserRepository userRepository, 
+    IContext context)
     : IRequestHandler<ChangeUserInformationCommand>
 {
     public async Task Handle(ChangeUserInformationCommand command, CancellationToken cancellationToken)

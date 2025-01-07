@@ -26,6 +26,12 @@ internal class UserRepository(PetManagerDbContext dbContext) : IUserRepository
         => await _users
             .AnyAsync(x => x.Email == email, cancellationToken);
 
+    public async Task DeleteAsync(User user, CancellationToken cancellationToken)
+    {
+        _users.Remove(user);
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
         => await dbContext.SaveChangesAsync(cancellationToken);
 }

@@ -7,7 +7,7 @@ public class SignInEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost(UsersEndpoint.SignIn, async (
+        app.MapPost(UserEndpoints.SignIn, async (
                 [FromBody] SignInCommand command,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -17,7 +17,7 @@ public class SignInEndpoint : IEndpointDefinition
             })
             .Produces<SignInResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
-            .WithTags(UsersEndpoint.Tag)
+            .WithTags(UserEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Sign in",

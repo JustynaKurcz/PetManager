@@ -7,7 +7,7 @@ internal sealed class ChangeUserInformationEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut(UsersEndpoint.ChangeUserInformation, async (
+        app.MapPut(UserEndpoints.ChangeUserInformation, async (
                 [FromBody] ChangeUserInformationCommand command,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -18,7 +18,8 @@ internal sealed class ChangeUserInformationEndpoint : IEndpointDefinition
             })
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status400BadRequest)
-            .WithTags(UsersEndpoint.Tag)
+            .Produces(StatusCodes.Status401Unauthorized)
+            .WithTags(UserEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Change user information",

@@ -1,4 +1,4 @@
-using PetManager.Application.Security;
+using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Application.Users.Commands.SignUp;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;
@@ -73,6 +73,28 @@ public sealed class SignUpCommandHandlerTests
         await _userRepository
             .DidNotReceive()
             .AddAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
+    }
+    
+    [Fact]
+    public async Task given_email_with_uppercase_letters_when_sign_up_then_should_convert_to_lowercase()
+    {
+        // Arrange
+        const string upperCaseEmail = "TEST@EMAIL.COM";
+        const string lowerCaseEmail = "test@email.com";
+    
+        var command = _userFactory.CreateSignUpCommand() with { Email = upperCaseEmail };
+
+        _userRepository
+            .ExistsByEmailAsync(lowerCaseEmail, Arg.Any<CancellationToken>())
+            .Returns(false);
+
+        // Act
+        await Act(command);
+
+        // Assert
+        await _userRepository
+            .Received(1)
+            .ExistsByEmailAsync(lowerCaseEmail, Arg.Any<CancellationToken>());
     }
 
     private readonly IUserRepository _userRepository;

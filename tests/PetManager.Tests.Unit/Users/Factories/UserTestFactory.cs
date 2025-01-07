@@ -1,5 +1,5 @@
-using Bogus;
 using PetManager.Application.Users.Commands.ChangeUserInformation;
+using PetManager.Application.Users.Commands.DeleteUser;
 using PetManager.Application.Users.Commands.SignIn;
 using PetManager.Application.Users.Commands.SignUp;
 using PetManager.Core.Users.Entities;
@@ -22,4 +22,13 @@ internal sealed class UserTestFactory
 
     internal ChangeUserInformationCommand ChangeUserInformationCommand()
         => new(_faker.Person.FirstName, _faker.Person.LastName);
+
+    internal ChangeUserInformationCommand ChangeUserInformationCommandWithoutFirstName()
+        => new(null, _faker.Person.LastName);
+
+    internal ChangeUserInformationCommand ChangeUserInformationCommandWithoutLastName()
+        => new(_faker.Person.FirstName, null);
+
+    internal DeleteUserCommand DeleteUserCommand()
+        => new(_faker.Random.Guid());
 }

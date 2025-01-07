@@ -1,4 +1,4 @@
 namespace PetManager.Application.Users.Commands.SignUp;
 
-public record SignUpCommand(string Password, string Email)
+internal record SignUpCommand(string Email, string Password)
     : IRequest<SignUpResponse>;
