@@ -1,6 +1,7 @@
 using PetManager.Application.Shared.Security.Auth;
 using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Application.Users.Commands.SignIn;
+using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 using PetManager.Tests.Unit.Users.Factories;
@@ -19,7 +20,7 @@ public sealed class SignInCommandHandlerTests
         var command = _userFactory.CreateSignInCommand();
 
         _userRepository
-            .GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -32,7 +33,7 @@ public sealed class SignInCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         _passwordManager
             .DidNotReceive()
@@ -51,7 +52,7 @@ public sealed class SignInCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         _passwordManager
@@ -59,7 +60,6 @@ public sealed class SignInCommandHandlerTests
             .Returns(false);
 
         // Act
-
         var exception = await Record.ExceptionAsync(() => Act(command));
 
         // Assert
@@ -69,7 +69,7 @@ public sealed class SignInCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         _passwordManager
             .Received(1)
@@ -88,7 +88,7 @@ public sealed class SignInCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         _passwordManager
@@ -105,9 +105,10 @@ public sealed class SignInCommandHandlerTests
         // Assert
         response.ShouldNotBeNull();
         response.ShouldBeOfType<SignInResponse>();
+
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         _passwordManager
             .Received(1)
@@ -117,19 +118,17 @@ public sealed class SignInCommandHandlerTests
             .Received(1)
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
-    
+
     [Fact]
     public async Task given_email_with_uppercase_letters_when_sign_in_then_should_convert_to_lowercase()
     {
         // Arrange
         const string upperCaseEmail = "TEST@EMAIL.COM";
-        const string lowerCaseEmail = "test@email.com";
-        
         var command = _userFactory.CreateSignInCommand() with { Email = upperCaseEmail };
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(lowerCaseEmail, Arg.Any<CancellationToken>())
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         _passwordManager
@@ -147,15 +146,13 @@ public sealed class SignInCommandHandlerTests
         response.ShouldNotBeNull();
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(lowerCaseEmail, Arg.Any<CancellationToken>());
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
     }
 
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
     private readonly IAuthManager _authManager;
-
     private readonly IRequestHandler<SignInCommand, SignInResponse> _handler;
-
     private readonly UserTestFactory _userFactory = new();
 
     public SignInCommandHandlerTests()

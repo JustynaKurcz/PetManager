@@ -1,5 +1,6 @@
 using PetManager.Application.Pets.Commands.ChangePetInformation;
 using PetManager.Application.Shared.Context;
+using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Exceptions;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Tests.Unit.Pets.Factories;
@@ -17,7 +18,7 @@ public sealed class ChangePetInformationCommandHandlerTests
         // Arrange
         var command = _petFactory.ChangePetInformationCommand();
         _petRepository
-            .GetByIdAsync(command.PetId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .ReturnsNull();
 
         // Act
@@ -30,18 +31,21 @@ public sealed class ChangePetInformationCommandHandlerTests
 
         await _petRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
     }
 
     [Fact]
     public async Task given_valid_data_when_change_pet_information_then_should_change_pet_information()
     {
         // Arrange
+        var userId = Guid.NewGuid();
+        _context.UserId.Returns(userId);
+
         var command = _petFactory.ChangePetInformationCommand();
-        var pet = _petFactory.CreatePet();
+        var pet = _petFactory.CreatePet(userId);
 
         _petRepository
-            .GetByIdAsync(command.PetId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .Returns(pet);
 
         // Act
@@ -50,13 +54,16 @@ public sealed class ChangePetInformationCommandHandlerTests
         // Assert
         await _petRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
+
+        await _petRepository
+            .Received(1)
+            .SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
     private readonly IContext _context;
     private readonly IPetRepository _petRepository;
     private readonly IRequestHandler<ChangePetInformationCommand> _handler;
-
     private readonly PetTestFactory _petFactory = new();
 
     public ChangePetInformationCommandHandlerTests()

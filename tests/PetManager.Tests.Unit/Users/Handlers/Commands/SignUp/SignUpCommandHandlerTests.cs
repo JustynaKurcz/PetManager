@@ -20,8 +20,8 @@ public sealed class SignUpCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .ExistsByEmailAsync(command.Email, Arg.Any<CancellationToken>())
-            .Returns(false);
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .ReturnsNull();
 
         _passwordManager
             .HashPassword(command.Password)
@@ -38,9 +38,10 @@ public sealed class SignUpCommandHandlerTests
         response.ShouldNotBeNull();
         response.ShouldBeOfType<SignUpResponse>();
         response.UserId.ShouldNotBe(Guid.Empty);
+
         await _userRepository
             .Received(1)
-            .ExistsByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         _passwordManager
             .Received(1)
@@ -56,9 +57,11 @@ public sealed class SignUpCommandHandlerTests
     {
         // Arrange
         var command = _userFactory.CreateSignUpCommand();
+        var existingUser = _userFactory.CreateUser();
+
         _userRepository
-            .ExistsByEmailAsync(command.Email.ToLowerInvariant(), Arg.Any<CancellationToken>())
-            .Returns(true);
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .Returns(existingUser);
 
         // Act
         var exception = await Record.ExceptionAsync(() => Act(command));
@@ -66,27 +69,26 @@ public sealed class SignUpCommandHandlerTests
         // Assert
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<UserAlreadyExistsException>();
+
         await _userRepository
             .Received(1)
-            .ExistsByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .DidNotReceive()
             .AddAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
-    
+
     [Fact]
     public async Task given_email_with_uppercase_letters_when_sign_up_then_should_convert_to_lowercase()
     {
         // Arrange
         const string upperCaseEmail = "TEST@EMAIL.COM";
-        const string lowerCaseEmail = "test@email.com";
-    
         var command = _userFactory.CreateSignUpCommand() with { Email = upperCaseEmail };
 
         _userRepository
-            .ExistsByEmailAsync(lowerCaseEmail, Arg.Any<CancellationToken>())
-            .Returns(false);
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .ReturnsNull();
 
         // Act
         await Act(command);
@@ -94,14 +96,12 @@ public sealed class SignUpCommandHandlerTests
         // Assert
         await _userRepository
             .Received(1)
-            .ExistsByEmailAsync(lowerCaseEmail, Arg.Any<CancellationToken>());
+            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
     }
 
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
-
     private readonly IRequestHandler<SignUpCommand, SignUpResponse> _handler;
-
     private readonly UserTestFactory _userFactory = new();
 
     public SignUpCommandHandlerTests()

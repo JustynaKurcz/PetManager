@@ -4,9 +4,8 @@ namespace PetManager.Core.HealthRecords.Repositories;
 
 public interface IHealthRecordRepository
 {
-    Task AddAsync(HealthRecord healthRecord, CancellationToken cancellationToken);
-
-    Task<HealthRecord?> GetByIdAsync(Guid healthRecordId, CancellationToken cancellationToken,
+    Task<HealthRecord?> GetByIdAsync(Expression<Func<HealthRecord, bool>> predicate,
+        CancellationToken cancellationToken,
         bool asNoTracking = false);
 
     Task UpdateAsync(HealthRecord healthRecord, CancellationToken cancellationToken);

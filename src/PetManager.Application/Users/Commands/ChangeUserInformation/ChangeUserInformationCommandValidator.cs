@@ -1,6 +1,6 @@
 namespace PetManager.Application.Users.Commands.ChangeUserInformation;
 
-internal class ChangeUserInformationCommandValidator  : AbstractValidator<ChangeUserInformationCommand>
+internal class ChangeUserInformationCommandValidator : AbstractValidator<ChangeUserInformationCommand>
 {
     public ChangeUserInformationCommandValidator()
     {

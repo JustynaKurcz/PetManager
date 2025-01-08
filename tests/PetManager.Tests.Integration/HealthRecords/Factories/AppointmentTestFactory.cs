@@ -10,7 +10,7 @@ internal sealed class AppointmentTestFactory
     internal Appointment CreateAppointment(Guid? healthRecordId)
         => Appointment.Create(_faker.Random.Word(), _faker.Random.Word(), _faker.Date.PastOffset().ToUniversalTime(),
             _faker.Random.Word(), healthRecordId ?? _faker.Random.Guid());
-    
+
     internal GetAppointmentDetailsQuery GetAppointmentDetailsQuery()
         => new(_faker.Random.Guid(), _faker.Random.Guid());
 }

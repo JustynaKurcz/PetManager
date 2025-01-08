@@ -12,7 +12,8 @@ internal sealed class GetVaccinationDetailsQueryHandler(IHealthRecordRepository 
         CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetByIdAsync(query.HealthRecordId, cancellationToken, asNoTracking: true)
+            await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == query.HealthRecordId, cancellationToken,
+                asNoTracking: true)
             ?? throw new HealthRecordNotFoundException(query.HealthRecordId);
 
         var vaccination = healthRecord.Vaccinations.FirstOrDefault(v => v.VaccinationId == query.VaccinationId)

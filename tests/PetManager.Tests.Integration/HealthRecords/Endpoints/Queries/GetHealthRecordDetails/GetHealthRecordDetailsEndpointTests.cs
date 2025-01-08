@@ -1,4 +1,5 @@
 using PetManager.Api.Endpoints.HealthRecords;
+using PetManager.Tests.Integration.Configuration;
 using PetManager.Tests.Integration.HealthRecords.Factories;
 using PetManager.Tests.Integration.Users.Factories;
 

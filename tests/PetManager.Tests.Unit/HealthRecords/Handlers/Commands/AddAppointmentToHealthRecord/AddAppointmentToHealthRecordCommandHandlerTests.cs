@@ -19,7 +19,8 @@ public sealed class AddAppointmentToHealthRecordCommandHandlerTests
         var command = _healthRecordFactory.AddAppointmentToHealthRecordCommand();
 
         _healthRecordRepository
-            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>())
             .ReturnsNull();
 
         // Act
@@ -32,7 +33,8 @@ public sealed class AddAppointmentToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>());
 
         await _healthRecordRepository
             .DidNotReceive()
@@ -52,7 +54,8 @@ public sealed class AddAppointmentToHealthRecordCommandHandlerTests
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
 
         _healthRecordRepository
-            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>())
             .Returns(healthRecord);
 
         _healthRecordRepository
@@ -73,7 +76,8 @@ public sealed class AddAppointmentToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>());
 
         await _healthRecordRepository
             .Received(1)
@@ -94,7 +98,6 @@ public sealed class AddAppointmentToHealthRecordCommandHandlerTests
     public AddAppointmentToHealthRecordCommandHandlerTests()
     {
         _healthRecordRepository = Substitute.For<IHealthRecordRepository>();
-
         _handler = new AddAppointmentToHealthRecordCommandHandler(_healthRecordRepository);
     }
 }

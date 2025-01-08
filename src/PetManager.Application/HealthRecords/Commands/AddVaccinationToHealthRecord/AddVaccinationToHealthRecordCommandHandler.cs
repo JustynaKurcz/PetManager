@@ -12,7 +12,8 @@ internal sealed class AddVaccinationToHealthRecordCommandHandler(
         CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetByIdAsync(command.HealthRecordId, cancellationToken)
+            await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == command.HealthRecordId,
+                cancellationToken)
             ?? throw new HealthRecordNotFoundException(command.HealthRecordId);
 
         var vaccination = Vaccination.Create(command.VaccinationName, command.VaccinationDate,

@@ -14,7 +14,7 @@ internal static class Extensions
 
         services
             .AddValidators(Assembly.GetExecutingAssembly());
-        
+
         return services;
     }
 }

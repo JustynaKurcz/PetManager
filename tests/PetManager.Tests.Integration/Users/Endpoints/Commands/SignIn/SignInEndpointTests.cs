@@ -1,5 +1,6 @@
 using PetManager.Api.Endpoints.Users;
 using PetManager.Application.Users.Commands.SignIn;
+using PetManager.Tests.Integration.Configuration;
 using PetManager.Tests.Integration.Users.Factories;
 
 namespace PetManager.Tests.Integration.Users.Endpoints.Commands.SignIn;

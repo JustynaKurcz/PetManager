@@ -25,16 +25,11 @@ public class HealthRecord
 
     private HealthRecord()
     {
-    }
-
-    private HealthRecord(Guid petId)
-    {
         HealthRecordId = Guid.NewGuid();
-        PetId = petId;
     }
 
-    public static HealthRecord Create(Guid petId)
-        => new(petId);
+    public static HealthRecord Create()
+        => new();
 
     public void AddVaccination(Vaccination vaccination)
         => _vaccinations.Add(vaccination);

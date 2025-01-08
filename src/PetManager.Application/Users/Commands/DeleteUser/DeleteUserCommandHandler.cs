@@ -11,7 +11,7 @@ internal sealed class DeleteUserCommandHandler(
 {
     public async Task Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByIdAsync(command.UserId, cancellationToken)
+        var user = await userRepository.GetByIdAsync(x => x.UserId == context.UserId, cancellationToken)
                    ?? throw new UserNotFoundException(command.UserId);
 
         ValidateDeletePermissions(command.UserId);

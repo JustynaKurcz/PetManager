@@ -20,8 +20,8 @@ public sealed class UserEntityValidTestData
         user.Role.ShouldBe(userParams.Role);
         user.CreatedAt.ShouldNotBe(default);
     }
-    
-    
+
+
     private static User Act(UserParams userParams)
         => User.Create(userParams.Email, userParams.Password, userParams.Role);
 }

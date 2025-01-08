@@ -1,5 +1,6 @@
 using PetManager.Application.Shared.Context;
 using PetManager.Application.Users.Commands.ChangeUserInformation;
+using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 using PetManager.Tests.Unit.Users.Factories;
@@ -17,7 +18,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Arrange
         var command = _userFactory.ChangeUserInformationCommand();
         _userRepository
-            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -30,7 +31,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .DidNotReceive()
@@ -45,7 +46,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -54,16 +55,16 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Assert
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .Received(1)
             .SaveChangesAsync(Arg.Any<CancellationToken>());
-        
+
         user.FirstName.ShouldBe(command.FirstName);
         user.LastName.ShouldBe(command.LastName);
     }
-    
+
     [Fact]
     public async Task given_only_first_name_when_change_user_information_then_should_update_only_first_name()
     {
@@ -73,7 +74,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         var command = _userFactory.ChangeUserInformationCommandWithoutLastName();
 
         _userRepository
-            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -82,16 +83,16 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Assert
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .Received(1)
             .SaveChangesAsync(Arg.Any<CancellationToken>());
-        
+
         user.FirstName.ShouldBe(command.FirstName);
         user.LastName.ShouldBe(existingLastName);
     }
-    
+
     [Fact]
     public async Task given_only_last_name_when_change_user_information_then_should_update_only_last_name()
     {
@@ -101,7 +102,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         var command = _userFactory.ChangeUserInformationCommandWithoutFirstName();
 
         _userRepository
-            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -110,19 +111,18 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Assert
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .Received(1)
             .SaveChangesAsync(Arg.Any<CancellationToken>());
-        
+
         user.FirstName.ShouldBe(existingFirstName);
         user.LastName.ShouldBe(command.LastName);
     }
-    
+
     private readonly IUserRepository _userRepository;
     private readonly IContext _context;
-
     private readonly IRequestHandler<ChangeUserInformationCommand> _handler;
     private readonly UserTestFactory _userFactory = new();
 

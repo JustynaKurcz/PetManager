@@ -2,6 +2,7 @@ using PetManager.Application.Pets.Commands.ChangePetInformation;
 using PetManager.Application.Pets.Commands.CreatePet;
 using PetManager.Application.Pets.Commands.DeletePet;
 using PetManager.Application.Pets.Queries.GetPetDetails;
+using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Enums;
 
@@ -14,7 +15,7 @@ internal sealed class PetTestFactory
     internal Pet CreatePet(Guid? userId)
         => Pet.Create(_faker.Person.FirstName, _faker.PickRandom<Species>(), _faker.Random.Word(),
             _faker.PickRandom<Gender>(), _faker.Date.PastOffset(10, DateTimeOffset.UtcNow),
-            userId ?? _faker.Random.Guid());
+            userId ?? _faker.Random.Guid(), HealthRecord.Create());
 
     internal CreatePetCommand CreatePetCommand()
         => new(_faker.Person.FirstName, _faker.PickRandom<Species>(), _faker.Random.Word(), _faker.PickRandom<Gender>(),

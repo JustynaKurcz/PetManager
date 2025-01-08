@@ -1,5 +1,6 @@
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails;
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails.DTO;
+using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Exceptions;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Infrastructure.EF.HealthRecords.Queries.GetAppointmentDetails;
@@ -19,7 +20,8 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         // Arrange
         var query = _appointmentFactory.GetAppointmentDetailsQuery();
         _healthRecordRepository
-            .GetByIdAsync(query.HealthRecordId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>())
             .ReturnsNull();
 
         // Act
@@ -32,7 +34,8 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>());
     }
 
     [Fact]
@@ -43,7 +46,8 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         var query = _appointmentFactory.GetAppointmentDetailsQuery();
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
         _healthRecordRepository
-            .GetByIdAsync(query.HealthRecordId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>())
             .Returns(healthRecord);
 
         // Act
@@ -56,7 +60,8 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>());
     }
 
     [Fact]
@@ -71,7 +76,8 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         healthRecord.AddAppointment(appointment);
 
         _healthRecordRepository
-            .GetByIdAsync(query.HealthRecordId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>())
             .Returns(healthRecord);
 
         // Act

@@ -1,6 +1,5 @@
 using PetManager.Application.Shared.Context;
 using PetManager.Core.HealthRecords.Entities;
-using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Core.Users.Exceptions;
@@ -11,23 +10,18 @@ namespace PetManager.Application.Pets.Commands.CreatePet;
 internal sealed class CreatePetCommandHandler(
     IContext context,
     IUserRepository userRepository,
-    IPetRepository petRepository,
-    IHealthRecordRepository healthRecordRepository)
-    : IRequestHandler<CreatePetCommand, CreatePetResponse>
+    IPetRepository petRepository
+) : IRequestHandler<CreatePetCommand, CreatePetResponse>
 {
     public async Task<CreatePetResponse> Handle(CreatePetCommand command, CancellationToken cancellationToken = default)
     {
-        var user = await userRepository.GetByIdAsync(context.UserId, cancellationToken);
-        if (user is null)
+        var userExists = await userRepository.ExistsAsync(u => u.UserId == context.UserId, cancellationToken);
+        if (!userExists)
             throw new UserNotFoundException(context.UserId);
 
         var pet = Pet.Create(command.Name, command.Species, command.Breed, command.Gender, command.BirthDate,
-            context.UserId);
+            context.UserId, HealthRecord.Create());
         await petRepository.AddAsync(pet, cancellationToken);
-
-        var healthRecord = HealthRecord.Create(pet.PetId);
-        pet.AddHealthRecord(healthRecord.HealthRecordId);
-        await healthRecordRepository.AddAsync(healthRecord, cancellationToken);
 
         return new CreatePetResponse(pet.PetId);
     }

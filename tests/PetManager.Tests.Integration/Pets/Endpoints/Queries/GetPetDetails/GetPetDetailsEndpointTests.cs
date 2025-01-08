@@ -1,5 +1,6 @@
 using PetManager.Api.Endpoints.Pets;
 using PetManager.Application.Pets.Queries.GetPetDetails.DTO;
+using PetManager.Tests.Integration.Configuration;
 using PetManager.Tests.Integration.Pets.Factories;
 using PetManager.Tests.Integration.Users.Factories;
 

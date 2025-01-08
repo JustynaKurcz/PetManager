@@ -19,7 +19,8 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
         var command = _healthRecordFactory.DeleteVaccinationToHealthRecordCommand();
 
         _healthRecordRepository
-            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>())
             .ReturnsNull();
 
         // Act
@@ -32,7 +33,8 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>());
 
         await _healthRecordRepository
             .DidNotReceive()
@@ -52,7 +54,8 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
 
         _healthRecordRepository
-            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>())
             .Returns(healthRecord);
 
         // Act
@@ -65,7 +68,8 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>());
 
         await _healthRecordRepository
             .DidNotReceive()
@@ -90,7 +94,8 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
         healthRecord.AddVaccination(vaccination);
 
         _healthRecordRepository
-            .GetByIdAsync(command.HealthRecordId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>())
             .Returns(healthRecord);
 
         // Act
@@ -99,7 +104,8 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
         // Assert
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+                Arg.Any<bool>());
 
         await _healthRecordRepository
             .Received(1)

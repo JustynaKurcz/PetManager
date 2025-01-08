@@ -1,6 +1,7 @@
 using PetManager.Application.Shared.Context;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
+using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 using PetManager.Infrastructure.EF.Users.Queries.GetCurrentUserDetails;
@@ -19,7 +20,7 @@ public sealed class GetCurrentUserDetailsQueryHandlerTest
         // Arrange
         var query = new GetCurrentUserDetailsQuery();
         _userRepository
-            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -32,7 +33,7 @@ public sealed class GetCurrentUserDetailsQueryHandlerTest
 
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>());
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -43,7 +44,7 @@ public sealed class GetCurrentUserDetailsQueryHandlerTest
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByIdAsync(_context.UserId, Arg.Any<CancellationToken>())
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -52,13 +53,15 @@ public sealed class GetCurrentUserDetailsQueryHandlerTest
         // Assert
         response.ShouldNotBeNull();
         response.ShouldBeOfType<CurrentUserDetailsDto>();
+
+        await _userRepository
+            .Received(1)
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
     }
 
     private readonly IUserRepository _userRepository;
     private readonly IContext _context;
-
     private readonly IRequestHandler<GetCurrentUserDetailsQuery, CurrentUserDetailsDto> _handler;
-
     private readonly UserTestFactory _userFactory = new();
 
     public GetCurrentUserDetailsQueryHandlerTest()

@@ -11,7 +11,7 @@ internal sealed class HealthRecordTestFactory
     private readonly Faker _faker = new();
 
     internal HealthRecord CreateHealthRecord()
-        => HealthRecord.Create(_faker.Random.Guid());
+        => HealthRecord.Create();
 
     internal AddAppointmentToHealthRecordCommand AddAppointmentToHealthRecordCommand()
         => new(_faker.Random.Word(), _faker.Random.Word(), _faker.Date.PastOffset(), _faker.Random.Word());

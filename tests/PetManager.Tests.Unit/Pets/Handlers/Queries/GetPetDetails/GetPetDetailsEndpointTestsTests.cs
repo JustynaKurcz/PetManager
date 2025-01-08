@@ -1,5 +1,6 @@
 using PetManager.Application.Pets.Queries.GetPetDetails;
 using PetManager.Application.Pets.Queries.GetPetDetails.DTO;
+using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Exceptions;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Infrastructure.EF.Pets.Queries.GetPetDetails;
@@ -18,7 +19,7 @@ public sealed class GetPetDetailsQueryHandlerTests
         // Arrange
         var query = _petFactory.GetPetDetailsQuery();
         _petRepository
-            .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
+            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .ReturnsNull();
 
         // Act
@@ -31,7 +32,7 @@ public sealed class GetPetDetailsQueryHandlerTests
 
         await _petRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
+            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
     }
 
     [Fact]
@@ -42,7 +43,7 @@ public sealed class GetPetDetailsQueryHandlerTests
         var pet = _petFactory.CreatePet();
 
         _petRepository
-            .GetByIdAsync(query.PetId, Arg.Any<CancellationToken>(), Arg.Any<bool>())
+            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .Returns(pet);
 
         // Act
@@ -51,18 +52,19 @@ public sealed class GetPetDetailsQueryHandlerTests
         // Assert
         response.ShouldNotBeNull();
         response.ShouldBeOfType<PetDetailsDto>();
+
+        await _petRepository
+            .Received(1)
+            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
     }
 
     private readonly IPetRepository _petRepository;
-
     private readonly IRequestHandler<GetPetDetailsQuery, PetDetailsDto> _handler;
-
     private readonly PetTestFactory _petFactory = new();
 
     public GetPetDetailsQueryHandlerTests()
     {
         _petRepository = Substitute.For<IPetRepository>();
-
         _handler = new GetPetDetailsQueryHandler(_petRepository);
     }
 }

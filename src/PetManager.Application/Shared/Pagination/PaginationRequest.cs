@@ -17,7 +17,7 @@ public class PaginationRequest
         get => _pageSize;
         set => _pageSize = value >= 1 ? value <= 100 ? value : 25 : 25;
     }
-    
+
     public PaginationRequest()
     {
         _pageNumber = 1;

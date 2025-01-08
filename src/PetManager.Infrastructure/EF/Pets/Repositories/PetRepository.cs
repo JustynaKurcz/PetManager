@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Repositories;
 using PetManager.Infrastructure.EF.DbContext;
@@ -17,18 +18,19 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
         => await dbContext.SaveChangesAsync(cancellationToken);
 
-    public async Task<Pet> GetByIdAsync(Guid petId, CancellationToken cancellationToken, bool asNoTracking = false)
+    public async Task<Pet?> GetByIdAsync(Expression<Func<Pet, bool>> predicate, CancellationToken cancellationToken,
+        bool asNoTracking = false)
     {
         var query = _pets.AsQueryable();
 
         if (asNoTracking)
             query = query.AsNoTracking();
 
-        return await query.SingleOrDefaultAsync(x => x.PetId == petId, cancellationToken);
+        return await query.SingleOrDefaultAsync(predicate, cancellationToken);
     }
 
     public async Task<IQueryable<Pet>> BrowseAsync(CancellationToken cancellationToken)
-        =>  _pets.AsQueryable();
+        => _pets.AsQueryable();
 
     public async Task DeleteAsync(Pet pet, CancellationToken cancellationToken)
     {

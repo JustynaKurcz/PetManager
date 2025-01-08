@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using PetManager.Infrastructure.EF.DbContext;
 
-namespace PetManager.Tests.Integration;
+namespace PetManager.Tests.Integration.Configuration;
 
 public class PetManagerTestFactory : WebApplicationFactory<Api.Program>
 {

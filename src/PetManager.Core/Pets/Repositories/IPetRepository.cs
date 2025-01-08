@@ -6,7 +6,10 @@ public interface IPetRepository
 {
     Task AddAsync(Pet pet, CancellationToken cancellationToken);
     Task SaveChangesAsync(CancellationToken cancellationToken);
-    Task<Pet?> GetByIdAsync(Guid petId, CancellationToken cancellationToken, bool asNoTracking = false);
+
+    Task<Pet?> GetByIdAsync(Expression<Func<Pet, bool>> predicate, CancellationToken cancellationToken,
+        bool asNoTracking = false);
+
     Task<IQueryable<Pet>> BrowseAsync(CancellationToken cancellationToken);
     Task DeleteAsync(Pet pet, CancellationToken cancellationToken);
 }

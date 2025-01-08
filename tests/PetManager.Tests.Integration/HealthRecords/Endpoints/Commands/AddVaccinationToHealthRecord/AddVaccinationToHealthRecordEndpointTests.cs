@@ -1,6 +1,7 @@
 using PetManager.Api.Endpoints.HealthRecords;
 using PetManager.Application.HealthRecords.Commands.AddAppointmentToHealthRecord;
 using PetManager.Application.HealthRecords.Commands.AddVaccinationToHealthRecord;
+using PetManager.Tests.Integration.Configuration;
 using PetManager.Tests.Integration.HealthRecords.Factories;
 using PetManager.Tests.Integration.Pets.Factories;
 using PetManager.Tests.Integration.Users.Factories;
@@ -27,7 +28,7 @@ public class AddVaccinationToHealthRecordEndpointTests : IntegrationTestBase
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
-    
+
     [Fact]
     public async Task add_vaccination_to_health_record_with_valid_data_should_return_201_status_code()
     {
@@ -35,26 +36,26 @@ public class AddVaccinationToHealthRecordEndpointTests : IntegrationTestBase
         var user = _userFactory.CreateUser();
         await AddAsync(user);
         Authenticate(user.UserId, user.Role.ToString());
-        
+
         var pet = _petFactory.CreatePet(user.UserId);
         await AddAsync(pet);
-        
-        var healthRecord = _healthRecordFactory.CreateHealthRecord(pet.PetId);
-        await AddAsync(healthRecord);
 
-        var command = _healthRecordFactory.AddVaccinationToHealthRecordCommand() with { HealthRecordId = healthRecord.HealthRecordId };
+        var command = _healthRecordFactory.AddVaccinationToHealthRecordCommand() with
+        {
+            HealthRecordId = pet.HealthRecordId
+        };
 
         // Act
         var response = await _client.PostAsJsonAsync(
             HealthRecordEndpoints.AddVaccination.Replace("{healthRecordId:guid}",
-                healthRecord.HealthRecordId.ToString()),
+                pet.HealthRecordId.ToString()),
             command);
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.Created);
         await response.Content.ReadFromJsonAsync<AddVaccinationToHealthRecordResponse>().ShouldNotBeNull();
     }
-    
+
     [Fact]
     public async Task add_vaccination_to_health_record_given_non_existing_health_record_should_return_400_status_code()
     {
@@ -62,7 +63,7 @@ public class AddVaccinationToHealthRecordEndpointTests : IntegrationTestBase
         var user = _userFactory.CreateUser();
         await AddAsync(user);
         Authenticate(user.UserId, user.Role.ToString());
-        
+
         var command = _healthRecordFactory.AddVaccinationToHealthRecordCommand();
 
         // Act

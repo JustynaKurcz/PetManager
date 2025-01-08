@@ -18,5 +18,4 @@ public class EnumHelper
         var displayAttribute = fieldInfo?.GetCustomAttribute<DisplayAttribute>();
         return displayAttribute != null ? displayAttribute.Name : value.ToString();
     }
-    
 }

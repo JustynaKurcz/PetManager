@@ -1,4 +1,5 @@
 using PetManager.Api.Endpoints.HealthRecords;
+using PetManager.Tests.Integration.Configuration;
 using PetManager.Tests.Integration.HealthRecords.Factories;
 using PetManager.Tests.Integration.Pets.Factories;
 using PetManager.Tests.Integration.Users.Factories;
@@ -26,7 +27,7 @@ public class DeleteAppointmentToHealthRecordEndpointTests : IntegrationTestBase
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
-    
+
     [Fact]
     public async Task delete_appointment_to_health_record_with_valid_data_should_return_204_status_code()
     {
@@ -34,27 +35,25 @@ public class DeleteAppointmentToHealthRecordEndpointTests : IntegrationTestBase
         var user = _userFactory.CreateUser();
         await AddAsync(user);
         Authenticate(user.UserId, user.Role.ToString());
-        
+
         var pet = _petFactory.CreatePet(user.UserId);
         await AddAsync(pet);
-        
-        var healthRecord = _healthRecordFactory.CreateHealthRecord(pet.PetId);
-        await AddAsync(healthRecord);
 
-        var appointment = _appointmentFactory.CreateAppointment(healthRecord.HealthRecordId);
+        var appointment = _appointmentFactory.CreateAppointment(pet.HealthRecordId);
         await AddAsync(appointment);
 
         // Act
         var response = await _client.DeleteAsync(
-            HealthRecordEndpoints.DeleteAppointment.Replace("{healthRecordId:guid}", healthRecord.HealthRecordId.ToString())
+            HealthRecordEndpoints.DeleteAppointment.Replace("{healthRecordId:guid}", pet.HealthRecordId.ToString())
                 .Replace("{appointmentId:guid}", appointment.AppointmentId.ToString()));
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.NoContent);
     }
-    
+
     [Fact]
-    public async Task delete_appointment_to_health_record_given_non_existing_health_record_should_return_400_status_code()
+    public async Task
+        delete_appointment_to_health_record_given_non_existing_health_record_should_return_400_status_code()
     {
         // Arrange
         var user = _userFactory.CreateUser();
@@ -66,7 +65,8 @@ public class DeleteAppointmentToHealthRecordEndpointTests : IntegrationTestBase
 
         // Act
         var response = await _client.DeleteAsync(
-            HealthRecordEndpoints.DeleteAppointment.Replace("{healthRecordId:guid}", nonExistingHealthRecordId.ToString())
+            HealthRecordEndpoints.DeleteAppointment
+                .Replace("{healthRecordId:guid}", nonExistingHealthRecordId.ToString())
                 .Replace("{appointmentId:guid}", appointmentId.ToString()));
 
         // Assert
@@ -80,22 +80,18 @@ public class DeleteAppointmentToHealthRecordEndpointTests : IntegrationTestBase
         var user = _userFactory.CreateUser();
         await AddAsync(user);
         Authenticate(user.UserId, user.Role.ToString());
-        
+
         var pet = _petFactory.CreatePet(user.UserId);
         await AddAsync(pet);
-        
-        var healthRecord = _healthRecordFactory.CreateHealthRecord(pet.PetId);
-        await AddAsync(healthRecord);
 
         var nonExistingAppointmentId = Guid.NewGuid();
 
         // Act
         var response = await _client.DeleteAsync(
-            HealthRecordEndpoints.DeleteAppointment.Replace("{healthRecordId:guid}", healthRecord.HealthRecordId.ToString())
+            HealthRecordEndpoints.DeleteAppointment.Replace("{healthRecordId:guid}", pet.HealthRecordId.ToString())
                 .Replace("{appointmentId:guid}", nonExistingAppointmentId.ToString()));
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
     }
-
 }

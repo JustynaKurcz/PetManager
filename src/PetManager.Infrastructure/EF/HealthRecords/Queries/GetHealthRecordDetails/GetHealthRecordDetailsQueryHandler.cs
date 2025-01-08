@@ -8,11 +8,13 @@ namespace PetManager.Infrastructure.EF.HealthRecords.Queries.GetHealthRecordDeta
 internal sealed class GetHealthRecordDetailsQueryHandler(IHealthRecordRepository healthRecordRepository)
     : IRequestHandler<GetHealthRecordDetailsQuery, HealthRecordDetailsDto>
 {
-    public async Task<HealthRecordDetailsDto> Handle(GetHealthRecordDetailsQuery query, CancellationToken cancellationToken)
+    public async Task<HealthRecordDetailsDto> Handle(GetHealthRecordDetailsQuery query,
+        CancellationToken cancellationToken)
     {
-        var healthRecord = await healthRecordRepository.GetByIdAsync(query.HealthRecordId, cancellationToken, asNoTracking: true)
-                          ?? throw new HealthRecordNotFoundException(query.HealthRecordId);
-        
+        var healthRecord = await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == query.HealthRecordId,
+                               cancellationToken, asNoTracking: true)
+                           ?? throw new HealthRecordNotFoundException(query.HealthRecordId);
+
         return healthRecord.AsDetailsDto();
     }
 }

@@ -14,14 +14,15 @@ public class Pet
     public DateTimeOffset BirthDate { get; set; }
     public Guid UserId { get; private set; }
     public virtual User User { get; private set; }
-    public Guid? HealthRecordId { get; set; }
-    public HealthRecord? HealthRecord { get; set; }
+    public Guid HealthRecordId { get; set; }
+    public HealthRecord HealthRecord { get; set; }
 
     private Pet()
     {
     }
 
-    private Pet(string name, Species species, string breed, Gender gender, DateTimeOffset birthDate, Guid userId)
+    private Pet(string name, Species species, string breed, Gender gender, DateTimeOffset birthDate, Guid userId,
+        HealthRecord healthRecord)
     {
         PetId = Guid.NewGuid();
         Name = name;
@@ -30,11 +31,13 @@ public class Pet
         Gender = gender;
         BirthDate = birthDate;
         UserId = userId;
+        HealthRecordId = healthRecord.HealthRecordId;
+        HealthRecord = healthRecord;
     }
 
     public static Pet Create(string name, Species species, string breed, Gender gender, DateTimeOffset birthDate,
-        Guid userId)
-        => new(name, species, breed, gender, birthDate, userId);
+        Guid userId, HealthRecord healthRecord)
+        => new(name, species, breed, gender, birthDate, userId, healthRecord);
 
     public void AddHealthRecord(Guid healthRecordId)
         => HealthRecordId = healthRecordId;

@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Repositories;
 using PetManager.Infrastructure.EF.DbContext;
@@ -14,17 +15,17 @@ internal class UserRepository(PetManagerDbContext dbContext) : IUserRepository
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
+    public async Task<User?> GetByEmailAsync(Expression<Func<User, bool>> predicate,
+        CancellationToken cancellationToken)
         => await _users
-            .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+            .FirstOrDefaultAsync(predicate, cancellationToken);
 
-    public async Task<User?> GetByIdAsync(Guid userId, CancellationToken cancellationToken)
-        => await _users.SingleOrDefaultAsync(x => x.UserId == userId, cancellationToken);
+    public async Task<User?> GetByIdAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
+        => await _users.SingleOrDefaultAsync(predicate, cancellationToken);
 
-
-    public async Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken)
+    public async Task<bool> ExistsAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
         => await _users
-            .AnyAsync(x => x.Email == email, cancellationToken);
+            .AnyAsync(predicate, cancellationToken);
 
     public async Task DeleteAsync(User user, CancellationToken cancellationToken)
     {

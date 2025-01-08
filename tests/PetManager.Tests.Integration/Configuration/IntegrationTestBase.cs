@@ -4,7 +4,7 @@ using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Infrastructure.EF.DbContext;
 using PetManager.Tests.Integration.Users.Factories;
 
-namespace PetManager.Tests.Integration;
+namespace PetManager.Tests.Integration.Configuration;
 
 [Collection("IntegrationTests")]
 public abstract class IntegrationTestBase : IClassFixture<PetManagerTestFactory>, IAsyncLifetime

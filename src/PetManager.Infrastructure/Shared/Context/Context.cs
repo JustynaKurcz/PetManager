@@ -16,6 +16,5 @@ internal class Context : IContext
 
         UserId = Guid.Parse(identity!.Name!);
         IsAdmin = claims?.Any(c => c is { Type: "role", Value: "Admin" }) ?? false;
-        
     }
 }

@@ -13,7 +13,7 @@ internal sealed class ChangePetInformationCommandHandler(
     {
         var currentLoggedUserId = context.UserId;
 
-        var pet = await petRepository.GetByIdAsync(command.PetId, cancellationToken)
+        var pet = await petRepository.GetByIdAsync(x => x.PetId == command.PetId, cancellationToken)
                   ?? throw new PetNotFoundException(command.PetId);
 
         var isPetOwnedByCurrentUser = pet.UserId == currentLoggedUserId;

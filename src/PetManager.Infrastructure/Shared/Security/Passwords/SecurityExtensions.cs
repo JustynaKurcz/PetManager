@@ -1,4 +1,3 @@
-using PetManager.Application.Shared.Security;
 using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Core.Users.Entities;
 

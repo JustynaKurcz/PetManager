@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Infrastructure.EF.DbContext;
@@ -8,13 +9,8 @@ internal class HealthRecordRepository(PetManagerDbContext dbContext) : IHealthRe
 {
     private readonly DbSet<HealthRecord> _healthRecords = dbContext.HealthRecords;
 
-    public async Task AddAsync(HealthRecord healthRecord, CancellationToken cancellationToken)
-    {
-        await _healthRecords.AddAsync(healthRecord, cancellationToken);
-        await dbContext.SaveChangesAsync(cancellationToken);
-    }
-
-    public async Task<HealthRecord?> GetByIdAsync(Guid healthRecordId, CancellationToken cancellationToken,
+    public async Task<HealthRecord?> GetByIdAsync(Expression<Func<HealthRecord, bool>> predicate,
+        CancellationToken cancellationToken,
         bool asNoTracking = false)
     {
         var query = _healthRecords.AsQueryable()
@@ -25,7 +21,7 @@ internal class HealthRecordRepository(PetManagerDbContext dbContext) : IHealthRe
         if (asNoTracking)
             query = query.AsNoTracking();
 
-        return await query.SingleOrDefaultAsync(x => x.HealthRecordId == healthRecordId, cancellationToken);
+        return await query.SingleOrDefaultAsync(predicate, cancellationToken);
     }
 
     public async Task UpdateAsync(HealthRecord healthRecord, CancellationToken cancellationToken)

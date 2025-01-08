@@ -1,4 +1,5 @@
 using PetManager.Api.Endpoints.Pets;
+using PetManager.Tests.Integration.Configuration;
 using PetManager.Tests.Integration.Pets.Factories;
 using PetManager.Tests.Integration.Users.Factories;
 

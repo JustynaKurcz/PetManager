@@ -1,5 +1,6 @@
 using PetManager.Api.Endpoints.Users;
 using PetManager.Core.Users.Enums;
+using PetManager.Tests.Integration.Configuration;
 using PetManager.Tests.Integration.Users.Factories;
 
 namespace PetManager.Tests.Integration.Users.Endpoints.Commands.DeleteUser;

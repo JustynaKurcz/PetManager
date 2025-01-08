@@ -28,8 +28,8 @@ internal sealed class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.Property<Guid>("UserId")
             .IsRequired();
 
-        builder.Property<Guid?>("HealthRecordId")
-            .IsRequired(false);
+        builder.Property<Guid>("HealthRecordId")
+            .IsRequired();
 
         builder.HasOne(x => x.User)
             .WithMany()

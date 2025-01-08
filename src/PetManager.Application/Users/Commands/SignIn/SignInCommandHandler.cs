@@ -15,7 +15,7 @@ internal sealed class SignInCommandHandler(
     {
         var email = command.Email.ToLowerInvariant();
 
-        var user = await userRepository.GetByEmailAsync(email, cancellationToken);
+        var user = await userRepository.GetByEmailAsync(x => x.Email == email, cancellationToken);
         if (user is null)
             throw new InvalidCredentialsException();
 

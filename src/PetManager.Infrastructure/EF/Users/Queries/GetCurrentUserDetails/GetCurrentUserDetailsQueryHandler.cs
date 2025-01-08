@@ -14,7 +14,7 @@ internal sealed class GetCurrentUserDetailsQueryHandler(
     public async Task<CurrentUserDetailsDto> Handle(GetCurrentUserDetailsQuery query,
         CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByIdAsync(context.UserId, cancellationToken)
+        var user = await userRepository.GetByIdAsync(x => x.UserId == context.UserId, cancellationToken)
                    ?? throw new UserNotFoundException(context.UserId);
 
         if (user is null)

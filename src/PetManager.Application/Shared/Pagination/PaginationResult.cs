@@ -22,7 +22,8 @@ public class PaginationResult<T>
 
     public bool HasNextPage => PageIndex < TotalPages;
 
-    public static async Task<PaginationResult<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize, CancellationToken cancellationToken)
+    public static async Task<PaginationResult<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize,
+        CancellationToken cancellationToken)
     {
         var count = await source.CountAsync(cancellationToken);
         var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);

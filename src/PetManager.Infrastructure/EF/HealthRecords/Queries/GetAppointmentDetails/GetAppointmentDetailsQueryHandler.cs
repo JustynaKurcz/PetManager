@@ -12,7 +12,8 @@ internal sealed class GetAppointmentDetailsQueryHandler(IHealthRecordRepository 
         CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetByIdAsync(query.HealthRecordId, cancellationToken, asNoTracking: true)
+            await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == query.HealthRecordId, cancellationToken,
+                asNoTracking: true)
             ?? throw new HealthRecordNotFoundException(query.HealthRecordId);
 
         var appointment = healthRecord.Appointments.FirstOrDefault(a => a.AppointmentId == query.AppointmentId)
