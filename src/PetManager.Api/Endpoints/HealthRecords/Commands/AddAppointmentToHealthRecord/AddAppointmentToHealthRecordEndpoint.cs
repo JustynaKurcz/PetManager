@@ -7,7 +7,7 @@ internal sealed class AddAppointmentToHealthRecordEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost(HealthRecordsEndpoint.AddAppointment, async (
+        app.MapPost(HealthRecordEndpoints.AddAppointment, async (
                 [AsParameters] AddAppointmentToHealthRecordEndpointRequest request,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -15,11 +15,11 @@ internal sealed class AddAppointmentToHealthRecordEndpoint : IEndpointDefinition
                 var command = request.Command with { HealthRecordId = request.HealthRecordId };
                 var response = await mediator.Send(command, cancellationToken);
 
-                return Results.Created(HealthRecordsEndpoint.Base, response);
+                return Results.Created(HealthRecordEndpoints.Base, response);
             })
             .Produces<AddAppointmentToHealthRecordResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
-            .WithTags(HealthRecordsEndpoint.Tag)
+            .WithTags(HealthRecordEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Add an appointment to a health record",

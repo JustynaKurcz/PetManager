@@ -7,7 +7,7 @@ internal sealed class DeleteAppointmentToHealthRecordEndpoint : IEndpointDefinit
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete(HealthRecordsEndpoint.DeleteAppointment, async (
+        app.MapDelete(HealthRecordEndpoints.DeleteAppointment, async (
                 [AsParameters] DeleteAppointmentToHealthRecordEndpointRequest request,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -20,7 +20,7 @@ internal sealed class DeleteAppointmentToHealthRecordEndpoint : IEndpointDefinit
             })
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
-            .WithTags(HealthRecordsEndpoint.Tag)
+            .WithTags(HealthRecordEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Delete an appointment to a health record",

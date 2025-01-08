@@ -9,7 +9,7 @@ internal sealed class BrowseUsersEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(AdminEndpoint.BrowseUsers, async (
+        app.MapGet(AdminEndpoints.BrowseUsers, async (
                 [FromServices] IMediator mediator,
                 [AsParameters] BrowseUsersQuery query,
                 CancellationToken cancellationToken) =>
@@ -20,7 +20,7 @@ internal sealed class BrowseUsersEndpoint : IEndpointDefinition
             })
             .Produces<PaginationResult<CurrentUserDetailsDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
-            .WithTags(AdminEndpoint.Tag)
+            .WithTags(AdminEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Browse users",

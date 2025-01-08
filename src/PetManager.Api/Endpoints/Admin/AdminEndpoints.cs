@@ -1,6 +1,6 @@
 namespace PetManager.Api.Endpoints.Admin;
 
-internal static class AdminEndpoint
+internal static class AdminEndpoints
 {
     private const string Base = $"{Routing.BaseUrl}/admin";
     internal const string Tag = "Admin";

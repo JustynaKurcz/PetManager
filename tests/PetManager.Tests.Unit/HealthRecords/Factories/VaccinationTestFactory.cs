@@ -1,4 +1,3 @@
-using Bogus;
 using PetManager.Application.HealthRecords.Queries.GetVaccinationDetails;
 using PetManager.Core.HealthRecords.Entities;
 

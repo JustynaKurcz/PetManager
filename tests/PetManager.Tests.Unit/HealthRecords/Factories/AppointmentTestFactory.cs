@@ -1,4 +1,3 @@
-using Bogus;
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails;
 using PetManager.Core.HealthRecords.Entities;
 

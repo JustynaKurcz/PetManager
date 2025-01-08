@@ -8,7 +8,7 @@ internal sealed class GetAppointmentDetailsEndpoint : IEndpointDefinition
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(HealthRecordsEndpoint.GetAppointmentDetails, async (
+        app.MapGet(HealthRecordEndpoints.GetAppointmentDetails, async (
                 [AsParameters] GetAppointmentDetailsEndpointRequest request,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -20,7 +20,7 @@ internal sealed class GetAppointmentDetailsEndpoint : IEndpointDefinition
             })
             .Produces<AppointmentDetailsDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
-            .WithTags(HealthRecordsEndpoint.Tag)
+            .WithTags(HealthRecordEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Get appointment details",

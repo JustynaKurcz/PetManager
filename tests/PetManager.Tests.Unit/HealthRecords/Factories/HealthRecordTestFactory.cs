@@ -1,4 +1,3 @@
-using Bogus;
 using PetManager.Application.HealthRecords.Commands.AddAppointmentToHealthRecord;
 using PetManager.Application.HealthRecords.Commands.AddVaccinationToHealthRecord;
 using PetManager.Application.HealthRecords.Commands.DeleteAppointmentToHealthRecord;

@@ -1,6 +1,6 @@
 namespace PetManager.Api.Endpoints.HealthRecords;
 
-internal static class HealthRecordsEndpoint
+internal static class HealthRecordEndpoints
 {
     internal const string Base = $"{Routing.BaseUrl}/health-records";
     internal const string Tag = "HealthRecords";

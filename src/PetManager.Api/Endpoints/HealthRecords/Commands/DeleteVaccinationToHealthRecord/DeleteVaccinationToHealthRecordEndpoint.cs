@@ -7,7 +7,7 @@ internal sealed class DeleteVaccinationToHealthRecordEndpoint : IEndpointDefinit
 {
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete(HealthRecordsEndpoint.DeleteVaccination, async (
+        app.MapDelete(HealthRecordEndpoints.DeleteVaccination, async (
                 [AsParameters] DeleteVaccinationToHealthRecordEndpointRequest request,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
@@ -20,7 +20,7 @@ internal sealed class DeleteVaccinationToHealthRecordEndpoint : IEndpointDefinit
             })
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
-            .WithTags(HealthRecordsEndpoint.Tag)
+            .WithTags(HealthRecordEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Delete a vaccination to a health record",
