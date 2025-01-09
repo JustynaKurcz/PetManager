@@ -1,4 +1,4 @@
-namespace PetManager.Application.Shared.Emails.Templates.Models;
+namespace PetManager.Application.Shared.Emails.Models;
 
 public record SignUpEmailModel
 {

@@ -16,6 +16,9 @@ internal sealed class VaccinationConfiguration : IEntityTypeConfiguration<Vaccin
 
         builder.Property<DateTimeOffset>("NextVaccinationDate")
             .IsRequired();
+        
+        builder.Property<bool>("IsNotificationSent")
+            .IsRequired();
 
         builder.Property<Guid>("HealthRecordId")
             .IsRequired();

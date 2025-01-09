@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PetManager.Infrastructure.EF.DbContext;
@@ -11,9 +12,11 @@ using PetManager.Infrastructure.EF.DbContext;
 namespace PetManager.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(PetManagerDbContext))]
-    partial class PetManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250109215425_AddPropertyIsNotificationSentToVaccination")]
+    partial class AddPropertyIsNotificationSentToVaccination
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

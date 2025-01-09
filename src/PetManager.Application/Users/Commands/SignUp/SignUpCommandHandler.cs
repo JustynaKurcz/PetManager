@@ -1,6 +1,5 @@
 using PetManager.Application.Shared.Emails;
-using PetManager.Application.Shared.Emails.Templates;
-using PetManager.Application.Shared.Emails.Templates.Models;
+using PetManager.Application.Shared.Emails.Models;
 using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Enums;

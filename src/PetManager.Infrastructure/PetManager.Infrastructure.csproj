@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Shared\Emails\EmailTemplates\SignUpEmail.html" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\PetManager.Application\PetManager.Application.csproj" />
     </ItemGroup>
 
@@ -23,6 +19,11 @@
       <PackageReference Include="MailKit" Version="4.9.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0-rc.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Shared\Emails\Templates\Views\SignUpEmail.html" />
+        <EmbeddedResource Include="Shared\Emails\Templates\Views\VaccinationReminder.html" />
     </ItemGroup>
 
 </Project>

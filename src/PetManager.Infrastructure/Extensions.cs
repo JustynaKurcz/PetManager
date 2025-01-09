@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using PetManager.Infrastructure.EF;
 using PetManager.Infrastructure.EF.DbContext;
+using PetManager.Infrastructure.Shared;
 using PetManager.Infrastructure.Shared.Context;
 using PetManager.Infrastructure.Shared.Emails.Configuration;
 using PetManager.Infrastructure.Shared.Exceptions;
@@ -29,6 +30,8 @@ internal static class Extensions
         services.AddAuth(configuration);
         services.AddContext();
         services.AddEmails(configuration);
+        
+        services.AddHostedService<VaccinationReminderService>();
  
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 

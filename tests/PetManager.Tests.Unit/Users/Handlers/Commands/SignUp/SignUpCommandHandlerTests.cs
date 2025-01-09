@@ -1,3 +1,4 @@
+using PetManager.Application.Shared.Emails;
 using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Application.Users.Commands.SignUp;
 using PetManager.Core.Users.Entities;
@@ -101,6 +102,7 @@ public sealed class SignUpCommandHandlerTests
 
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
+    private readonly IEmailService _emailService;
     private readonly IRequestHandler<SignUpCommand, SignUpResponse> _handler;
     private readonly UserTestFactory _userFactory = new();
 
@@ -108,7 +110,8 @@ public sealed class SignUpCommandHandlerTests
     {
         _userRepository = Substitute.For<IUserRepository>();
         _passwordManager = Substitute.For<IPasswordManager>();
+        _emailService = Substitute.For<IEmailService>();
 
-        _handler = new SignUpCommandHandler(_userRepository, _passwordManager);
+        _handler = new SignUpCommandHandler(_userRepository, _passwordManager, _emailService);
     }
 }
