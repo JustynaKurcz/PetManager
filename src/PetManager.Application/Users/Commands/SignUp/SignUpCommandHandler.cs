@@ -1,3 +1,6 @@
+using PetManager.Application.Shared.Emails;
+using PetManager.Application.Shared.Emails.Templates;
+using PetManager.Application.Shared.Emails.Templates.Models;
 using PetManager.Application.Shared.Security.Passwords;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Enums;
@@ -8,7 +11,8 @@ namespace PetManager.Application.Users.Commands.SignUp;
 
 internal sealed class SignUpCommandHandler(
     IUserRepository userRepository,
-    IPasswordManager passwordManager
+    IPasswordManager passwordManager,
+    IEmailService emailService
 ) : IRequestHandler<SignUpCommand, SignUpResponse>
 {
     public async Task<SignUpResponse> Handle(SignUpCommand command, CancellationToken cancellationToken = default)
@@ -24,6 +28,16 @@ internal sealed class SignUpCommandHandler(
         var user = User.Create(email, hashPassword, UserRole.User);
 
         await userRepository.AddAsync(user, cancellationToken);
+
+        var emailModel = new SignUpEmailModel { Email = email };
+
+        await emailService.SendEmailAsync(
+            email,
+            EmailTemplateConstants.SignUpTemplatePath,
+            emailModel,
+            EmailTemplateConstants.SignUpSubject,
+            cancellationToken
+        );
 
         return new SignUpResponse(user.UserId);
     }
