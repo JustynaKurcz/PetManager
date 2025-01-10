@@ -23,7 +23,7 @@ internal sealed class SignInCommandHandler(
         if (!passwordIsValid)
             throw new InvalidCredentialsException();
 
-        var token = authManager.GenerateToken(user.UserId, user.Role.ToString());
+        var token = await authManager.GenerateToken(user.UserId, user.Role.ToString());
 
         return new SignInResponse(token);
     }

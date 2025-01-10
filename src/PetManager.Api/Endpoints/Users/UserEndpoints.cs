@@ -10,4 +10,6 @@ internal static class UserEndpoints
     internal static string DeleteUser => $"{Base}/{{userId:guid}}";
     internal static string ChangeUserInformation => Base;
     internal static string GetCurrentUser => $"{Base}/user";
+    internal static string ForgotPassword => $"{Base}/forgot-password";
+    internal static string ResetPassword => $"{Base}/reset-password/{{token}}";
 }

@@ -34,4 +34,10 @@ public class User
         FirstName = firstName;
         LastName = lastName;
     }
+
+    public void ChangePassword(string newPassword)
+    {
+        Password = newPassword;
+        LastChangePasswordDate = DateTimeOffset.UtcNow;
+    }
 }

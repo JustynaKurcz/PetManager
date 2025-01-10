@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>Witamy w Pet Manager</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetManager - Witamy</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #81C784;
+            --success: #66BB6A;
+            --background: #F3F4F6;
+            --text: #1F2937;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
         }
 
         .header {
             text-align: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 2px solid #4CAF50;
+            border-bottom: 2px solid var(--primary);
         }
 
         .logo {
             font-size: 28px;
-            color: #4CAF50;
+            color: var(--primary);
             font-weight: bold;
             margin-bottom: 10px;
         }
@@ -43,43 +44,131 @@
             text-align: center;
         }
 
-        .content {
-            background-color: #fafafa;
-            padding: 25px;
-            border-radius: 6px;
-            margin-bottom: 25px;
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        .highlight {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 4px;
+        .content {
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .message {
+            margin-bottom: 30px;
+            color: #4B5563;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .cta-button {
             display: inline-block;
-            margin: 10px 0;
+            background: var(--primary);
+            color: white !important;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(76, 175, 80, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-1px);
+            background: var(--primary-dark);
+        }
+
+        .feature-list {
+            font-size: 14px;
+            color: #6B7280;
+            margin: 20px 0;
+            padding: 20px;
+            background: #F9FAFB;
+            border-radius: 8px;
+        }
+
+        .feature-list p {
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .feature-list ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .feature-list li {
+            margin: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #4B5563;
+        }
+
+        .feature-list li::before {
+            content: "🐾";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
         }
 
         .info-box {
-            background-color: #e8f5e9;
-            border-left: 4px solid #4CAF50;
+            font-size: 14px;
+            color: #6B7280;
             padding: 15px;
+            border-left: 4px solid var(--success);
+            background: #F9FAFB;
             margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-box strong {
+            color: var(--text);
         }
 
         .footer {
+            margin-top: 40px;
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #666;
             font-size: 14px;
+            color: #9CA3AF;
+            border-top: 1px solid #E5E7EB;
+            padding-top: 20px;
         }
 
-        @media only screen and (max-width: 600px) {
+        .paw-print {
+            display: inline-block;
+            font-size: 24px;
+            margin: 0 5px;
+            color: var(--secondary);
+        }
+
+        @media (max-width: 480px) {
             .container {
-                margin: 0;
-                padding: 20px;
-                border-radius: 0;
+                padding: 20px 15px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 15px;
+                width: calc(100% - 48px);
             }
         }
     </style>
@@ -93,31 +182,44 @@
     <h1>Witaj w Pet Manager!</h1>
 
     <div class="content">
-        <p>Cieszymy się, że dołączyłeś do naszej społeczności miłośników zwierząt! 🎉</p>
-
-        <div class="info-box">
-            <p>Twój adres email: <strong>{Email}</strong></p>
+        <div class="message">
+            <p>
+                Dziękujemy za dołączenie do społeczności Pet Manager! Cieszymy się, że jesteś z nami.
+                Stworzyliśmy to miejsce z myślą o Tobie i Twoich pupilach.
+            </p>
         </div>
 
-        <p>Od teraz możesz korzystać ze wszystkich funkcji naszego systemu:</p>
-        <ul style="list-style-type: none; padding-left: 0;">
-            <li>✅ Zarządzanie profilami zwierząt</li>
-            <li>✅ Śledzenie wizyt weterynaryjnych</li>
-            <li>✅ Przypomnienia o szczepieniach</li>
-            <li>✅ Historia leczenia</li>
-        </ul>
+        <div class="info-box">
+            <span style="font-size: 20px;">📧</span>
+            <div>
+                <strong>Twój adres email:</strong> {Email}
+            </div>
+        </div>
+
+        <div class="feature-list">
+            <p>Funkcje dostępne w aplikacji:</p>
+            <ul>
+                <li>Twórz profile swoich zwierząt</li>
+                <li>Planuj i śledź wizyty weterynaryjne</li>
+                <li>Otrzymuj przypomnienia o szczepieniach</li>
+                <li>Zapisuj historię leczenia</li>
+            </ul>
+        </div>
+
+        <div class="button-container">
+            <a href="http://localhost:4200/" class="cta-button">
+                Rozpocznij dodając swojego pierwszego zwierzaka!
+            </a>
+        </div>
     </div>
 
-    <p class="highlight">
-        Rozpocznij dodając profil swojego pierwszego zwierzaka!
-    </p>
-
     <div class="footer">
-        <p>Z pozdrowieniami,<br><strong>Zespół Pet Manager</strong></p>
-
-        <p style="margin-top: 20px; font-size: 12px; color: #999;">
-            Jeśli potrzebujesz pomocy, skontaktuj się z nami: support@petmanager.com
+        <p>
+            <span class="paw-print">🐾</span>
+            PetManager - Twój partner w opiece nad zwierzętami
+            <span class="paw-print">🐾</span>
         </p>
+        <p>Ta wiadomość została wygenerowana automatycznie. Prosimy na nią nie odpowiadać.</p>
     </div>
 </div>
 </body>

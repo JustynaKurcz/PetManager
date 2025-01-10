@@ -49,9 +49,9 @@ public abstract class IntegrationTestBase : IClassFixture<PetManagerTestFactory>
         await _dbContext.SaveChangesAsync();
     }
 
-    protected void Authenticate(Guid userId, string role)
+    protected async Task Authenticate(Guid userId, string role)
     {
-        var token = _authManager.GenerateToken(userId, role);
+        var token = await _authManager.GenerateToken(userId, role);
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 }

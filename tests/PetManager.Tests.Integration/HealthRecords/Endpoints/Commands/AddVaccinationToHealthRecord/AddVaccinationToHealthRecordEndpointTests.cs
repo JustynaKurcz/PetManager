@@ -1,5 +1,4 @@
 using PetManager.Api.Endpoints.HealthRecords;
-using PetManager.Application.HealthRecords.Commands.AddAppointmentToHealthRecord;
 using PetManager.Application.HealthRecords.Commands.AddVaccinationToHealthRecord;
 using PetManager.Tests.Integration.Configuration;
 using PetManager.Tests.Integration.HealthRecords.Factories;

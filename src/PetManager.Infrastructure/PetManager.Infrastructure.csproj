@@ -6,24 +6,26 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PetManager.Application\PetManager.Application.csproj" />
+        <ProjectReference Include="..\PetManager.Application\PetManager.Application.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="PetManager.Tests.Unit" />
-        <InternalsVisibleTo Include="PetManager.Tests.Integration" />
+        <InternalsVisibleTo Include="PetManager.Tests.Unit"/>
+        <InternalsVisibleTo Include="PetManager.Tests.Integration"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Humanizer" Version="3.0.0-beta.54" />
-      <PackageReference Include="MailKit" Version="4.9.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0-rc.2" />
+        <PackageReference Include="Humanizer" Version="3.0.0-beta.54"/>
+        <PackageReference Include="MailKit" Version="4.9.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0-rc.2"/>
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Shared\Emails\Templates\Views\SignUpEmail.html" />
-        <EmbeddedResource Include="Shared\Emails\Templates\Views\VaccinationReminder.html" />
+        <EmbeddedResource Include="Shared\Emails\Templates\Views\SignUpEmail.html"/>
+        <EmbeddedResource Include="Shared\Emails\Templates\Views\VaccinationReminder.html"/>
+        <EmbeddedResource Include="Shared\Emails\Templates\Views\PasswordReset.html"/>
+        <EmbeddedResource Include="Shared\Emails\Templates\Views\ResetPasswordForm.html"/>
     </ItemGroup>
 
 </Project>

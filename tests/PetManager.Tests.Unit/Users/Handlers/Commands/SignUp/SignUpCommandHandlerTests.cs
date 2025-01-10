@@ -102,7 +102,7 @@ public sealed class SignUpCommandHandlerTests
 
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
-    private readonly IEmailService _emailService;
+    private readonly IMediator _mediator;
     private readonly IRequestHandler<SignUpCommand, SignUpResponse> _handler;
     private readonly UserTestFactory _userFactory = new();
 
@@ -110,8 +110,8 @@ public sealed class SignUpCommandHandlerTests
     {
         _userRepository = Substitute.For<IUserRepository>();
         _passwordManager = Substitute.For<IPasswordManager>();
-        _emailService = Substitute.For<IEmailService>();
+        _mediator = Substitute.For<IMediator>();
 
-        _handler = new SignUpCommandHandler(_userRepository, _passwordManager, _emailService);
+        _handler = new SignUpCommandHandler(_userRepository, _passwordManager, _mediator);
     }
 }

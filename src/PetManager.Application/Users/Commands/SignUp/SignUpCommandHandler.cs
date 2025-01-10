@@ -1,6 +1,7 @@
 using PetManager.Application.Shared.Emails;
 using PetManager.Application.Shared.Emails.Models;
 using PetManager.Application.Shared.Security.Passwords;
+using PetManager.Application.Users.Commands.SignUp.Events;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Exceptions;
@@ -11,7 +12,7 @@ namespace PetManager.Application.Users.Commands.SignUp;
 internal sealed class SignUpCommandHandler(
     IUserRepository userRepository,
     IPasswordManager passwordManager,
-    IEmailService emailService
+    IMediator mediator
 ) : IRequestHandler<SignUpCommand, SignUpResponse>
 {
     public async Task<SignUpResponse> Handle(SignUpCommand command, CancellationToken cancellationToken = default)
@@ -28,15 +29,7 @@ internal sealed class SignUpCommandHandler(
 
         await userRepository.AddAsync(user, cancellationToken);
 
-        var emailModel = new SignUpEmailModel { Email = email };
-
-        await emailService.SendEmailAsync(
-            email,
-            EmailTemplateConstants.SignUpTemplatePath,
-            emailModel,
-            EmailTemplateConstants.SignUpSubject,
-            cancellationToken
-        );
+        await mediator.Publish(new SignedUpEvent(email), cancellationToken);
 
         return new SignUpResponse(user.UserId);
     }
