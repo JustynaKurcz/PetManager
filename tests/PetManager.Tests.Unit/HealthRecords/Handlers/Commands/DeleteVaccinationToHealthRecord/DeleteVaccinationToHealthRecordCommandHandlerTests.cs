@@ -88,8 +88,8 @@ public sealed class DeleteVaccinationToHealthRecordCommandHandlerTests
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
         var vaccination = _vaccinationFactory.CreateVaccination();
         var command =
-            _healthRecordFactory.DeleteVaccinationToHealthRecordCommand(healthRecord.HealthRecordId,
-                vaccination.VaccinationId);
+            _healthRecordFactory.DeleteVaccinationToHealthRecordCommand(healthRecord.Id,
+                vaccination.Id);
 
         healthRecord.AddVaccination(vaccination);
 

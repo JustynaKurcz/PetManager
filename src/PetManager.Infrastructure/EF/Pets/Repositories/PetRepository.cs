@@ -21,7 +21,9 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
     public async Task<Pet?> GetByIdAsync(Expression<Func<Pet, bool>> predicate, CancellationToken cancellationToken,
         bool asNoTracking = false)
     {
-        var query = _pets.AsQueryable();
+        var query = _pets
+            .Include(x => x.Image)
+            .AsQueryable();
 
         if (asNoTracking)
             query = query.AsNoTracking();

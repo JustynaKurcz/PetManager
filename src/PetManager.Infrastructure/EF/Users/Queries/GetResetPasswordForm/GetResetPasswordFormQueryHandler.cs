@@ -1,4 +1,4 @@
-using PetManager.Application.Shared.Security.Auth;
+using PetManager.Application.Common.Security.Auth;
 using PetManager.Application.Users.Queries.GetResetPasswordForm;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;

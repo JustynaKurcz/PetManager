@@ -23,7 +23,7 @@ public sealed class PetTests
         // Assert
         pet.ShouldNotBeNull();
         pet.ShouldBeOfType<Pet>();
-        pet.PetId.ShouldNotBe(Guid.Empty);
+        pet.Id.ShouldNotBe(Guid.Empty);
         pet.UserId.ShouldBe(userId);
     }
 

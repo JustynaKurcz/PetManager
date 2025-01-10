@@ -14,7 +14,7 @@ public sealed class UserEntityValidTestData
         // Assert
         user.ShouldNotBeNull();
         user.ShouldBeOfType<User>();
-        user.UserId.ShouldNotBe(Guid.Empty);
+        user.Id.ShouldNotBe(Guid.Empty);
         user.Email.ShouldBe(userParams.Email);
         user.Password.ShouldBe(userParams.Password);
         user.Role.ShouldBe(userParams.Role);

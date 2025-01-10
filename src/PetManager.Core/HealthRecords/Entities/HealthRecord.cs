@@ -4,7 +4,7 @@ namespace PetManager.Core.HealthRecords.Entities;
 
 public class HealthRecord
 {
-    public Guid HealthRecordId { get; private set; }
+    public Guid Id { get; private set; }
     public string Notes { get; set; }
     public Guid PetId { get; private set; }
     public Pet Pet { get; private set; }
@@ -25,7 +25,7 @@ public class HealthRecord
 
     private HealthRecord()
     {
-        HealthRecordId = Guid.NewGuid();
+        Id = Guid.NewGuid();
     }
 
     public static HealthRecord Create()

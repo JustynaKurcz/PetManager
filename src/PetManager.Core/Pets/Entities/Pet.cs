@@ -6,7 +6,7 @@ namespace PetManager.Core.Pets.Entities;
 
 public class Pet
 {
-    public Guid PetId { get; private set; }
+    public Guid Id { get; private set; }
     public string Name { get; set; }
     public Species Species { get; set; }
     public string Breed { get; set; }
@@ -15,8 +15,9 @@ public class Pet
     public Guid UserId { get; private set; }
     public virtual User User { get; private set; }
     public Guid HealthRecordId { get; set; }
-    public HealthRecord HealthRecord { get; set; }
-
+    public virtual HealthRecord HealthRecord { get; set; }
+    public Guid? ImageId { get; set; }
+    public virtual Image? Image { get; set; }
     private Pet()
     {
     }
@@ -24,14 +25,14 @@ public class Pet
     private Pet(string name, Species species, string breed, Gender gender, DateTimeOffset birthDate, Guid userId,
         HealthRecord healthRecord)
     {
-        PetId = Guid.NewGuid();
+        Id = Guid.NewGuid();
         Name = name;
         Species = species;
         Breed = breed;
         Gender = gender;
         BirthDate = birthDate;
         UserId = userId;
-        HealthRecordId = healthRecord.HealthRecordId;
+        HealthRecordId = healthRecord.Id;
         HealthRecord = healthRecord;
     }
 
@@ -39,13 +40,16 @@ public class Pet
         Guid userId, HealthRecord healthRecord)
         => new(name, species, breed, gender, birthDate, userId, healthRecord);
 
-    public void AddHealthRecord(Guid healthRecordId)
-        => HealthRecordId = healthRecordId;
-
     public void ChangeInformation(Species species, string breed, Gender gender)
     {
         Species = species;
         Breed = breed;
         Gender = gender;
+    }
+
+    public void SetImage(Image image)
+    {
+        Image = image;
+        ImageId = image.Id;
     }
 }

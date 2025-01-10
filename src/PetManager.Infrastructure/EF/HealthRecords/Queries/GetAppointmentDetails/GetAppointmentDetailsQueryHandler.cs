@@ -12,11 +12,11 @@ internal sealed class GetAppointmentDetailsQueryHandler(IHealthRecordRepository 
         CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == query.HealthRecordId, cancellationToken,
+            await healthRecordRepository.GetByIdAsync(x => x.Id == query.HealthRecordId, cancellationToken,
                 asNoTracking: true)
             ?? throw new HealthRecordNotFoundException(query.HealthRecordId);
 
-        var appointment = healthRecord.Appointments.FirstOrDefault(a => a.AppointmentId == query.AppointmentId)
+        var appointment = healthRecord.Appointments.FirstOrDefault(a => a.Id == query.AppointmentId)
                           ?? throw new AppointmentNotFoundException(query.AppointmentId);
 
         return appointment.AsAppointmentDetailsDto();

@@ -71,8 +71,8 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         // Arrange
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
         var appointment = _appointmentFactory.CreateAppointment();
-        var query = _appointmentFactory.GetAppointmentDetailsQuery(healthRecord.HealthRecordId,
-            appointment.AppointmentId);
+        var query = _appointmentFactory.GetAppointmentDetailsQuery(healthRecord.Id,
+            appointment.Id);
         healthRecord.AddAppointment(appointment);
 
         _healthRecordRepository

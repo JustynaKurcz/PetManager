@@ -11,18 +11,18 @@ internal sealed class AddAppointmentToHealthRecordCommandHandler(IHealthRecordRe
         CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == command.HealthRecordId,
+            await healthRecordRepository.GetByIdAsync(x => x.Id == command.HealthRecordId,
                 cancellationToken)
             ?? throw new HealthRecordNotFoundException(command.HealthRecordId);
 
         var appointment = Appointment.Create(command.Title, command.Diagnosis, command.AppointmentDate, command.Notes,
-            healthRecord.HealthRecordId);
+            healthRecord.Id);
 
         healthRecord.AddAppointment(appointment);
 
         await healthRecordRepository.UpdateAsync(healthRecord, cancellationToken);
         await healthRecordRepository.SaveChangesAsync(cancellationToken);
 
-        return new AddAppointmentToHealthRecordResponse(appointment.AppointmentId);
+        return new AddAppointmentToHealthRecordResponse(appointment.Id);
     }
 }

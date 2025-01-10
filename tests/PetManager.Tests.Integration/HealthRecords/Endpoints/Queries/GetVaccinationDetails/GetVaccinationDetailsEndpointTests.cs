@@ -36,9 +36,9 @@ public class GetVaccinationDetailsEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
-        var pet = _petFactory.CreatePet(user.UserId);
+        var pet = _petFactory.CreatePet(user.Id);
         await AddAsync(pet);
 
         var vaccination = _vaccinationFactory.CreateVaccination(pet.HealthRecordId);
@@ -48,7 +48,7 @@ public class GetVaccinationDetailsEndpointTests : IntegrationTestBase
         var response = await _client.GetAsync(
             HealthRecordEndpoints.GetVaccinationDetails
                 .Replace("{healthRecordId:guid}", pet.HealthRecordId.ToString())
-                .Replace("{vaccinationId:guid}", vaccination.VaccinationId.ToString()));
+                .Replace("{vaccinationId:guid}", vaccination.Id.ToString()));
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
@@ -61,7 +61,7 @@ public class GetVaccinationDetailsEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
         var nonExistingHealthRecordId = Guid.NewGuid();
         var vaccinationId = Guid.NewGuid();
@@ -82,9 +82,9 @@ public class GetVaccinationDetailsEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
-        var pet = _petFactory.CreatePet(user.UserId);
+        var pet = _petFactory.CreatePet(user.Id);
         await AddAsync(pet);
 
         var nonExistingVaccinationId = Guid.NewGuid();

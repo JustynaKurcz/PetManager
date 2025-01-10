@@ -1,6 +1,6 @@
+using PetManager.Application.Common.Pagination;
 using PetManager.Application.Pets.Queries.BrowsePets;
 using PetManager.Application.Pets.Queries.BrowsePets.DTO;
-using PetManager.Application.Shared.Pagination;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Repositories;
 
@@ -17,7 +17,7 @@ internal sealed class BrowsePetsQueryHandler(IPetRepository petRepository)
 
 
         return await pets.AsNoTracking()
-            .Select(x => new PetDto(x.PetId, x.Name))
+            .Select(x => new PetDto(x.Id, x.Name))
             .PaginateAsync(query, cancellationToken);
     }
 

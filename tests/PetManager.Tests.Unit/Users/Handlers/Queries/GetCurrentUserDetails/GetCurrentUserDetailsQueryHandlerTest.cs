@@ -1,4 +1,4 @@
-using PetManager.Application.Shared.Context;
+using PetManager.Application.Common.Context;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 using PetManager.Core.Users.Entities;

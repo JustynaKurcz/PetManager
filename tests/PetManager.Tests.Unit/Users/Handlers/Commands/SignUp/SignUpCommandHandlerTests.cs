@@ -1,5 +1,4 @@
-using PetManager.Application.Shared.Emails;
-using PetManager.Application.Shared.Security.Passwords;
+using PetManager.Application.Common.Security.Passwords;
 using PetManager.Application.Users.Commands.SignUp;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;

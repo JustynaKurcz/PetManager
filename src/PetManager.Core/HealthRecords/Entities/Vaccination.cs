@@ -2,7 +2,7 @@ namespace PetManager.Core.HealthRecords.Entities;
 
 public class Vaccination
 {
-    public Guid VaccinationId { get; private set; }
+    public Guid Id { get; private set; }
     public string VaccinationName { get; set; }
     public DateTimeOffset VaccinationDate { get; set; }
     public DateTimeOffset NextVaccinationDate { get; set; }
@@ -17,7 +17,7 @@ public class Vaccination
     private Vaccination(string vaccinationName, DateTimeOffset vaccinationDate, DateTimeOffset nextVaccinationDate,
         Guid healthRecordId)
     {
-        VaccinationId = Guid.NewGuid();
+        Id = Guid.NewGuid();
         VaccinationName = vaccinationName;
         VaccinationDate = vaccinationDate;
         NextVaccinationDate = nextVaccinationDate;

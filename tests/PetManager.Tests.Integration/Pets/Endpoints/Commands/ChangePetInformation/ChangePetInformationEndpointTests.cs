@@ -31,7 +31,7 @@ public class ChangePetInformationEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
         var command = _petFactory.ChangePetInformationCommand();
 
@@ -52,16 +52,16 @@ public class ChangePetInformationEndpointTests : IntegrationTestBase
         await AddAsync(owner);
 
         var differentUser = _userFactory.CreateUser();
-        Authenticate(differentUser.UserId, differentUser.Role.ToString());
+        Authenticate(differentUser.Id, differentUser.Role.ToString());
 
-        var pet = _petFactory.CreatePet(owner.UserId);
+        var pet = _petFactory.CreatePet(owner.Id);
         await AddAsync(pet);
 
         var command = _petFactory.ChangePetInformationCommand();
 
         // Act
         var response = await _client.PutAsJsonAsync(
-            PetEndpoints.ChangePetInformation.Replace("{petId:guid}", pet.PetId.ToString()),
+            PetEndpoints.ChangePetInformation.Replace("{petId:guid}", pet.Id.ToString()),
             command);
 
         // Assert
@@ -74,16 +74,16 @@ public class ChangePetInformationEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
-        var pet = _petFactory.CreatePet(user.UserId);
+        var pet = _petFactory.CreatePet(user.Id);
         await AddAsync(pet);
 
         var command = _petFactory.ChangePetInformationCommand();
 
         // Act
         var response = await _client.PutAsJsonAsync(
-            PetEndpoints.ChangePetInformation.Replace("{petId:guid}", pet.PetId.ToString()),
+            PetEndpoints.ChangePetInformation.Replace("{petId:guid}", pet.Id.ToString()),
             command);
 
         // Assert

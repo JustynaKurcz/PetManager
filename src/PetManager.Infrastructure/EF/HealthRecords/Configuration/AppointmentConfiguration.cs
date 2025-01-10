@@ -6,7 +6,7 @@ internal sealed class AppointmentConfiguration : IEntityTypeConfiguration<Appoin
 {
     public void Configure(EntityTypeBuilder<Appointment> builder)
     {
-        builder.HasKey(x => x.AppointmentId);
+        builder.HasKey(x => x.Id);
 
         builder.Property<string>("Title")
             .IsRequired();

@@ -14,6 +14,7 @@ public class PetManagerDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<HealthRecord> HealthRecords { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<Vaccination> Vaccinations { get; set; }
+    public DbSet<Image> Images { get; set; }
 
     public PetManagerDbContext(DbContextOptions<PetManagerDbContext> options) : base(options)
     {
@@ -26,5 +27,6 @@ public class PetManagerDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.ApplyConfiguration(new HealthRecordConfiguration());
         modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
         modelBuilder.ApplyConfiguration(new VaccinationConfiguration());
+        modelBuilder.ApplyConfiguration(new ImageConfiguration());
     }
 }

@@ -33,7 +33,7 @@ public class GetPetDetailsEndpointTests : IntegrationTestBase
 
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
         // Act
         var response =
@@ -49,13 +49,13 @@ public class GetPetDetailsEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
-        var pet = _petFactory.CreatePet(user.UserId);
+        var pet = _petFactory.CreatePet(user.Id);
         await AddAsync(pet);
 
         // Act
-        var response = await _client.GetAsync(PetEndpoints.GetPetDetails.Replace("{petId:guid}", pet.PetId.ToString()));
+        var response = await _client.GetAsync(PetEndpoints.GetPetDetails.Replace("{petId:guid}", pet.Id.ToString()));
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.OK);

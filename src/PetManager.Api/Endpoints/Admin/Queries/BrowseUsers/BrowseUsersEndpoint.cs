@@ -1,6 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Admin.Queries.BrowseUsers;
-using PetManager.Application.Shared.Pagination;
+using PetManager.Application.Common.Pagination;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 
 namespace PetManager.Api.Endpoints.Admin.Queries.BrowseUsers;

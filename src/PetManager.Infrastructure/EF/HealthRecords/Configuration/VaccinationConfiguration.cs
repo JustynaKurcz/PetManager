@@ -6,7 +6,7 @@ internal sealed class VaccinationConfiguration : IEntityTypeConfiguration<Vaccin
 {
     public void Configure(EntityTypeBuilder<Vaccination> builder)
     {
-        builder.HasKey(x => x.VaccinationId);
+        builder.HasKey(x => x.Id);
 
         builder.Property<string>("VaccinationName")
             .IsRequired();

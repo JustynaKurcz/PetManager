@@ -1,5 +1,5 @@
-using PetManager.Application.Shared.Emails;
-using PetManager.Application.Shared.Emails.Models;
+using PetManager.Application.Common.Emails;
+using PetManager.Application.Common.Emails.Models;
 
 namespace PetManager.Application.Users.Commands.SignUp.Events;
 

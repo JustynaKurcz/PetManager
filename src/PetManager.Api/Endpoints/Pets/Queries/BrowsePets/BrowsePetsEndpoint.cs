@@ -1,7 +1,7 @@
 using PetManager.Api.Common.Endpoints;
+using PetManager.Application.Common.Pagination;
 using PetManager.Application.Pets.Queries.BrowsePets;
 using PetManager.Application.Pets.Queries.BrowsePets.DTO;
-using PetManager.Application.Shared.Pagination;
 
 namespace PetManager.Api.Endpoints.Pets.Queries.BrowsePets;
 

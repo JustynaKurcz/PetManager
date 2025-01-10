@@ -1,6 +1,4 @@
-using PetManager.Application.Shared.Emails;
-using PetManager.Application.Shared.Emails.Models;
-using PetManager.Application.Shared.Security.Passwords;
+using PetManager.Application.Common.Security.Passwords;
 using PetManager.Application.Users.Commands.SignUp.Events;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Enums;
@@ -31,6 +29,6 @@ internal sealed class SignUpCommandHandler(
 
         await mediator.Publish(new SignedUpEvent(email), cancellationToken);
 
-        return new SignUpResponse(user.UserId);
+        return new SignUpResponse(user.Id);
     }
 }

@@ -7,7 +7,7 @@ internal static class Extensions
 {
     public static PetDetailsDto AsDetailsDto(this Pet pet)
         => new(
-            pet.PetId,
+            pet.Id,
             pet.Name,
             pet.Species,
             pet.Breed,

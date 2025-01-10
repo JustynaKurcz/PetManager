@@ -11,7 +11,7 @@ internal sealed class GetHealthRecordDetailsQueryHandler(IHealthRecordRepository
     public async Task<HealthRecordDetailsDto> Handle(GetHealthRecordDetailsQuery query,
         CancellationToken cancellationToken)
     {
-        var healthRecord = await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == query.HealthRecordId,
+        var healthRecord = await healthRecordRepository.GetByIdAsync(x => x.Id == query.HealthRecordId,
                                cancellationToken, asNoTracking: true)
                            ?? throw new HealthRecordNotFoundException(query.HealthRecordId);
 

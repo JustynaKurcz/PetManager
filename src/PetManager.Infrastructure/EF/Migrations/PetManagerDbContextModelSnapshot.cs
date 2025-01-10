@@ -24,7 +24,7 @@ namespace PetManager.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("PetManager.Core.HealthRecords.Entities.Appointment", b =>
                 {
-                    b.Property<Guid>("AppointmentId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -46,7 +46,7 @@ namespace PetManager.Infrastructure.EF.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("AppointmentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("HealthRecordId");
 
@@ -55,7 +55,7 @@ namespace PetManager.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("PetManager.Core.HealthRecords.Entities.HealthRecord", b =>
                 {
-                    b.Property<Guid>("HealthRecordId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -65,7 +65,7 @@ namespace PetManager.Infrastructure.EF.Migrations
                     b.Property<Guid>("PetId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("HealthRecordId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PetId")
                         .IsUnique();
@@ -75,7 +75,7 @@ namespace PetManager.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("PetManager.Core.HealthRecords.Entities.Vaccination", b =>
                 {
-                    b.Property<Guid>("VaccinationId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -95,16 +95,44 @@ namespace PetManager.Infrastructure.EF.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("VaccinationId");
+                    b.HasKey("Id");
 
                     b.HasIndex("HealthRecordId");
 
                     b.ToTable("Vaccinations", (string)null);
                 });
 
+            modelBuilder.Entity("PetManager.Core.Pets.Entities.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BlobUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("PetId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("UploadedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetId")
+                        .IsUnique();
+
+                    b.ToTable("Images", (string)null);
+                });
+
             modelBuilder.Entity("PetManager.Core.Pets.Entities.Pet", b =>
                 {
-                    b.Property<Guid>("PetId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -121,6 +149,9 @@ namespace PetManager.Infrastructure.EF.Migrations
                     b.Property<Guid>("HealthRecordId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("ImageId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -131,7 +162,7 @@ namespace PetManager.Infrastructure.EF.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("PetId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -140,7 +171,7 @@ namespace PetManager.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("PetManager.Core.Users.Entities.User", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -167,7 +198,7 @@ namespace PetManager.Infrastructure.EF.Migrations
                     b.Property<short>("Role")
                         .HasColumnType("smallint");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
@@ -208,10 +239,21 @@ namespace PetManager.Infrastructure.EF.Migrations
                     b.Navigation("HealthRecord");
                 });
 
+            modelBuilder.Entity("PetManager.Core.Pets.Entities.Image", b =>
+                {
+                    b.HasOne("PetManager.Core.Pets.Entities.Pet", "Pet")
+                        .WithOne("Image")
+                        .HasForeignKey("PetManager.Core.Pets.Entities.Image", "PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
+                });
+
             modelBuilder.Entity("PetManager.Core.Pets.Entities.Pet", b =>
                 {
                     b.HasOne("PetManager.Core.Users.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Pets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -229,6 +271,13 @@ namespace PetManager.Infrastructure.EF.Migrations
             modelBuilder.Entity("PetManager.Core.Pets.Entities.Pet", b =>
                 {
                     b.Navigation("HealthRecord");
+
+                    b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("PetManager.Core.Users.Entities.User", b =>
+                {
+                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }

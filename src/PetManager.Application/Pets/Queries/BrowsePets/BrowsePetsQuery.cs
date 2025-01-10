@@ -1,5 +1,5 @@
+using PetManager.Application.Common.Pagination;
 using PetManager.Application.Pets.Queries.BrowsePets.DTO;
-using PetManager.Application.Shared.Pagination;
 
 namespace PetManager.Application.Pets.Queries.BrowsePets;
 

@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
-using PetManager.Application.Shared.Security.Auth;
-using PetManager.Application.Shared.Security.Passwords;
+using PetManager.Application.Common.Security.Auth;
+using PetManager.Application.Common.Security.Passwords;
 using PetManager.Infrastructure.EF.DbContext;
 using PetManager.Tests.Integration.Users.Factories;
 

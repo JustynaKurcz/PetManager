@@ -2,43 +2,44 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using PetManager.Infrastructure.EF.DbContext;
 
-namespace PetManager.Tests.Integration.Configuration;
-
-public class PetManagerTestFactory : WebApplicationFactory<Api.Program>
+namespace PetManager.Tests.Integration.Configuration
 {
-    private const string AppSettings = "appsettings.test.json";
-    private const string ConnectionString = "PetManagerDbTest";
-    private string _dbName;
-
-    public PetManagerTestFactory()
+    public class PetManagerTestFactory : WebApplicationFactory<Api.Program>
     {
-        _dbName = $"PetManagerDbTest_{Guid.NewGuid()}";
-    }
+        private const string AppSettings = "appsettings.test.json";
+        private const string ConnectionString = "PetManagerDbTest";
+        private string _dbName;
 
-    private readonly IConfiguration _configuration = new ConfigurationBuilder()
-        .AddJsonFile(AppSettings)
-        .Build();
-
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        builder.ConfigureServices(services =>
+        public PetManagerTestFactory()
         {
-            var descriptor = services
-                .SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<PetManagerDbContext>));
+            _dbName = $"PetManagerDbTest_{Guid.NewGuid()}";
+        }
 
-            if (descriptor is not null)
+        private readonly IConfiguration _configuration = new ConfigurationBuilder()
+            .AddJsonFile(AppSettings)
+            .Build();
+
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            builder.ConfigureServices(services =>
             {
-                services.Remove(descriptor);
-            }
+                var descriptor = services
+                    .SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<PetManagerDbContext>));
 
-            var connectionString = _configuration.GetConnectionString(ConnectionString);
+                if (descriptor is not null)
+                {
+                    services.Remove(descriptor);
+                }
 
-            services.AddDbContext<PetManagerDbContext>(options =>
-            {
-                options.UseNpgsql(connectionString?.Replace("PetManager_test", _dbName))
-                    .EnableSensitiveDataLogging(false)
-                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                var connectionString = _configuration.GetConnectionString(ConnectionString);
+
+                services.AddDbContext<PetManagerDbContext>(options =>
+                {
+                    options.UseNpgsql(connectionString?.Replace("PetManager_test", _dbName))
+                        .EnableSensitiveDataLogging(false)
+                        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                });
             });
-        });
+        }
     }
 }

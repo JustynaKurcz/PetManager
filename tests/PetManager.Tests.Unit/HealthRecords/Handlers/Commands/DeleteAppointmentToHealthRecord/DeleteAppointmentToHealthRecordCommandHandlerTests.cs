@@ -88,8 +88,8 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
         var appointment = _appointmentFactory.CreateAppointment();
         var command =
-            _healthRecordFactory.DeleteAppointmentToHealthRecordCommand(healthRecord.HealthRecordId,
-                appointment.AppointmentId);
+            _healthRecordFactory.DeleteAppointmentToHealthRecordCommand(healthRecord.Id,
+                appointment.Id);
 
         healthRecord.AddAppointment(appointment);
 

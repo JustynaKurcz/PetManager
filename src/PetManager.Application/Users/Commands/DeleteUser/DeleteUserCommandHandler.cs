@@ -1,4 +1,4 @@
-using PetManager.Application.Shared.Context;
+using PetManager.Application.Common.Context;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 
@@ -11,7 +11,7 @@ internal sealed class DeleteUserCommandHandler(
 {
     public async Task Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByIdAsync(x => x.UserId == context.UserId, cancellationToken)
+        var user = await userRepository.GetByIdAsync(x => x.Id == context.UserId, cancellationToken)
                    ?? throw new UserNotFoundException(command.UserId);
 
         ValidateDeletePermissions(command.UserId);

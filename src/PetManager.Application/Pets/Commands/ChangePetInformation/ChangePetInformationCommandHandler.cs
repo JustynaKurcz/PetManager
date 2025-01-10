@@ -1,4 +1,4 @@
-using PetManager.Application.Shared.Context;
+using PetManager.Application.Common.Context;
 using PetManager.Core.Pets.Exceptions;
 using PetManager.Core.Pets.Repositories;
 
@@ -13,7 +13,7 @@ internal sealed class ChangePetInformationCommandHandler(
     {
         var currentLoggedUserId = context.UserId;
 
-        var pet = await petRepository.GetByIdAsync(x => x.PetId == command.PetId, cancellationToken)
+        var pet = await petRepository.GetByIdAsync(x => x.Id == command.PetId, cancellationToken)
                   ?? throw new PetNotFoundException(command.PetId);
 
         var isPetOwnedByCurrentUser = pet.UserId == currentLoggedUserId;

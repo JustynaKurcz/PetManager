@@ -12,11 +12,11 @@ internal sealed class GetVaccinationDetailsQueryHandler(IHealthRecordRepository 
         CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == query.HealthRecordId, cancellationToken,
+            await healthRecordRepository.GetByIdAsync(x => x.Id == query.HealthRecordId, cancellationToken,
                 asNoTracking: true)
             ?? throw new HealthRecordNotFoundException(query.HealthRecordId);
 
-        var vaccination = healthRecord.Vaccinations.FirstOrDefault(v => v.VaccinationId == query.VaccinationId)
+        var vaccination = healthRecord.Vaccinations.FirstOrDefault(v => v.Id == query.VaccinationId)
                           ?? throw new VaccinationNotFoundException(query.VaccinationId);
 
         return vaccination.AsVaccinationDetailsDto();

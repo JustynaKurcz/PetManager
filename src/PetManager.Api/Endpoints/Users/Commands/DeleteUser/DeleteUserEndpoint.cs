@@ -1,5 +1,5 @@
 using PetManager.Api.Common.Endpoints;
-using PetManager.Application.Shared.Context;
+using PetManager.Application.Common.Context;
 using PetManager.Application.Users.Commands.DeleteUser;
 
 namespace PetManager.Api.Endpoints.Users.Commands.DeleteUser;

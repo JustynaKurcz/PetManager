@@ -12,4 +12,5 @@ internal static class PetEndpoints
     internal static string GetPetDetails => $"{Base}/{{petId:guid}}";
     internal static string GetGenders => $"{Base}/gender-types";
     internal static string GetSpecies => $"{Base}/species-types";
+    internal static string AddImageToPet => $"{Base}/{{petId:guid}}/images";
 }

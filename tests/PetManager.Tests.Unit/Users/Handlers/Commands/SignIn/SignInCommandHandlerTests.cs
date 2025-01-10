@@ -1,5 +1,5 @@
-using PetManager.Application.Shared.Security.Auth;
-using PetManager.Application.Shared.Security.Passwords;
+using PetManager.Application.Common.Security.Auth;
+using PetManager.Application.Common.Security.Passwords;
 using PetManager.Application.Users.Commands.SignIn;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;
@@ -96,7 +96,7 @@ public sealed class SignInCommandHandlerTests
             .Returns(true);
 
         _authManager
-            .GenerateToken(user.UserId, user.Role.ToString())
+            .GenerateToken(user.Id, user.Role.ToString())
             .Returns("token");
 
         // Act
@@ -136,7 +136,7 @@ public sealed class SignInCommandHandlerTests
             .Returns(true);
 
         _authManager
-            .GenerateToken(user.UserId, user.Role.ToString())
+            .GenerateToken(user.Id, user.Role.ToString())
             .Returns("token");
 
         // Act

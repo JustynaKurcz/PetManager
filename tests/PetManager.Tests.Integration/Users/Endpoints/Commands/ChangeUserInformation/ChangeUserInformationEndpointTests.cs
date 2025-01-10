@@ -44,7 +44,7 @@ public class ChangeUserInformationEndpointTests : IntegrationTestBase
         var user = _userFactory.CreateUser();
         await AddAsync(user);
         var command = _userFactory.ChangeUserInformationCommand();
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
         // Act
         var response = await _client.PutAsJsonAsync(UserEndpoints.ChangeUserInformation, command);

@@ -1,4 +1,4 @@
-using PetManager.Application.Shared.Context;
+using PetManager.Application.Common.Context;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 using PetManager.Core.Users.Exceptions;
@@ -14,7 +14,7 @@ internal sealed class GetCurrentUserDetailsQueryHandler(
     public async Task<CurrentUserDetailsDto> Handle(GetCurrentUserDetailsQuery query,
         CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByIdAsync(x => x.UserId == context.UserId, cancellationToken)
+        var user = await userRepository.GetByIdAsync(x => x.Id == context.UserId, cancellationToken)
                    ?? throw new UserNotFoundException(context.UserId);
 
         if (user is null)

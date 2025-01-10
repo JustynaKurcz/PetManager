@@ -8,7 +8,7 @@ internal sealed class PetConfiguration : IEntityTypeConfiguration<Pet>
 {
     public void Configure(EntityTypeBuilder<Pet> builder)
     {
-        builder.HasKey(x => x.PetId);
+        builder.HasKey(x => x.Id);
 
         builder.Property<string>("Name")
             .IsRequired();
@@ -30,17 +30,14 @@ internal sealed class PetConfiguration : IEntityTypeConfiguration<Pet>
 
         builder.Property<Guid>("HealthRecordId")
             .IsRequired();
-
-        builder.HasOne(x => x.User)
-            .WithMany()
-            .HasForeignKey("UserId")
-            .OnDelete(DeleteBehavior.Cascade);
+        
+       builder.Property<Guid?>("ImageId");
 
         builder.HasOne(x => x.HealthRecord)
             .WithOne(hr => hr.Pet)
             .HasForeignKey<HealthRecord>(hr => hr.PetId)
             .OnDelete(DeleteBehavior.Cascade);
-
+            
         builder.ToTable("Pets");
     }
 }

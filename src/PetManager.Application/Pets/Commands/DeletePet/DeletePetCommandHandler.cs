@@ -7,7 +7,7 @@ internal sealed class DeletePetCommandHandler(IPetRepository petRepository) : IR
 {
     public async Task Handle(DeletePetCommand command, CancellationToken cancellationToken)
     {
-        var pet = await petRepository.GetByIdAsync(x => x.PetId == command.PetId, cancellationToken)
+        var pet = await petRepository.GetByIdAsync(x => x.Id == command.PetId, cancellationToken)
                   ?? throw new PetNotFoundException(command.PetId);
 
         await petRepository.DeleteAsync(pet, cancellationToken);

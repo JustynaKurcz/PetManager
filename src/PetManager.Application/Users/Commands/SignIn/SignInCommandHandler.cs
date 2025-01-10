@@ -1,5 +1,5 @@
-using PetManager.Application.Shared.Security.Auth;
-using PetManager.Application.Shared.Security.Passwords;
+using PetManager.Application.Common.Security.Auth;
+using PetManager.Application.Common.Security.Passwords;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
 
@@ -23,7 +23,7 @@ internal sealed class SignInCommandHandler(
         if (!passwordIsValid)
             throw new InvalidCredentialsException();
 
-        var token = await authManager.GenerateToken(user.UserId, user.Role.ToString());
+        var token = await authManager.GenerateToken(user.Id, user.Role.ToString());
 
         return new SignInResponse(token);
     }

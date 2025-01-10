@@ -34,9 +34,9 @@ public class AddAppointmentToHealthRecordEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
-        var pet = _petFactory.CreatePet(user.UserId);
+        var pet = _petFactory.CreatePet(user.Id);
         await AddAsync(pet);
 
         var command = _healthRecordFactory.AddAppointmentToHealthRecordCommand() with
@@ -61,7 +61,7 @@ public class AddAppointmentToHealthRecordEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, user.Role.ToString());
+        Authenticate(user.Id, user.Role.ToString());
 
         var command = _healthRecordFactory.AddAppointmentToHealthRecordCommand();
 

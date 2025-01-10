@@ -7,7 +7,7 @@ internal static class Extensions
 {
     public static CurrentUserDetailsDto AsDetailsDto(this User user)
         => new(
-            user.UserId,
+            user.Id,
             user.FirstName,
             user.LastName,
             user.Email,

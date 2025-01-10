@@ -1,4 +1,4 @@
-using PetManager.Application.Shared.Pagination;
+using PetManager.Application.Common.Pagination;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 
 namespace PetManager.Application.Admin.Queries.BrowseUsers;

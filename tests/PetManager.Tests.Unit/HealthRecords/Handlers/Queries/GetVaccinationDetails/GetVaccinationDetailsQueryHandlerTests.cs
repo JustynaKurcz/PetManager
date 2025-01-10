@@ -71,8 +71,8 @@ public sealed class GetVaccinationDetailsQueryHandlerTests
         // Arrange
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
         var vaccination = _vaccinationFactory.CreateVaccination();
-        var query = _vaccinationFactory.GetVaccinationDetailsQuery(healthRecord.HealthRecordId,
-            vaccination.VaccinationId);
+        var query = _vaccinationFactory.GetVaccinationDetailsQuery(healthRecord.Id,
+            vaccination.Id);
         healthRecord.AddVaccination(vaccination);
 
         _healthRecordRepository

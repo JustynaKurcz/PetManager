@@ -9,11 +9,11 @@ internal sealed class DeleteAppointmentToHealthRecordCommandHandler(IHealthRecor
     public async Task Handle(DeleteAppointmentToHealthRecordCommand command, CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == command.HealthRecordId,
+            await healthRecordRepository.GetByIdAsync(x => x.Id == command.HealthRecordId,
                 cancellationToken)
             ?? throw new HealthRecordNotFoundException(command.HealthRecordId);
 
-        var appointment = healthRecord.Appointments.SingleOrDefault(a => a.AppointmentId == command.AppointmentId)
+        var appointment = healthRecord.Appointments.SingleOrDefault(a => a.Id == command.AppointmentId)
                           ?? throw new AppointmentNotFoundException(command.AppointmentId);
 
         healthRecord.DeleteAppointment(appointment);

@@ -15,7 +15,8 @@ internal static class DataAccess
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IPetRepository, PetRepository>()
             .AddScoped<IHealthRecordRepository, HealthRecordRepository>()
-            .AddScoped<IVaccinationRepository, VaccinationRepository>();
+            .AddScoped<IVaccinationRepository, VaccinationRepository>()
+            .AddScoped<IImageRepository, ImageRepository>();
 
         return services;
     }

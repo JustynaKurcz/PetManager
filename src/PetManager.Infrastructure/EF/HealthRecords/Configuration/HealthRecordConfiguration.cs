@@ -6,7 +6,7 @@ internal sealed class HealthRecordConfiguration : IEntityTypeConfiguration<Healt
 {
     public void Configure(EntityTypeBuilder<HealthRecord> builder)
     {
-        builder.HasKey(x => x.HealthRecordId);
+        builder.HasKey(x => x.Id);
 
         builder.Property<string>("Notes")
             .IsRequired(false);

@@ -12,18 +12,18 @@ internal sealed class AddVaccinationToHealthRecordCommandHandler(
         CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetByIdAsync(x => x.HealthRecordId == command.HealthRecordId,
+            await healthRecordRepository.GetByIdAsync(x => x.Id == command.HealthRecordId,
                 cancellationToken)
             ?? throw new HealthRecordNotFoundException(command.HealthRecordId);
 
         var vaccination = Vaccination.Create(command.VaccinationName, command.VaccinationDate,
-            command.NextVaccinationDate, healthRecord.HealthRecordId);
+            command.NextVaccinationDate, healthRecord.Id);
 
         healthRecord.AddVaccination(vaccination);
 
         await healthRecordRepository.UpdateAsync(healthRecord, cancellationToken);
         await healthRecordRepository.SaveChangesAsync(cancellationToken);
 
-        return new AddVaccinationToHealthRecordResponse(vaccination.VaccinationId);
+        return new AddVaccinationToHealthRecordResponse(vaccination.Id);
     }
 }

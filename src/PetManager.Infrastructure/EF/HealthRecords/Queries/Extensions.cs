@@ -9,7 +9,7 @@ internal static class Extensions
 {
     public static AppointmentDetailsDto AsAppointmentDetailsDto(this Appointment appointment)
         => new(
-            appointment.AppointmentId,
+            appointment.Id,
             appointment.Title,
             appointment.Diagnosis,
             appointment.AppointmentDate,
@@ -19,7 +19,7 @@ internal static class Extensions
 
     public static VaccinationDetailsDto AsVaccinationDetailsDto(this Vaccination vaccination)
         => new(
-            vaccination.VaccinationId,
+            vaccination.Id,
             vaccination.VaccinationName,
             vaccination.VaccinationDate,
             vaccination.NextVaccinationDate,
@@ -28,7 +28,7 @@ internal static class Extensions
 
     public static HealthRecordDetailsDto AsDetailsDto(this HealthRecord healthRecord)
         => new(
-            healthRecord.HealthRecordId,
+            healthRecord.Id,
             healthRecord.PetId,
             healthRecord.Notes,
             healthRecord.Vaccinations.Select(v => v.AsVaccinationDetailsDto()).ToList(),

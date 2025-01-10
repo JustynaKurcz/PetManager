@@ -1,4 +1,4 @@
-using PetManager.Application.Shared.Context;
+using PetManager.Application.Common.Context;
 using PetManager.Application.Users.Commands.ChangeUserInformation;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Exceptions;

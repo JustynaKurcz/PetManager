@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
-using PetManager.Application.Shared.Security.Passwords;
+using PetManager.Application.Common.Security.Passwords;
 using PetManager.Application.Users.Commands.ChangeUserInformation;
 using PetManager.Application.Users.Commands.SignIn;
 using PetManager.Application.Users.Commands.SignUp;
 using PetManager.Core.Users.Entities;
 using PetManager.Core.Users.Enums;
-using PetManager.Infrastructure.Shared.Security.Passwords;
+using PetManager.Infrastructure.Common.Security.Passwords;
 
 namespace PetManager.Tests.Integration.Users.Factories;
 

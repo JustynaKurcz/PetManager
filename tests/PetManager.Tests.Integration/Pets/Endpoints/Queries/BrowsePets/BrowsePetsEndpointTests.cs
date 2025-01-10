@@ -24,7 +24,7 @@ public class BrowsePetsEndpointTests : IntegrationTestBase
         var user = _userFactory.CreateUser();
         await AddAsync(user);
 
-        var pets = _petFactory.CreatePets(user.UserId, PetsToCreate);
+        var pets = _petFactory.CreatePets(user.Id, PetsToCreate);
         await AddRangeAsync(pets);
 
         // Act

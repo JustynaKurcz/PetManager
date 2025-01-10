@@ -7,7 +7,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.HasKey(x => x.UserId);
+        builder.HasKey(x => x.Id);
 
         builder.Property<string>("FirstName")
             .IsRequired(false);
@@ -29,7 +29,12 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property<UserRole>("Role")
             .IsRequired();
-
+        
+        builder.HasMany(x =>x.Pets)
+            .WithOne(x=>x.User)
+            .HasForeignKey(x=>x.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
         builder.ToTable("Users");
     }
 }

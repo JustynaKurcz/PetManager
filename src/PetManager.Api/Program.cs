@@ -1,8 +1,10 @@
-using PetManager.Api.Configuration.Api;
-using PetManager.Api.Configuration.Cors;
-using PetManager.Api.Configuration.Swagger;
+using PetManager.Api.Common.Configuration.Api;
+using PetManager.Api.Common.Configuration.Cors;
+using PetManager.Api.Common.Configuration.Swagger;
 using PetManager.Application;
 using PetManager.Infrastructure;
+using Swashbuckle.AspNetCore.JsonMultipartFormDataSupport.Extensions;
+using Swashbuckle.AspNetCore.JsonMultipartFormDataSupport.Integrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,8 @@ builder.Services.AddCorsConfiguration(builder.Configuration);
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
+
+builder.Services.AddJsonMultipartFormDataSupport(JsonSerializerChoice.Newtonsoft);
 
 builder.Services.AddSwaggerConfiguration();
 

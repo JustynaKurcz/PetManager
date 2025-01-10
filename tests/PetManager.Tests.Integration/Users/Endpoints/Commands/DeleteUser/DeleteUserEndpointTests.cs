@@ -28,11 +28,11 @@ public class DeleteUserEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.UserId, UserRole.User.ToString());
+        Authenticate(user.Id, UserRole.User.ToString());
 
         // Act
         var response =
-            await _client.DeleteAsync(UserEndpoints.DeleteUser.Replace("{userId:guid}", user.UserId.ToString()));
+            await _client.DeleteAsync(UserEndpoints.DeleteUser.Replace("{userId:guid}", user.Id.ToString()));
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.NoContent);
@@ -50,7 +50,7 @@ public class DeleteUserEndpointTests : IntegrationTestBase
 
         // Act
         var response =
-            await _client.DeleteAsync(UserEndpoints.DeleteUser.Replace("{userId:guid}", user.UserId.ToString()));
+            await _client.DeleteAsync(UserEndpoints.DeleteUser.Replace("{userId:guid}", user.Id.ToString()));
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
