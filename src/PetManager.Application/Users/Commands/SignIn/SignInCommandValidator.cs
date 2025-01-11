@@ -12,6 +12,7 @@ internal class SignInCommandValidator : AbstractValidator<SignInCommand>
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password cannot be empty")
             .NotNull().WithMessage("Password cannot be null")
-            .MinimumLength(8).WithMessage("Password must be at least 8 characters long");
+            .MinimumLength(6).WithMessage("Password must be at least 6 characters long")
+            .MaximumLength(16).WithMessage("Password must be at most 16 characters long");
     }
 }

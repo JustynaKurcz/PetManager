@@ -16,7 +16,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
     public async Task given_user_not_found_when_change_user_information_then_should_throw_user_not_found_exception()
     {
         // Arrange
-        var command = _userFactory.ChangeUserInformationCommand();
+        var command = _userFactory.CreateChangeUserInformationCommand();
         _userRepository
             .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
@@ -42,7 +42,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
     public async Task given_valid_data_when_change_user_information_then_should_change_user_information()
     {
         // Arrange
-        var command = _userFactory.ChangeUserInformationCommand();
+        var command = _userFactory.CreateChangeUserInformationCommand();
         var user = _userFactory.CreateUser();
 
         _userRepository
@@ -71,7 +71,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Arrange
         var user = _userFactory.CreateUser();
         var existingLastName = user.LastName;
-        var command = _userFactory.ChangeUserInformationCommandWithoutLastName();
+        var command = _userFactory.CreateChangeUserInformationCommandWithoutLastNameCommand();
 
         _userRepository
             .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
@@ -99,7 +99,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Arrange
         var user = _userFactory.CreateUser();
         var existingFirstName = user.FirstName;
-        var command = _userFactory.ChangeUserInformationCommandWithoutFirstName();
+        var command = _userFactory.CreateChangeUserInformationCommandWithoutFirstNameCommand();
 
         _userRepository
             .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())

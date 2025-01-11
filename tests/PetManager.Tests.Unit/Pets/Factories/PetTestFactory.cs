@@ -22,7 +22,7 @@ internal sealed class PetTestFactory
             _faker.Date.PastOffset(10, DateTimeOffset.UtcNow));
 
     internal ChangePetInformationCommand ChangePetInformationCommand()
-        => new(_faker.PickRandom<Species>(), _faker.Random.Word(), _faker.PickRandom<Gender>());
+        => new(_faker.PickRandom<Species>(), _faker.Random.Word(), _faker.PickRandom<Gender>()) { PetId = _faker.Random.Guid() };
 
     internal DeletePetCommand DeletePetCommand()
         => new(_faker.Random.Guid());

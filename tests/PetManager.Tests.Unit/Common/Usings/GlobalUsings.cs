@@ -5,3 +5,4 @@ global using Xunit;
 global using NSubstitute.ReturnsExtensions;
 global using Bogus;
 global using System.Linq.Expressions;
+global using FluentValidation;

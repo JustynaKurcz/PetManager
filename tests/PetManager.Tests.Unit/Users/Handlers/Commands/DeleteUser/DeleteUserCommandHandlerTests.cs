@@ -16,7 +16,7 @@ public sealed class DeleteUserCommandHandlerTests
     public async Task given_user_not_found_when_delete_user_then_should_throw_user_not_found_exception()
     {
         // Arrange
-        var command = _userFactory.DeleteUserCommand();
+        var command = _userFactory.CreateDeleteUserCommand();
         _userRepository
             .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
