@@ -7,6 +7,7 @@ public class Appointment
     public string Diagnosis { get; set; }
     public DateTimeOffset AppointmentDate { get; set; }
     public string Notes { get; private set; }
+    public bool IsNotificationSent { get; set; } = false;
     public Guid HealthRecordId { get; private set; }
     public virtual HealthRecord HealthRecord { get; private set; }
 
@@ -28,4 +29,7 @@ public class Appointment
     public static Appointment Create(string title, string diagnosis, DateTimeOffset appointmentDate, string notes,
         Guid healthRecordId)
         => new(title, diagnosis, appointmentDate, notes, healthRecordId);
+    
+    public void MarkNotificationAsSent()
+        => IsNotificationSent = true;
 }

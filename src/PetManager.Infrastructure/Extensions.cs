@@ -1,10 +1,10 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using PetManager.Infrastructure.Common;
 using PetManager.Infrastructure.Common.Context;
 using PetManager.Infrastructure.Common.Emails.Configuration;
 using PetManager.Infrastructure.Common.Exceptions;
 using PetManager.Infrastructure.Common.Integrations.BlobStorage;
+using PetManager.Infrastructure.Common.QuartzJobs.Configuration;
 using PetManager.Infrastructure.Common.Security.Auth;
 using PetManager.Infrastructure.Common.Security.Passwords;
 using PetManager.Infrastructure.EF;
@@ -32,9 +32,8 @@ internal static class Extensions
         services.AddContext();
         services.AddEmails(configuration);
         services.AddBlobStorage(configuration);
-        
-        services.AddHostedService<VaccinationReminderService>();
- 
+        services.AddQuartzJobs(configuration);
+
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
         return services;

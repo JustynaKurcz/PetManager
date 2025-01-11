@@ -8,10 +8,10 @@ internal class VaccinationRepository(PetManagerDbContext dbContext) : IVaccinati
 {
     private readonly DbSet<Vaccination> _vaccinations = dbContext.Vaccinations;
 
-    public async Task<IEnumerable<Vaccination>> GetScheduledVaccinationsAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Vaccination>> GetScheduledVaccinationsAsync(int reminderDays, CancellationToken cancellationToken)
     {
         var today = DateTimeOffset.UtcNow;
-        var nextWeek = today.AddDays(7);
+        var nextWeek = today.AddDays(reminderDays);
 
         return await _vaccinations
             .Include(v => v.HealthRecord)

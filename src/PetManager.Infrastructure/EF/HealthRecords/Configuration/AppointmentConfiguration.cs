@@ -19,6 +19,9 @@ internal sealed class AppointmentConfiguration : IEntityTypeConfiguration<Appoin
 
         builder.Property<string>("Notes")
             .IsRequired();
+        
+        builder.Property<bool>("IsNotificationSent")
+            .IsRequired();
 
         builder.Property<Guid>("HealthRecordId")
             .IsRequired();

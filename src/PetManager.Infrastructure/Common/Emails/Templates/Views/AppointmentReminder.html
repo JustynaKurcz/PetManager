@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetManager - Przypomnienie o szczepieniu</title>
+    <title>PetManager - Przypomnienie o wizycie</title>
     <style>
         :root {
             --primary: #4CAF50;
@@ -17,6 +17,7 @@
             --border-radius: 16px;
         }
 
+        /* Reszta styli taka sama jak w poprzednim szablonie */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -94,13 +95,7 @@
             margin-bottom: 10px;
         }
 
-        .pet-species {
-            color: var(--text);
-            opacity: 0.8;
-            font-style: italic;
-        }
-
-        .vaccination-details {
+        .appointment-details {
             background: #fff;
             border-radius: calc(var(--border-radius) - 4px);
             padding: 20px;
@@ -242,20 +237,20 @@
 <body>
 <div class="container">
     <div class="header-banner">
-        <div class="logo-icon">🏥</div>
+        <div class="logo-icon">👨‍⚕️</div>
         <div class="logo">Pet Manager</div>
-        <p>Przypomnienie o szczepieniu</p>
+        <p>Przypomnienie o wizycie</p>
     </div>
 
     <div class="content">
         <div class="pet-card">
             <div class="pet-name">{PetName}</div>
-            <div class="pet-species">{Species}</div>
 
-            <div class="vaccination-details">
-                <h3>Szczegóły szczepienia</h3>
-                <p><strong>Rodzaj szczepienia:</strong> {VaccinationName}</p>
-                <p><strong>Data szczepienia:</strong> {VaccinationDate}</p>
+            <div class="appointment-details">
+                <h3>Szczegóły wizyty</h3>
+                <p><strong>Tytuł wizyty:</strong> {Title}</p>
+                <p><strong>Data wizyty:</strong> {AppointmentDate}</p>
+                <p><strong>Notatki:</strong> {Notes}</p>
             </div>
         </div>
 
@@ -265,55 +260,55 @@
                 <span class="timeline-label">Przypomnienie</span>
             </div>
             <div class="timeline-point">
-                💉
-                <span class="timeline-label">Szczepienie</span>
+                👨‍⚕️
+                <span class="timeline-label">Wizyta</span>
             </div>
             <div class="timeline-point">
                 ✓
-                <span class="timeline-label">Ochrona</span>
+                <span class="timeline-label">Kontrola</span>
             </div>
         </div>
 
         <div class="importance-notice">
             <i>⚠️</i>
             <div>
-                <strong>Ważne przypomnienie!</strong>
-                <p style="margin: 5px 0 0 0">Zbliża się termin szczepienia Twojego pupila. Prosimy o zaplanowanie wizyty.</p>
+                <strong>Pamiętaj o wizycie!</strong>
+                <p style="margin: 5px 0 0 0">Zbliża się termin wizyty u weterynarza dla Twojego pupila.</p>
             </div>
         </div>
 
         <div class="benefits-grid">
             <div class="benefit-item">
-                <span class="benefit-icon">🛡️</span>
-                <div>Ochrona przed chorobami</div>
+                <span class="benefit-icon">🔍</span>
+                <div>Regularne kontrole</div>
             </div>
             <div class="benefit-item">
-                <span class="benefit-icon">📈</span>
-                <div>Wzmocnienie odporności</div>
+                <span class="benefit-icon">📋</span>
+                <div>Profesjonalna opieka</div>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">🏥</span>
+                <div>Wczesna diagnostyka</div>
             </div>
             <div class="benefit-item">
                 <span class="benefit-icon">❤️</span>
                 <div>Zdrowie pupila</div>
             </div>
-            <div class="benefit-item">
-                <span class="benefit-icon">✨</span>
-                <div>Spokój opiekuna</div>
-            </div>
         </div>
 
         <div class="quick-facts">
-            <h3>Ważne informacje przed szczepieniem</h3>
-            <div class="fact-item">
-                <span>📋</span>
-                <div>Zaplanuj wizytę z wyprzedzeniem</div>
-            </div>
+            <h3>Przygotowanie do wizyty</h3>
             <div class="fact-item">
                 <span>🕒</span>
-                <div>Obserwuj zwierzę przez 24 godziny po szczepieniu</div>
+                <div>Przyjdź 10 minut przed wizytą</div>
             </div>
             <div class="fact-item">
-                <span>🏥</span>
-                <div>Zwierzę powinno być zdrowe w dniu szczepienia</div>
+                <span>📋</span>
+                <div>Zapisz wszystkie niepokojące objawy</div>
+            </div>
+            <div class="fact-item">
+                <span>🦮</span>
+                <div>Zabierz smycz/transporterek</div>
             </div>
         </div>
     </div>

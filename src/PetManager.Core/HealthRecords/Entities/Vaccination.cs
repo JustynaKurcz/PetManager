@@ -6,7 +6,7 @@ public class Vaccination
     public string VaccinationName { get; set; }
     public DateTimeOffset VaccinationDate { get; set; }
     public DateTimeOffset NextVaccinationDate { get; set; }
-   public bool IsNotificationSent { get; set; } = false;
+    public bool IsNotificationSent { get; set; } = false;
     public Guid HealthRecordId { get; private set; }
     public HealthRecord HealthRecord { get; set; }
 

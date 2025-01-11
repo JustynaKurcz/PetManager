@@ -9,5 +9,4 @@ public record EmailOptions
     public string SenderEmail { get; init; }
     public string SenderName { get; init; }
     public bool EnableSsl { get; init; }
-    public int VaccinationReminderDays { get; init; }
 }

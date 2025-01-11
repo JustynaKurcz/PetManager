@@ -15,19 +15,23 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
+        <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0"/>
         <PackageReference Include="Humanizer" Version="3.0.0-beta.54"/>
         <PackageReference Include="MailKit" Version="4.9.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.3" />
+        <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.3"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0-rc.2"/>
+        <PackageReference Include="Quartz" Version="3.13.1"/>
+        <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.13.1"/>
+        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.1"/>
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Common\Emails\Templates\Views\PasswordReset.html" />
-      <EmbeddedResource Include="Common\Emails\Templates\Views\ResetPasswordForm.html" />
-      <EmbeddedResource Include="Common\Emails\Templates\Views\SignUpEmail.html" />
-      <EmbeddedResource Include="Common\Emails\Templates\Views\VaccinationReminder.html" />
+        <EmbeddedResource Include="Common\Emails\Templates\Views\PasswordReset.html"/>
+        <EmbeddedResource Include="Common\Emails\Templates\Views\ResetPasswordForm.html"/>
+        <EmbeddedResource Include="Common\Emails\Templates\Views\SignUpEmail.html"/>
+        <EmbeddedResource Include="Common\Emails\Templates\Views\VaccinationReminder.html"/>
+        <EmbeddedResource Include="Common\Emails\Templates\Views\AppointmentReminder.html"/>
     </ItemGroup>
 
 </Project>
