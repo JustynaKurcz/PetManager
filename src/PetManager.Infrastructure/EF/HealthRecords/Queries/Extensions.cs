@@ -1,3 +1,5 @@
+using PetManager.Application.HealthRecords.Queries.BrowseAppointments.DTO;
+using PetManager.Application.HealthRecords.Queries.BrowseVaccinations.DTO;
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails.DTO;
 using PetManager.Application.HealthRecords.Queries.GetHealthRecordDetails.DTO;
 using PetManager.Application.HealthRecords.Queries.GetVaccinationDetails.DTO;
@@ -16,6 +18,14 @@ internal static class Extensions
             appointment.Notes,
             appointment.HealthRecordId
         );
+    
+    public static AppointmentDto AsAppointmentDto(this Appointment appointment)
+        => new(
+            appointment.Id,
+            appointment.Title,
+            appointment.AppointmentDate,
+            appointment.IsNotificationSent
+        );
 
     public static VaccinationDetailsDto AsVaccinationDetailsDto(this Vaccination vaccination)
         => new(
@@ -24,6 +34,15 @@ internal static class Extensions
             vaccination.VaccinationDate,
             vaccination.NextVaccinationDate,
             vaccination.HealthRecordId
+        );
+    
+    public static VaccinationDto AsVaccinationDto(this Vaccination vaccination)
+        => new(
+            vaccination.Id,
+            vaccination.VaccinationName,
+            vaccination.VaccinationDate,
+            vaccination.NextVaccinationDate,
+            vaccination.IsNotificationSent
         );
 
     public static HealthRecordDetailsDto AsDetailsDto(this HealthRecord healthRecord)

@@ -8,7 +8,8 @@ internal class VaccinationRepository(PetManagerDbContext dbContext) : IVaccinati
 {
     private readonly DbSet<Vaccination> _vaccinations = dbContext.Vaccinations;
 
-    public async Task<IEnumerable<Vaccination>> GetScheduledVaccinationsAsync(int reminderDays, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Vaccination>> GetScheduledVaccinationsAsync(int reminderDays,
+        CancellationToken cancellationToken)
     {
         var today = DateTimeOffset.UtcNow;
         var nextWeek = today.AddDays(reminderDays);
@@ -20,6 +21,9 @@ internal class VaccinationRepository(PetManagerDbContext dbContext) : IVaccinati
             .Where(v => v.NextVaccinationDate >= today && v.NextVaccinationDate <= nextWeek && !v.IsNotificationSent)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<IQueryable<Vaccination>> BrowseAsync(CancellationToken cancellationToken)
+        => await Task.FromResult(_vaccinations.AsQueryable());
 
     public async Task UpdateVaccinationAsync(Vaccination vaccination, CancellationToken cancellationToken)
         => await Task.FromResult(_vaccinations.Update(vaccination));

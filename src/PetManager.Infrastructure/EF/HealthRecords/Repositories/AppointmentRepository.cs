@@ -22,6 +22,13 @@ internal class AppointmentRepository(PetManagerDbContext dbContext) : IAppointme
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<IQueryable<Appointment>> BrowseAsync(CancellationToken cancellationToken)
+        => await Task.FromResult(
+            _appointments
+                .AsSplitQuery()
+                .AsQueryable()
+            );
+
     public async Task UpdateAppointmentAsync(Appointment appointment, CancellationToken cancellationToken)
         => await Task.FromResult(_appointments.Update(appointment));
 
