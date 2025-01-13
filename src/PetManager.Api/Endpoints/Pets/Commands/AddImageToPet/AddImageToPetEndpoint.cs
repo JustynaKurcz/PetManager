@@ -9,18 +9,18 @@ internal sealed class AddImageToPetEndpoint : IEndpointDefinition
     public void DefineEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost(PetEndpoints.AddImageToPet, async (
-               [FromForm] IFormFile file,
+                [FromForm] IFormFile file,
                 [FromRoute] Guid petId,
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
-                var command = new AddImageToPetCommand(petId,file);
+                var command = new AddImageToPetCommand(petId, file);
                 var response = await mediator.Send(command, cancellationToken);
 
                 return Results.Ok(response);
             })
             .Produces(StatusCodes.Status200OK)
-           .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(PetEndpoints.Tag)
             .DisableAntiforgery()
             .Accepts<IFormFile>("multipart/form-data")

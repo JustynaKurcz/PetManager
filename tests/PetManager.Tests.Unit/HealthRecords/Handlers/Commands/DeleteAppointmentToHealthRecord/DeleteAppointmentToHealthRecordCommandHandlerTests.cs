@@ -19,7 +19,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         var command = _healthRecordFactory.DeleteAppointmentToHealthRecordCommand();
 
         _healthRecordRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>())
             .ReturnsNull();
 
@@ -33,7 +33,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>());
 
         await _healthRecordRepository
@@ -54,7 +54,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
 
         _healthRecordRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>())
             .Returns(healthRecord);
 
@@ -68,7 +68,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>());
 
         await _healthRecordRepository
@@ -94,7 +94,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         healthRecord.AddAppointment(appointment);
 
         _healthRecordRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>())
             .Returns(healthRecord);
 
@@ -112,7 +112,7 @@ public sealed class DeleteAppointmentToHealthRecordCommandHandlerTests
         // Assert
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>());
 
         await _healthRecordRepository

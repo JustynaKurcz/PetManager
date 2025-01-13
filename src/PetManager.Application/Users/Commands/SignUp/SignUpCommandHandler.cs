@@ -17,7 +17,7 @@ internal sealed class SignUpCommandHandler(
     {
         var email = command.Email.ToLowerInvariant();
 
-        var existingUser = await userRepository.GetByEmailAsync(x => x.Email == email, cancellationToken);
+        var existingUser = await userRepository.GetAsync(x => x.Email == email, cancellationToken);
         if (existingUser is not null)
             throw new UserAlreadyExistsException(email);
 

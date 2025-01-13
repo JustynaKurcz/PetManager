@@ -13,22 +13,22 @@ internal sealed class ForgotPasswordCommandHandler(
 ) : IRequestHandler<ForgotPasswordCommand>
 {
     private const string ResetPasswordPath = "api/v1/users/reset-password";
-   
+
     public async Task Handle(ForgotPasswordCommand command, CancellationToken cancellationToken)
     {
         var email = command.Email.ToLowerInvariant();
-        var user = await userRepository.GetByEmailAsync(x => x.Email == email, cancellationToken)
+        var user = await userRepository.GetAsync(x => x.Email == email, cancellationToken)
                    ?? throw new UserNotFoundException(email);
 
         var resetToken = authenticationManager.GeneratePasswordResetToken(user.Email);
-        
+
         var resetLink = BuildResetLink(resetToken);
-        
+
         await mediator.Publish(
-            new ForgotPasswordRequestedEvent(user.Email, resetLink), 
+            new ForgotPasswordRequestedEvent(user.Email, resetLink),
             cancellationToken);
     }
-    
+
     private string BuildResetLink(string token)
     {
         var apiUrl = configuration["Application:ApiBaseUrl"]

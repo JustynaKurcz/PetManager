@@ -18,7 +18,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Arrange
         var command = _userFactory.CreateChangeUserInformationCommand();
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -31,7 +31,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .DidNotReceive()
@@ -46,7 +46,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -55,7 +55,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Assert
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .Received(1)
@@ -74,7 +74,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         var command = _userFactory.CreateChangeUserInformationCommandWithoutLastNameCommand();
 
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -83,7 +83,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Assert
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .Received(1)
@@ -102,7 +102,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         var command = _userFactory.CreateChangeUserInformationCommandWithoutFirstNameCommand();
 
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -111,7 +111,7 @@ public sealed class ChangeUserInformationCommandHandlerTests
         // Assert
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .Received(1)

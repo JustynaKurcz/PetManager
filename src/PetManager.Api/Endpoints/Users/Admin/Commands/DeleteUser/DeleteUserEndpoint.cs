@@ -19,7 +19,7 @@ internal sealed class DeleteUserEndpoint : IEndpointDefinition
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden)
-           .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(AdminEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

@@ -8,7 +8,7 @@ public class Image
     public DateTimeOffset UploadedAt { get; set; } = DateTimeOffset.UtcNow;
     public Guid PetId { get; set; }
     public Pet Pet { get; set; }
-    
+
     private Image()
     {
     }
@@ -20,7 +20,7 @@ public class Image
         BlobUrl = blobUrl;
         PetId = petId;
     }
-    
+
     public static Image Create(string fileName, string blobUrl, Guid petId)
         => new(fileName, blobUrl, petId);
 }

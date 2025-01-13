@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Http;
 using PetManager.Api.Endpoints.Pets;
-using PetManager.Tests.Integration.Configuration;
-using PetManager.Tests.Integration.Pets.Factories;
-using PetManager.Tests.Integration.Users.Factories;
 using PetManager.Application.Pets.Commands.AddImageToPet;
 using PetManager.Core.Pets.Entities;
+using PetManager.Tests.Integration.Configuration;
+using PetManager.Tests.Integration.Pets.Factories;
 using PetManager.Tests.Integration.Pets.Helpers;
+using PetManager.Tests.Integration.Users.Factories;
 
 namespace PetManager.Tests.Integration.Pets.Endpoints.Commands.AddImageToPet;
 
@@ -49,7 +49,7 @@ public class AddImageToPetEndpointTests : IntegrationTestBase
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
     }
-    
+
     [Fact]
     public async Task post_add_image_to_pet_given_valid_data_should_return_200_status_code()
     {
@@ -77,7 +77,8 @@ public class AddImageToPetEndpointTests : IntegrationTestBase
     }
 
     [Fact]
-    public async Task post_add_image_to_pet_given_pet_with_existing_image_should_return_200_status_code_and_replace_image()
+    public async Task
+        post_add_image_to_pet_given_pet_with_existing_image_should_return_200_status_code_and_replace_image()
     {
         // Arrange
         var user = _userFactory.CreateUser();
@@ -107,7 +108,7 @@ public class AddImageToPetEndpointTests : IntegrationTestBase
         result.ShouldNotBeNull();
         result.ImageId.ShouldNotBe(existingImage.Id);
     }
-    
+
     private static MultipartFormDataContent CreateMultipartContent(IFormFile file)
     {
         var content = new MultipartFormDataContent();

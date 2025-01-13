@@ -13,14 +13,14 @@ internal sealed class EmailService(EmailOptions emailOptions) : IEmailService
     {
         var assembly = typeof(EmailService).Assembly;
         var template = string.Empty;
-        
+
         await using (var stream = assembly.GetManifestResourceStream(templatePath))
         {
             if (stream == null)
             {
                 throw new FileNotFoundException($"Template email not found: {templatePath}");
             }
-        
+
             using var reader = new StreamReader(stream);
             template = await reader.ReadToEndAsync(cancellationToken);
         }

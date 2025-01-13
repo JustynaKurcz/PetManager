@@ -30,14 +30,14 @@ internal sealed class PetConfiguration : IEntityTypeConfiguration<Pet>
 
         builder.Property<Guid>("HealthRecordId")
             .IsRequired();
-        
-       builder.Property<Guid?>("ImageId");
+
+        builder.Property<Guid?>("ImageId");
 
         builder.HasOne(x => x.HealthRecord)
             .WithOne(hr => hr.Pet)
             .HasForeignKey<HealthRecord>(hr => hr.PetId)
             .OnDelete(DeleteBehavior.Cascade);
-            
+
         builder.ToTable("Pets");
     }
 }

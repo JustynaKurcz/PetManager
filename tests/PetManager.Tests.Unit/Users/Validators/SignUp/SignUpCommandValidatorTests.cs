@@ -48,7 +48,7 @@ public class SignUpCommandValidatorTests
         result.Errors.ShouldNotBeEmpty();
         result.Errors.ShouldContain(x => x.PropertyName == nameof(SignUpCommand.Password));
     }
-    
+
     [Fact]
     public void validate_sign_up_command_with_too_short_password_should_return_error()
     {
@@ -78,7 +78,7 @@ public class SignUpCommandValidatorTests
         result.Errors.ShouldNotBeEmpty();
         result.Errors.ShouldContain(x => x.PropertyName == nameof(SignUpCommand.Password));
     }
-    
+
     [Fact]
     public void validate_sign_up_command_with_invalid_email_and_password_should_return_multiple_errors()
     {
@@ -94,7 +94,7 @@ public class SignUpCommandValidatorTests
         result.Errors.ShouldContain(x => x.PropertyName == nameof(SignUpCommand.Email));
         result.Errors.ShouldContain(x => x.PropertyName == nameof(SignUpCommand.Password));
     }
-    
+
     private readonly IValidator<SignUpCommand> _validator = new SignUpCommandValidator();
     private readonly UserTestFactory _factory = new();
 }

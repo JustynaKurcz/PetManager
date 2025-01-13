@@ -48,7 +48,7 @@ public class SignInCommandValidatorTests
         result.Errors.ShouldNotBeEmpty();
         result.Errors.ShouldContain(x => x.PropertyName == nameof(SignInCommand.Password));
     }
-    
+
     [Fact]
     public void validate_sign_in_command_with_too_short_password_should_return_error()
     {
@@ -63,7 +63,7 @@ public class SignInCommandValidatorTests
         result.Errors.ShouldNotBeEmpty();
         result.Errors.ShouldContain(x => x.PropertyName == nameof(SignInCommand.Password));
     }
-    
+
     [Fact]
     public void validate_sign_in_command_with_invalid_email_and_password_should_return_multiple_errors()
     {
@@ -79,7 +79,7 @@ public class SignInCommandValidatorTests
         result.Errors.ShouldContain(x => x.PropertyName == nameof(SignInCommand.Email));
         result.Errors.ShouldContain(x => x.PropertyName == nameof(SignInCommand.Password));
     }
-    
+
     private readonly IValidator<SignInCommand> _validator = new SignInCommandValidator();
     private readonly UserTestFactory _factory = new();
 }

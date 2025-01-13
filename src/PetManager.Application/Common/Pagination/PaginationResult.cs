@@ -1,4 +1,3 @@
-
 namespace PetManager.Application.Common.Pagination;
 
 public class PaginationResult<T>
@@ -25,7 +24,7 @@ public class PaginationResult<T>
         CancellationToken cancellationToken)
     {
         var count = source.ToList().Count;
-        var items =  source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+        var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
         return Task.FromResult(new PaginationResult<T>(items, count, pageIndex, pageSize));
     }

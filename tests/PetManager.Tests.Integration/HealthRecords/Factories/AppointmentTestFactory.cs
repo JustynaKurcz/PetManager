@@ -14,7 +14,7 @@ internal sealed class AppointmentTestFactory
 
     internal GetAppointmentDetailsQuery GetAppointmentDetailsQuery()
         => new(_faker.Random.Guid(), _faker.Random.Guid());
-    
+
     internal BrowseAppointmentsQuery BrowseAppointmentsQuery(Guid healthRecordId = default)
         => new()
         {

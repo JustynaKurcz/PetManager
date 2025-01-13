@@ -14,6 +14,7 @@ internal class ImageRepository(PetManagerDbContext dbContext) : IImageRepository
 
     public async Task<Image> GetByIdAsync(Expression<Func<Image, bool>> predicate, CancellationToken cancellationToken)
         => await _images.SingleOrDefaultAsync(predicate, cancellationToken);
+
     public async Task DeleteAsync(Image image, CancellationToken cancellationToken)
         => _images.Remove(image);
 

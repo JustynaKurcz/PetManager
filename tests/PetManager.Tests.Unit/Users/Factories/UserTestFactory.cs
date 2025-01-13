@@ -34,10 +34,10 @@ internal sealed class UserTestFactory
 
     internal DeleteUserCommand CreateDeleteUserCommand()
         => new();
-    
+
     internal ResetPasswordCommand CreateResetPasswordCommand()
         => new(_faker.Person.Email, _faker.Internet.Password());
-    
+
     internal ForgotPasswordCommand CreateForgotPasswordCommand()
         => new(_faker.Person.Email);
 

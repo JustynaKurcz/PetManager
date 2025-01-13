@@ -10,8 +10,8 @@ internal sealed class ResetPasswordCommandHandler(
 {
     public async Task Handle(ResetPasswordCommand command, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByEmailAsync(x => x.Email == command.Email, cancellationToken)
-            ?? throw new UserNotFoundException(command.Email);
+        var user = await userRepository.GetAsync(x => x.Email == command.Email, cancellationToken)
+                   ?? throw new UserNotFoundException(command.Email);
 
         var hashedPassword = passwordManager.HashPassword(command.NewPassword);
         user.ChangePassword(hashedPassword);

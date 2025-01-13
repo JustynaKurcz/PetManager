@@ -1,6 +1,7 @@
 namespace PetManager.Application.HealthRecords.Commands.AddVaccinationToHealthRecord;
 
-internal sealed class AddVaccinationToHealthRecordCommandValidator : AbstractValidator<AddVaccinationToHealthRecordCommand>
+internal sealed class
+    AddVaccinationToHealthRecordCommandValidator : AbstractValidator<AddVaccinationToHealthRecordCommand>
 {
     public AddVaccinationToHealthRecordCommandValidator()
     {

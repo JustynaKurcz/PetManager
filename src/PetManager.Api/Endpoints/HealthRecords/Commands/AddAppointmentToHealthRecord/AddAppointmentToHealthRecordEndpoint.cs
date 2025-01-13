@@ -19,7 +19,7 @@ internal sealed class AddAppointmentToHealthRecordEndpoint : IEndpointDefinition
                 return Results.Created(HealthRecordEndpoints.Base, response);
             })
             .Produces<AddAppointmentToHealthRecordResponse>(StatusCodes.Status201Created)
-           .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(HealthRecordEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

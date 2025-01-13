@@ -16,7 +16,7 @@ internal sealed class BrowsePetsQueryHandler(
     {
         var currentLoggedUserId = context.UserId;
         var pets = await petRepository.BrowseAsync(currentLoggedUserId, cancellationToken);
-        
+
         pets = Search(query, pets);
 
         return await pets.AsNoTracking()

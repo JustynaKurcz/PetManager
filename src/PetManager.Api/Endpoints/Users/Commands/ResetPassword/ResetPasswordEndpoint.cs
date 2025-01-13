@@ -16,7 +16,7 @@ public sealed class ResetPasswordEndpoint : IEndpointDefinition
                 return Results.Ok();
             })
             .Produces(StatusCodes.Status200OK)
-           .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(UserEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

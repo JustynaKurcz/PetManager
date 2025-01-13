@@ -13,13 +13,13 @@ internal sealed class AddImageToPetCommandHandler(
 {
     public async Task<AddImageToPetResponse> Handle(AddImageToPetCommand command, CancellationToken cancellationToken)
     {
-        var pet = await petRepository.GetByIdAsync(x => x.Id == command.PetId, cancellationToken)
+        var pet = await petRepository.GetAsync(x => x.Id == command.PetId, cancellationToken)
                   ?? throw new PetNotFoundException(command.PetId);
-        
+
         if (pet.Image is not null)
         {
             await blobStorageService.DeleteImageAsync(pet.Image!.BlobUrl, cancellationToken);
-            
+
             await imageRepository.DeleteAsync(pet.Image, cancellationToken);
             await imageRepository.SaveChangesAsync(cancellationToken);
         }

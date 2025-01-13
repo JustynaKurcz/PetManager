@@ -10,7 +10,8 @@ public class BrowseAppointmentsEndpointTests : IntegrationTestBase
     private readonly UserTestFactory _userFactory = new();
     private readonly AppointmentTestFactory _appointmentFactory = new();
 
-    [Fact] public async Task browse_appointments_without_being_authorized_should_return_401_status_code()
+    [Fact]
+    public async Task browse_appointments_without_being_authorized_should_return_401_status_code()
     {
         // Arrange
         var query = _appointmentFactory.BrowseAppointmentsQuery();
@@ -23,5 +24,4 @@ public class BrowseAppointmentsEndpointTests : IntegrationTestBase
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
-    
 }

@@ -13,7 +13,7 @@ internal sealed class DeleteUserCommandHandler(
     {
         var currentLoggedInUserId = context.UserId;
 
-        var user = await userRepository.GetByIdAsync(x => x.Id == context.UserId, cancellationToken)
+        var user = await userRepository.GetAsync(x => x.Id == context.UserId, cancellationToken)
                    ?? throw new UserNotFoundException(context.UserId);
 
         if (context.IsAdmin)

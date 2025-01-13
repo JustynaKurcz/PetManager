@@ -16,7 +16,7 @@ internal sealed class SignUpEndpoint : IEndpointDefinition
                 return Results.Created(UserEndpoints.Base, result);
             })
             .Produces<SignUpResponse>(StatusCodes.Status201Created)
-           .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(UserEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

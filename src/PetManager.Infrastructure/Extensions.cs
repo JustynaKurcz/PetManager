@@ -6,8 +6,6 @@ using PetManager.Infrastructure.Common.Exceptions;
 using PetManager.Infrastructure.Common.Integrations.BlobStorage;
 using PetManager.Infrastructure.Common.QuartzJobs.Configuration;
 using PetManager.Infrastructure.Common.Security;
-using PetManager.Infrastructure.Common.Security.Authentication;
-using PetManager.Infrastructure.Common.Security.Passwords;
 using PetManager.Infrastructure.EF;
 using PetManager.Infrastructure.EF.DbContext;
 

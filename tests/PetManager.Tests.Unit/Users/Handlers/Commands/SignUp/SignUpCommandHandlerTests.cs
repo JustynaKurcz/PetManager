@@ -20,7 +20,7 @@ public sealed class SignUpCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         _passwordManager
@@ -41,7 +41,7 @@ public sealed class SignUpCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         _passwordManager
             .Received(1)
@@ -60,7 +60,7 @@ public sealed class SignUpCommandHandlerTests
         var existingUser = _userFactory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(existingUser);
 
         // Act
@@ -72,7 +72,7 @@ public sealed class SignUpCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .DidNotReceive()
@@ -87,7 +87,7 @@ public sealed class SignUpCommandHandlerTests
         var command = _userFactory.CreateSignUpCommand() with { Email = upperCaseEmail };
 
         _userRepository
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -96,7 +96,7 @@ public sealed class SignUpCommandHandlerTests
         // Assert
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
     }
 
     private readonly IUserRepository _userRepository;

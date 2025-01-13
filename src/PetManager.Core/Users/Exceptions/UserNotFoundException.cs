@@ -11,7 +11,7 @@ public sealed class UserNotFoundException : PetManagerException
     {
         UserId = userId;
     }
-    
+
     public UserNotFoundException(string email) : base($"User with email {email} was not found.")
     {
         Email = email;

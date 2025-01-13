@@ -12,13 +12,14 @@ internal sealed class BrowseAppointmentsQueryHandler(
     IContext context,
     IAppointmentRepository appointmentRepository,
     IHealthRecordRepository healthRecordRepository
-    ) : IRequestHandler<BrowseAppointmentsQuery, PaginationResult<AppointmentDto>>
+) : IRequestHandler<BrowseAppointmentsQuery, PaginationResult<AppointmentDto>>
 {
-    public async Task<PaginationResult<AppointmentDto>> Handle(BrowseAppointmentsQuery query, CancellationToken cancellationToken)
+    public async Task<PaginationResult<AppointmentDto>> Handle(BrowseAppointmentsQuery query,
+        CancellationToken cancellationToken)
     {
-        var healthRecord = await healthRecordRepository.GetByIdAsync(x => x.Id == query.HealthRecordId, cancellationToken);
+        var healthRecord = await healthRecordRepository.GetAsync(x => x.Id == query.HealthRecordId, cancellationToken);
         if (healthRecord is null) throw new HealthRecordNotFoundException(query.HealthRecordId);
-        
+
         var currentLoggedUserId = context.UserId;
         var appointments = await appointmentRepository.BrowseAsync(currentLoggedUserId, cancellationToken);
 
@@ -28,7 +29,7 @@ internal sealed class BrowseAppointmentsQueryHandler(
             .Select(x => x.AsAppointmentDto())
             .PaginateAsync(query, cancellationToken);
     }
-    
+
     private IEnumerable<Appointment> Search(BrowseAppointmentsQuery query, IEnumerable<Appointment> appointments)
     {
         if (string.IsNullOrWhiteSpace(query.Search)) return appointments;

@@ -4,7 +4,7 @@ namespace PetManager.Core.HealthRecords.Repositories;
 
 public interface IHealthRecordRepository
 {
-    Task<HealthRecord?> GetByIdAsync(Expression<Func<HealthRecord, bool>> predicate,
+    Task<HealthRecord?> GetAsync(Expression<Func<HealthRecord, bool>> predicate,
         CancellationToken cancellationToken,
         bool asNoTracking = false);
 

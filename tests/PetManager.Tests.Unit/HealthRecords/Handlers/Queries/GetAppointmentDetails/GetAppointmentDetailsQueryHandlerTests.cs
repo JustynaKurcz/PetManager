@@ -20,7 +20,7 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         // Arrange
         var query = _appointmentFactory.GetAppointmentDetailsQuery();
         _healthRecordRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>())
             .ReturnsNull();
 
@@ -34,7 +34,7 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>());
     }
 
@@ -46,7 +46,7 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         var query = _appointmentFactory.GetAppointmentDetailsQuery();
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
         _healthRecordRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>())
             .Returns(healthRecord);
 
@@ -60,7 +60,7 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
 
         await _healthRecordRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>());
     }
 
@@ -76,7 +76,7 @@ public sealed class GetAppointmentDetailsQueryHandlerTests
         healthRecord.AddAppointment(appointment);
 
         _healthRecordRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>(),
                 Arg.Any<bool>())
             .Returns(healthRecord);
 

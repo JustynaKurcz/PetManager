@@ -26,7 +26,7 @@ public sealed class BrowseAppointmentsQueryHandlerTests
         var userId = Guid.NewGuid();
 
         _healthRecordRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(healthRecord);
 
         _context.UserId.Returns(userId);
@@ -41,7 +41,7 @@ public sealed class BrowseAppointmentsQueryHandlerTests
         result.ShouldNotBeNull();
         result.Items.Count.ShouldBe(appointments.Count());
     }
-    
+
     [Fact]
     public async Task given_valid_query_when_empty_appointments_then_should_return_empty_list()
     {
@@ -51,7 +51,7 @@ public sealed class BrowseAppointmentsQueryHandlerTests
         var userId = Guid.NewGuid();
 
         _healthRecordRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(healthRecord);
 
         _context.UserId.Returns(userId);
@@ -66,16 +66,17 @@ public sealed class BrowseAppointmentsQueryHandlerTests
         result.ShouldNotBeNull();
         result.Items.Count.ShouldBe(0);
     }
-    
+
     [Fact]
-    public async Task given_health_record_not_found_when_browse_appointments_then_should_throw_health_record_not_found_exception()
+    public async Task
+        given_health_record_not_found_when_browse_appointments_then_should_throw_health_record_not_found_exception()
     {
         // Arrange
         var query = _appointmentFactory.BrowseAppointmentsQuery();
         var userId = Guid.NewGuid();
 
         _healthRecordRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<HealthRecord, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         _context.UserId.Returns(userId);

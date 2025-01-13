@@ -29,12 +29,12 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property<UserRole>("Role")
             .IsRequired();
-        
-        builder.HasMany(x =>x.Pets)
-            .WithOne(x=>x.User)
-            .HasForeignKey(x=>x.UserId)
+
+        builder.HasMany(x => x.Pets)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.ToTable("Users");
     }
 }

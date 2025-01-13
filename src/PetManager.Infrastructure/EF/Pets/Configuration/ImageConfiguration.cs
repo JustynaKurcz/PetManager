@@ -19,12 +19,12 @@ internal sealed class ImageConfiguration : IEntityTypeConfiguration<Image>
 
         builder.Property<Guid>("PetId")
             .IsRequired();
-        
+
         builder.HasOne(x => x.Pet)
-            .WithOne(i=> i.Image)
-            .HasForeignKey<Image>(x=>x.PetId)
+            .WithOne(i => i.Image)
+            .HasForeignKey<Image>(x => x.PetId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.ToTable("Images");
     }
 }

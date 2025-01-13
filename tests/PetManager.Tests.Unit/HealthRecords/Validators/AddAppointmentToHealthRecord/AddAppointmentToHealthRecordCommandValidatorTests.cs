@@ -68,7 +68,8 @@ public class AddAppointmentToHealthRecordCommandValidatorTests
     [Theory]
     [InlineData("")]
     [InlineData(null)]
-    public void validate_add_appointment_to_health_record_command_with_invalid_diagnosis_should_return_error(string diagnosis)
+    public void validate_add_appointment_to_health_record_command_with_invalid_diagnosis_should_return_error(
+        string diagnosis)
     {
         //arrange
         var command = new AddAppointmentToHealthRecordCommand(
@@ -156,7 +157,8 @@ public class AddAppointmentToHealthRecordCommandValidatorTests
     }
 
     [Fact]
-    public void validate_add_appointment_to_health_record_command_with_multiple_invalid_fields_should_return_multiple_errors()
+    public void
+        validate_add_appointment_to_health_record_command_with_multiple_invalid_fields_should_return_multiple_errors()
     {
         //arrange
         var command = new AddAppointmentToHealthRecordCommand(
@@ -180,6 +182,8 @@ public class AddAppointmentToHealthRecordCommandValidatorTests
         result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.Notes));
     }
 
-    private readonly IValidator<AddAppointmentToHealthRecordCommand> _validator = new AddAppointmentToHealthRecordCommandValidator();
+    private readonly IValidator<AddAppointmentToHealthRecordCommand> _validator =
+        new AddAppointmentToHealthRecordCommandValidator();
+
     private readonly HealthRecordTestFactory _factory = new();
 }

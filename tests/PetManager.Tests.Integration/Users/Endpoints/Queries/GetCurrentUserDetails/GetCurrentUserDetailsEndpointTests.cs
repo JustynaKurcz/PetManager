@@ -35,7 +35,7 @@ public class GetCurrentUserDetailsEndpointTests : IntegrationTestBase
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
         await response.Content.ReadFromJsonAsync<CurrentUserDetailsDto>().ShouldNotBeNull();
     }
-    
+
     [Fact]
     public async Task get_current_user_details_with_admin_role_should_return_200_status_code_and_user_details()
     {

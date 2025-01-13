@@ -18,6 +18,7 @@ public class Pet
     public virtual HealthRecord HealthRecord { get; set; }
     public Guid? ImageId { get; set; }
     public virtual Image? Image { get; set; }
+
     private Pet()
     {
     }

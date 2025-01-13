@@ -18,7 +18,7 @@ internal static class Extensions
             appointment.Notes,
             appointment.HealthRecordId
         );
-    
+
     public static AppointmentDto AsAppointmentDto(this Appointment appointment)
         => new(
             appointment.Id,
@@ -35,7 +35,7 @@ internal static class Extensions
             vaccination.NextVaccinationDate,
             vaccination.HealthRecordId
         );
-    
+
     public static VaccinationDto AsVaccinationDto(this Vaccination vaccination)
         => new(
             vaccination.Id,

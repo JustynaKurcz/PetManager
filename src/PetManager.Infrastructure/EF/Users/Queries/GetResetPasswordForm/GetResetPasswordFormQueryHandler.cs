@@ -10,7 +10,8 @@ public class GetResetPasswordFormQueryHandler(
     IUserRepository userRepository
 ) : IRequestHandler<GetResetPasswordFormQuery, string>
 {
-    private const string ResetPasswordFormPath = "PetManager.Infrastructure.Shared.Emails.Templates.Views.ResetPasswordForm.html";
+    private const string ResetPasswordFormPath =
+        "PetManager.Infrastructure.Shared.Emails.Templates.Views.ResetPasswordForm.html";
 
     public async Task<string> Handle(GetResetPasswordFormQuery query, CancellationToken cancellationToken)
     {
@@ -19,20 +20,21 @@ public class GetResetPasswordFormQueryHandler(
             throw new InvalidOperationException("Invalid password reset token.");
         }
 
-        var user = await userRepository.GetByEmailAsync(x => x.Email == email, cancellationToken)
-            ?? throw new UserNotFoundException(email);
-        
+        var user = await userRepository.GetAsync(x => x.Email == email, cancellationToken)
+                   ?? throw new UserNotFoundException(email);
+
 
         var template = await LoadTemplateFromResources(cancellationToken);
-        
+
         return CustomizeTemplate(template, query.Token, user.Email);
     }
-    
+
     private async Task<string> LoadTemplateFromResources(CancellationToken cancellationToken)
     {
         var assembly = typeof(GetResetPasswordFormQueryHandler).Assembly;
         await using var stream = assembly.GetManifestResourceStream(ResetPasswordFormPath)
-                                 ?? throw new InvalidOperationException($"Could not find embedded resource '{ResetPasswordFormPath}'");
+                                 ?? throw new InvalidOperationException(
+                                     $"Could not find embedded resource '{ResetPasswordFormPath}'");
 
         using var reader = new StreamReader(stream);
         return await reader.ReadToEndAsync(cancellationToken);

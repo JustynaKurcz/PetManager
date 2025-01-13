@@ -1,4 +1,3 @@
-using PetManager.Application.Common.Context;
 using PetManager.Application.Common.Pagination;
 using PetManager.Application.Users.Admin.Queries.BrowseUsers;
 using PetManager.Application.Users.Admin.Queries.BrowseUsers.DTO;
@@ -14,7 +13,7 @@ internal sealed class BrowseUsersQueryHandler(
     public async Task<PaginationResult<UserDto>> Handle(BrowseUsersQuery query, CancellationToken cancellationToken)
     {
         var users = await userRepository.BrowseAsync(cancellationToken);
-        
+
         users = Search(query, users);
 
         return await users

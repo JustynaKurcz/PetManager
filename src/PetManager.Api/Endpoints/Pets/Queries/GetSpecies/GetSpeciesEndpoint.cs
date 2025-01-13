@@ -18,7 +18,7 @@ internal sealed class GetSpeciesEndpoint : IEndpointDefinition
                 return Results.Ok(response);
             })
             .Produces<SpeciesDto>(StatusCodes.Status200OK)
-           .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized)
             .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)

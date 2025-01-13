@@ -14,10 +14,11 @@ public abstract class BaseReminderJob<TEntity>(
     {
         await CheckAndSendReminders();
     }
-    
+
     protected abstract Task<IEnumerable<TEntity>> GetScheduledItems(IServiceScope scope);
     protected abstract Task UpdateItem(TEntity item, IServiceScope scope);
     protected abstract Task SendReminderEmail(TEntity item, CancellationToken cancellationToken);
+
     private async Task CheckAndSendReminders()
     {
         using var scope = scopeFactory.CreateScope();

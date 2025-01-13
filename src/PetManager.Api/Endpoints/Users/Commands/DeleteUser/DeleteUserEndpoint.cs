@@ -1,6 +1,4 @@
 using PetManager.Api.Common.Endpoints;
-using PetManager.Application.Common.Context;
-using PetManager.Application.Users.Admin.Commands.DeleteUser;
 using PetManager.Application.Users.Commands.DeleteUser;
 using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 

@@ -9,7 +9,7 @@ internal class HealthRecordRepository(PetManagerDbContext dbContext) : IHealthRe
 {
     private readonly DbSet<HealthRecord> _healthRecords = dbContext.HealthRecords;
 
-    public async Task<HealthRecord?> GetByIdAsync(Expression<Func<HealthRecord, bool>> predicate,
+    public async Task<HealthRecord?> GetAsync(Expression<Func<HealthRecord, bool>> predicate,
         CancellationToken cancellationToken,
         bool asNoTracking = false)
     {

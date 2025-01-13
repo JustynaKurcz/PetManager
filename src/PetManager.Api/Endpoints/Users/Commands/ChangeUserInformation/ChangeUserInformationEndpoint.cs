@@ -18,7 +18,7 @@ internal sealed class ChangeUserInformationEndpoint : IEndpointDefinition
                 return Results.NoContent();
             })
             .Produces(StatusCodes.Status204NoContent)
-           .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized)
             .WithTags(UserEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)

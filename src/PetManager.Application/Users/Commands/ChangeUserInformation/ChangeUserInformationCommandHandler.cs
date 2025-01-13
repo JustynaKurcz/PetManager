@@ -11,7 +11,7 @@ internal sealed class ChangeUserInformationCommandHandler(
 {
     public async Task Handle(ChangeUserInformationCommand command, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByIdAsync(x => x.Id == context.UserId, cancellationToken)
+        var user = await userRepository.GetAsync(x => x.Id == context.UserId, cancellationToken)
                    ?? throw new UserNotFoundException(context.UserId);
 
         user.ChangeInformation(command.FirstName, command.LastName);

@@ -8,7 +8,7 @@ internal sealed class AuthenticationManager(AuthenticationOptions authentication
     private readonly string _key = authenticationOptions.JwtKey;
     private readonly string _issuer = authenticationOptions.Issuer;
     private readonly string _audience = authenticationOptions.Audience;
-    
+
     public Task<string> GenerateToken(Guid userId, string role)
     {
         var tokenHandler = new JwtSecurityTokenHandler();

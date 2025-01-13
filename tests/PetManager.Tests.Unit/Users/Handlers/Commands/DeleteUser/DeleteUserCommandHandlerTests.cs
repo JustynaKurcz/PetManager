@@ -20,7 +20,7 @@ public sealed class DeleteUserCommandHandlerTests
         // Arrange
         var command = _userFactory.CreateDeleteUserCommand();
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -33,7 +33,7 @@ public sealed class DeleteUserCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .DidNotReceive()
@@ -50,7 +50,7 @@ public sealed class DeleteUserCommandHandlerTests
         var command = _userFactory.CreateDeleteUserCommand();
 
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -61,7 +61,7 @@ public sealed class DeleteUserCommandHandlerTests
             .Received(1)
             .DeleteAsync(user, Arg.Any<CancellationToken>());
     }
-    
+
     [Fact]
     public async Task given_admin_deleting_own_account_then_should_throw_admin_cannot_delete_own_account_exception()
     {
@@ -72,7 +72,7 @@ public sealed class DeleteUserCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -87,7 +87,7 @@ public sealed class DeleteUserCommandHandlerTests
             .DidNotReceive()
             .DeleteAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
-    
+
     [Fact]
     public async Task given_user_deleting_other_user_account_then_should_throw_user_cannot_delete_other_user_exception()
     {
@@ -101,7 +101,7 @@ public sealed class DeleteUserCommandHandlerTests
         // var user = _userFactory.CreateUser(id: otherUserId);
 
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -116,7 +116,7 @@ public sealed class DeleteUserCommandHandlerTests
             .DidNotReceive()
             .DeleteAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
-    
+
     private readonly IUserRepository _userRepository;
     private readonly IContext _context;
     private readonly IRequestHandler<DeleteUserCommand> _handler;

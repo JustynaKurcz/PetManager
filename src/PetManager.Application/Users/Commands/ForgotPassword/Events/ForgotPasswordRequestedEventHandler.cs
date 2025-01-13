@@ -3,7 +3,7 @@ using PetManager.Application.Common.Emails.Models;
 
 namespace PetManager.Application.Users.Commands.ForgotPassword.Events;
 
-internal sealed class ForgotPasswordRequestedEventHandler(IEmailService emailService) 
+internal sealed class ForgotPasswordRequestedEventHandler(IEmailService emailService)
     : INotificationHandler<ForgotPasswordRequestedEvent>
 {
     public async Task Handle(ForgotPasswordRequestedEvent notification, CancellationToken cancellationToken)
@@ -13,7 +13,7 @@ internal sealed class ForgotPasswordRequestedEventHandler(IEmailService emailSer
             UserName = notification.Email,
             ResetLink = notification.ResetLink
         };
-        
+
         await emailService.SendEmailAsync(
             notification.Email,
             EmailTemplateConstants.PasswordResetTemplatePath,

@@ -22,7 +22,8 @@ public class AddVaccinationToHealthRecordCommandValidatorTests
     [Theory]
     [InlineData("")]
     [InlineData(null)]
-    public void validate_add_vaccination_to_health_record_command_with_invalid_vaccination_name_should_return_error(string name)
+    public void validate_add_vaccination_to_health_record_command_with_invalid_vaccination_name_should_return_error(
+        string name)
     {
         //arrange
         var command = new AddVaccinationToHealthRecordCommand(
@@ -102,11 +103,13 @@ public class AddVaccinationToHealthRecordCommandValidatorTests
         //assert
         result.IsValid.ShouldBeFalse();
         result.Errors.ShouldNotBeEmpty();
-        result.Errors.ShouldContain(x => x.PropertyName == nameof(AddVaccinationToHealthRecordCommand.NextVaccinationDate));
+        result.Errors.ShouldContain(x =>
+            x.PropertyName == nameof(AddVaccinationToHealthRecordCommand.NextVaccinationDate));
     }
 
     [Fact]
-    public void validate_add_vaccination_to_health_record_command_with_next_vaccination_date_before_vaccination_date_should_return_error()
+    public void
+        validate_add_vaccination_to_health_record_command_with_next_vaccination_date_before_vaccination_date_should_return_error()
     {
         //arrange
         var command = new AddVaccinationToHealthRecordCommand(
@@ -123,11 +126,13 @@ public class AddVaccinationToHealthRecordCommandValidatorTests
         //assert
         result.IsValid.ShouldBeFalse();
         result.Errors.ShouldNotBeEmpty();
-        result.Errors.ShouldContain(x => x.PropertyName == nameof(AddVaccinationToHealthRecordCommand.NextVaccinationDate));
+        result.Errors.ShouldContain(x =>
+            x.PropertyName == nameof(AddVaccinationToHealthRecordCommand.NextVaccinationDate));
     }
 
     [Fact]
-    public void validate_add_vaccination_to_health_record_command_with_multiple_invalid_fields_should_return_multiple_errors()
+    public void
+        validate_add_vaccination_to_health_record_command_with_multiple_invalid_fields_should_return_multiple_errors()
     {
         //arrange
         var command = new AddVaccinationToHealthRecordCommand(
@@ -143,12 +148,15 @@ public class AddVaccinationToHealthRecordCommandValidatorTests
 
         //assert
         result.IsValid.ShouldBeFalse();
-        result.Errors.Count.ShouldBe(4); 
+        result.Errors.Count.ShouldBe(4);
         result.Errors.ShouldContain(x => x.PropertyName == nameof(AddVaccinationToHealthRecordCommand.VaccinationName));
         result.Errors.ShouldContain(x => x.PropertyName == nameof(AddVaccinationToHealthRecordCommand.VaccinationDate));
-        result.Errors.ShouldContain(x => x.PropertyName == nameof(AddVaccinationToHealthRecordCommand.NextVaccinationDate));
+        result.Errors.ShouldContain(x =>
+            x.PropertyName == nameof(AddVaccinationToHealthRecordCommand.NextVaccinationDate));
     }
 
-    private readonly IValidator<AddVaccinationToHealthRecordCommand> _validator = new AddVaccinationToHealthRecordCommandValidator();
+    private readonly IValidator<AddVaccinationToHealthRecordCommand> _validator =
+        new AddVaccinationToHealthRecordCommandValidator();
+
     private readonly HealthRecordTestFactory _factory = new();
 }

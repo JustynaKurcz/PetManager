@@ -15,14 +15,14 @@ internal sealed class BrowseAppointmentsEndpoint : IEndpointDefinition
                 [AsParameters] BrowseAppointmentsEndpointRequest request,
                 CancellationToken cancellationToken) =>
             {
-                var query = new BrowseAppointmentsQuery 
+                var query = new BrowseAppointmentsQuery
                 {
                     Search = request.Search,
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize,
                     HealthRecordId = request.HealthRecordId
                 };
-                
+
                 var response = await mediator.Send(query, cancellationToken);
                 return Results.Ok(response);
             })

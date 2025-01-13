@@ -19,7 +19,7 @@ public sealed class GetPetDetailsQueryHandlerTests
         // Arrange
         var query = _petFactory.GetPetDetailsQuery();
         _petRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .ReturnsNull();
 
         // Act
@@ -32,7 +32,7 @@ public sealed class GetPetDetailsQueryHandlerTests
 
         await _petRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public sealed class GetPetDetailsQueryHandlerTests
         var pet = _petFactory.CreatePet();
 
         _petRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .Returns(pet);
 
         // Act
@@ -55,7 +55,7 @@ public sealed class GetPetDetailsQueryHandlerTests
 
         await _petRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
     }
 
     private readonly IPetRepository _petRepository;

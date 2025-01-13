@@ -14,11 +14,13 @@ public class User
     public DateTimeOffset CreatedAt { get; private set; }
     public UserRole Role { get; private set; }
     private HashSet<Pet> _pets = [];
+
     public IEnumerable<Pet> Pets
     {
         get => _pets;
         set => _pets = new HashSet<Pet>(value);
     }
+
     private User()
     {
     }

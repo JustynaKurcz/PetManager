@@ -36,7 +36,7 @@ internal sealed class PetTestFactory
 
     internal DeletePetCommand DeletePetCommand()
         => new(_faker.Random.Guid());
-    
+
     internal AddImageToPetCommand AddImageToPetCommand()
         => new(_faker.Random.Guid(), FormFileGenerator.CreateTestFileFaker().Generate());
 }

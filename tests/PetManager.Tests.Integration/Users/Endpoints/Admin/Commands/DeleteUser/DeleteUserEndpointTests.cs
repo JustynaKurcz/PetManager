@@ -21,7 +21,7 @@ public class DeleteUserEndpointTests : IntegrationTestBase
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
-    
+
     [Fact]
     public async Task delete_non_existing_user_should_return_400_status_code()
     {
@@ -39,12 +39,12 @@ public class DeleteUserEndpointTests : IntegrationTestBase
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
     }
-    
+
     [Fact]
     public async Task admin_delete_own_account_should_return_400_status_code()
     {
         // Arrange
-        var admin =  _userFactory.CreateUser(role: UserRole.Admin);
+        var admin = _userFactory.CreateUser(role: UserRole.Admin);
         await AddAsync(admin);
         await Authenticate(admin.Id, admin.Role.ToString());
 

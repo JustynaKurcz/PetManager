@@ -29,7 +29,7 @@ public class Appointment
     public static Appointment Create(string title, string diagnosis, DateTimeOffset appointmentDate, string notes,
         Guid healthRecordId)
         => new(title, diagnosis, appointmentDate, notes, healthRecordId);
-    
+
     public void MarkNotificationAsSent()
         => IsNotificationSent = true;
 }

@@ -1,4 +1,3 @@
-
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Users.Queries.GetResetPasswordForm;
 

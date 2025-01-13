@@ -18,7 +18,7 @@ internal static class HealthRecordEndpoints
         $"{Base}/{{healthRecordId:guid}}/vaccinations/{{vaccinationId:guid}}";
 
     internal static string GetHealthRecordDetails => $"{Base}/{{healthRecordId:guid}}";
-    
+
     internal static string BrowseAppointments => $"{Base}/{{healthRecordId:guid}}/appointments";
     internal static string BrowseVaccinations => $"{Base}/{{healthRecordId:guid}}/vaccinations";
 }

@@ -19,7 +19,7 @@ public sealed class AddImageToPetCommandHandlerTests
         // Arrange
         var command = _petTestFactory.AddImageToPetCommand();
         _petRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -30,7 +30,7 @@ public sealed class AddImageToPetCommandHandlerTests
         exception.ShouldBeOfType<PetNotFoundException>();
         await _petRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -40,11 +40,11 @@ public sealed class AddImageToPetCommandHandlerTests
         var command = _petTestFactory.AddImageToPetCommand();
         var pet = _petTestFactory.CreatePet();
         var blobUrl = "https://test-storage.com/image.jpg";
-        
+
         _petRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(pet);
-            
+
         _blobStorageService
             .UploadImageAsync(command.File, Arg.Any<CancellationToken>())
             .Returns(blobUrl);
@@ -59,10 +59,10 @@ public sealed class AddImageToPetCommandHandlerTests
             .UploadImageAsync(command.File, Arg.Any<CancellationToken>());
         await _imageRepository
             .Received(1)
-            .AddAsync(Arg.Is<Image>(i => 
-                    i.FileName == command.File.FileName && 
-                    i.BlobUrl == blobUrl && 
-                    i.PetId == pet.Id), 
+            .AddAsync(Arg.Is<Image>(i =>
+                    i.FileName == command.File.FileName &&
+                    i.BlobUrl == blobUrl &&
+                    i.PetId == pet.Id),
                 Arg.Any<CancellationToken>());
         await _imageRepository
             .Received(1)
@@ -77,13 +77,13 @@ public sealed class AddImageToPetCommandHandlerTests
         var pet = _petTestFactory.CreatePet();
         var existingImage = Image.Create("old-image.jpg", "https://test-storage.com/old-image.jpg", pet.Id);
         pet.SetImage(existingImage);
-        
+
         var newBlobUrl = "https://test-storage.com/new-image.jpg";
-        
+
         _petRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(pet);
-            
+
         _blobStorageService
             .UploadImageAsync(command.File, Arg.Any<CancellationToken>())
             .Returns(newBlobUrl);
@@ -103,14 +103,14 @@ public sealed class AddImageToPetCommandHandlerTests
             .Received(1)
             .UploadImageAsync(command.File, Arg.Any<CancellationToken>());
         await _imageRepository
-            .Received(2)  // Once for delete, once for add
+            .Received(2) // Once for delete, once for add
             .SaveChangesAsync(Arg.Any<CancellationToken>());
         await _imageRepository
             .Received(1)
-            .AddAsync(Arg.Is<Image>(i => 
-                    i.FileName == command.File.FileName && 
-                    i.BlobUrl == newBlobUrl && 
-                    i.PetId == pet.Id), 
+            .AddAsync(Arg.Is<Image>(i =>
+                    i.FileName == command.File.FileName &&
+                    i.BlobUrl == newBlobUrl &&
+                    i.PetId == pet.Id),
                 Arg.Any<CancellationToken>());
     }
 
@@ -121,11 +121,11 @@ public sealed class AddImageToPetCommandHandlerTests
         var command = _petTestFactory.AddImageToPetCommand();
         var pet = _petTestFactory.CreatePet();
         var expectedException = new Exception("Upload failed");
-        
+
         _petRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(pet);
-            
+
         _blobStorageService
             .UploadImageAsync(command.File, Arg.Any<CancellationToken>())
             .ThrowsAsync(expectedException);
@@ -143,7 +143,7 @@ public sealed class AddImageToPetCommandHandlerTests
             .DidNotReceive()
             .SaveChangesAsync(Arg.Any<CancellationToken>());
     }
-    
+
     private readonly IBlobStorageService _blobStorageService;
     private readonly IPetRepository _petRepository;
     private readonly IImageRepository _imageRepository;

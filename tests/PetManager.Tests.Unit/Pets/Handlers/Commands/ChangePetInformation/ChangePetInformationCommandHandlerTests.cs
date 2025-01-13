@@ -18,7 +18,7 @@ public sealed class ChangePetInformationCommandHandlerTests
         // Arrange
         var command = _petFactory.ChangePetInformationCommand();
         _petRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .ReturnsNull();
 
         // Act
@@ -31,7 +31,7 @@ public sealed class ChangePetInformationCommandHandlerTests
 
         await _petRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
     }
 
     [Fact]
@@ -45,7 +45,7 @@ public sealed class ChangePetInformationCommandHandlerTests
         var pet = _petFactory.CreatePet(userId);
 
         _petRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>())
             .Returns(pet);
 
         // Act
@@ -54,7 +54,7 @@ public sealed class ChangePetInformationCommandHandlerTests
         // Assert
         await _petRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
+            .GetAsync(Arg.Any<Expression<Func<Pet, bool>>>(), Arg.Any<CancellationToken>(), Arg.Any<bool>());
 
         await _petRepository
             .Received(1)

@@ -24,7 +24,8 @@ public class CreatePetCommandValidatorTests
     public void validate_create_pet_command_with_empty_name_should_return_error()
     {
         //arrange
-        var command = new CreatePetCommand("", Species.Dog, "Labrador", Gender.Male, DateTimeOffset.UtcNow.AddYears(-1));
+        var command =
+            new CreatePetCommand("", Species.Dog, "Labrador", Gender.Male, DateTimeOffset.UtcNow.AddYears(-1));
 
         //act
         var result = _validator.Validate(command);
@@ -39,7 +40,8 @@ public class CreatePetCommandValidatorTests
     public void validate_create_pet_command_with_null_name_should_return_error()
     {
         //arrange
-        var command = new CreatePetCommand(null, Species.Dog, "Labrador", Gender.Male, DateTimeOffset.UtcNow.AddYears(-1));
+        var command =
+            new CreatePetCommand(null, Species.Dog, "Labrador", Gender.Male, DateTimeOffset.UtcNow.AddYears(-1));
 
         //act
         var result = _validator.Validate(command);
@@ -55,10 +57,10 @@ public class CreatePetCommandValidatorTests
     {
         //arrange
         var command = new CreatePetCommand(
-            new string('x', 51), 
-            Species.Dog, 
-            "Labrador", 
-            Gender.Male, 
+            new string('x', 51),
+            Species.Dog,
+            "Labrador",
+            Gender.Male,
             DateTimeOffset.UtcNow.AddYears(-1));
 
         //act
@@ -75,10 +77,10 @@ public class CreatePetCommandValidatorTests
     {
         //arrange
         var command = new CreatePetCommand(
-            "Max", 
-            (Species)999, 
-            "Labrador", 
-            Gender.Male, 
+            "Max",
+            (Species)999,
+            "Labrador",
+            Gender.Male,
             DateTimeOffset.UtcNow.AddYears(-1));
 
         //act
@@ -125,10 +127,10 @@ public class CreatePetCommandValidatorTests
     {
         //arrange
         var command = new CreatePetCommand(
-            "Max", 
-            Species.Dog, 
-            new string('x', 51), 
-            Gender.Male, 
+            "Max",
+            Species.Dog,
+            new string('x', 51),
+            Gender.Male,
             DateTimeOffset.UtcNow.AddYears(-1));
 
         //act
@@ -145,10 +147,10 @@ public class CreatePetCommandValidatorTests
     {
         //arrange
         var command = new CreatePetCommand(
-            "Max", 
-            Species.Dog, 
-            "Labrador", 
-            (Gender)999, 
+            "Max",
+            Species.Dog,
+            "Labrador",
+            (Gender)999,
             DateTimeOffset.UtcNow.AddYears(-1));
 
         //act
@@ -165,10 +167,10 @@ public class CreatePetCommandValidatorTests
     {
         //arrange
         var command = new CreatePetCommand(
-            "Max", 
-            Species.Dog, 
-            "Labrador", 
-            Gender.Male, 
+            "Max",
+            Species.Dog,
+            "Labrador",
+            Gender.Male,
             DateTimeOffset.UtcNow.AddYears(1));
 
         //act

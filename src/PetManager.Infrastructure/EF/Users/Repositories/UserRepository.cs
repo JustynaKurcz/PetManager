@@ -16,12 +16,7 @@ internal class UserRepository(PetManagerDbContext dbContext) : IUserRepository
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<User?> GetByEmailAsync(Expression<Func<User, bool>> predicate,
-        CancellationToken cancellationToken)
-        => await _users
-            .FirstOrDefaultAsync(predicate, cancellationToken);
-
-    public async Task<User?> GetByIdAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
+    public async Task<User?> GetAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
         => await _users.SingleOrDefaultAsync(predicate, cancellationToken);
 
     public async Task<bool> ExistsAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
@@ -32,7 +27,7 @@ internal class UserRepository(PetManagerDbContext dbContext) : IUserRepository
         => await Task.FromResult(
             _users
                 .Include(x => x.Pets)
-                .Where(x=>x.Role != UserRole.Admin)
+                .Where(x => x.Role != UserRole.Admin)
                 .AsSplitQuery()
                 .AsQueryable()
         );

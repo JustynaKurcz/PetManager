@@ -5,7 +5,7 @@ namespace PetManager.Infrastructure.EF.Users.Queries.Admin.Queries;
 
 internal static class AdminExtensions
 {
-    public static UserDto AsUserDto (this User user)
+    public static UserDto AsUserDto(this User user)
         => new(
             user.Id,
             user.FirstName,
@@ -14,5 +14,4 @@ internal static class AdminExtensions
             user.CreatedAt,
             user.Pets.Count()
         );
-    
 }

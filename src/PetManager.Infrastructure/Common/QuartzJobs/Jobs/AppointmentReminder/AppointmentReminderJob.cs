@@ -8,8 +8,8 @@ using PetManager.Infrastructure.Common.QuartzJobs.Base.Options;
 namespace PetManager.Infrastructure.Common.QuartzJobs.Jobs.AppointmentReminder;
 
 public class AppointmentReminderJob(
-    IServiceScopeFactory scopeFactory, 
-    IEmailService emailService, 
+    IServiceScopeFactory scopeFactory,
+    IEmailService emailService,
     ReminderOptions options) : BaseReminderJob<Appointment>(scopeFactory, emailService, options)
 {
     protected override async Task<IEnumerable<Appointment>> GetScheduledItems(IServiceScope scope)
@@ -25,7 +25,7 @@ public class AppointmentReminderJob(
         await repository.UpdateAppointmentAsync(appointment, CancellationToken.None);
         await repository.SaveChangesAsync(CancellationToken.None);
     }
-    
+
     protected override async Task SendReminderEmail(Appointment appointment, CancellationToken cancellationToken)
     {
         var emailModel = new AppointmentReminderModel

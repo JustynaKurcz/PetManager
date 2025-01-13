@@ -18,7 +18,7 @@ internal sealed class ChangePetInformationEndpoint : IEndpointDefinition
                 return Results.NoContent();
             })
             .Produces(StatusCodes.Status204NoContent)
-           .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

@@ -1,5 +1,4 @@
 using System.Reflection;
-using PetManager.Infrastructure.Common.QuartzJobs.Base;
 using PetManager.Infrastructure.Common.QuartzJobs.Base.Options;
 using Quartz;
 
@@ -14,7 +13,7 @@ internal static class QuartzJobsExtensions
     {
         var reminderOptions = configuration.GetSection(SectionName).Get<ReminderOptions>();
         services.AddSingleton(reminderOptions);
-        
+
         services.AddQuartz(RegisterJobs);
 
         services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);

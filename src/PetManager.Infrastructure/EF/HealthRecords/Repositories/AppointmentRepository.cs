@@ -28,9 +28,9 @@ internal class AppointmentRepository(PetManagerDbContext dbContext) : IAppointme
                 .Include(a => a.HealthRecord)
                 .ThenInclude(hr => hr.Pet)
                 .ThenInclude(p => p.User)
-                .Where(x=>x.HealthRecord.Pet.UserId == userId)
+                .Where(x => x.HealthRecord.Pet.UserId == userId)
                 .AsSplitQuery()
-            );
+        );
 
     public async Task UpdateAppointmentAsync(Appointment appointment, CancellationToken cancellationToken)
         => await Task.FromResult(_appointments.Update(appointment));

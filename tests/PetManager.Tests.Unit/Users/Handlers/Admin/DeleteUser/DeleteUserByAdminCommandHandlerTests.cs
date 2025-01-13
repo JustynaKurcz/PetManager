@@ -19,7 +19,7 @@ public class DeleteUserByAdminCommandHandlerTests
         // Arrange
         var command = _userFactory.CreateDeleteUserByAdminCommand();
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -32,13 +32,13 @@ public class DeleteUserByAdminCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         await _userRepository
             .DidNotReceive()
             .DeleteAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
-    
+
     [Fact]
     public async Task given_admin_deleting_own_account_then_should_throw_admin_cannot_delete_own_account_exception()
     {
@@ -48,7 +48,7 @@ public class DeleteUserByAdminCommandHandlerTests
         var command = new DeleteUserByAdminCommand(admin.Id);
 
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(admin);
 
         // Act
@@ -70,12 +70,12 @@ public class DeleteUserByAdminCommandHandlerTests
         // Arrange
         var admin = _userFactory.CreateUser(UserRole.Admin);
         _context.UserId.Returns(admin.Id);
-        
+
         var user = _userFactory.CreateUser();
         var command = new DeleteUserByAdminCommand(user.Id);
 
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -86,7 +86,7 @@ public class DeleteUserByAdminCommandHandlerTests
             .Received(1)
             .DeleteAsync(user, Arg.Any<CancellationToken>());
     }
-    
+
     private readonly IUserRepository _userRepository;
     private readonly IContext _context;
     private readonly IRequestHandler<DeleteUserByAdminCommand> _handler;

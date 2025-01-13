@@ -16,7 +16,7 @@ public class SignInEndpoint : IEndpointDefinition
                 return Results.Ok(result);
             })
             .Produces<SignInResponse>(StatusCodes.Status200OK)
-           .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(UserEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

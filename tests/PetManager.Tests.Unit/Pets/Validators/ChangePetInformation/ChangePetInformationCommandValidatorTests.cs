@@ -124,7 +124,7 @@ public class ChangePetInformationCommandValidatorTests
 
         //assert
         result.IsValid.ShouldBeFalse();
-        result.Errors.Count.ShouldBe(3); 
+        result.Errors.Count.ShouldBe(3);
         result.Errors.ShouldContain(x => x.PropertyName == nameof(ChangePetInformationCommand.Species));
         result.Errors.ShouldContain(x => x.PropertyName == nameof(ChangePetInformationCommand.Breed));
         result.Errors.ShouldContain(x => x.PropertyName == nameof(ChangePetInformationCommand.Gender));

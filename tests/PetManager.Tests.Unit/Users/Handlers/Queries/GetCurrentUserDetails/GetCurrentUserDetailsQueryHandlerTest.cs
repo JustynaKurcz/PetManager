@@ -20,7 +20,7 @@ public sealed class GetCurrentUserDetailsQueryHandlerTest
         // Arrange
         var query = new GetCurrentUserDetailsQuery();
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -33,7 +33,7 @@ public sealed class GetCurrentUserDetailsQueryHandlerTest
 
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public sealed class GetCurrentUserDetailsQueryHandlerTest
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         // Act
@@ -56,7 +56,7 @@ public sealed class GetCurrentUserDetailsQueryHandlerTest
 
         await _userRepository
             .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
     }
 
     private readonly IUserRepository _userRepository;

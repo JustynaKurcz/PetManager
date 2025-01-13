@@ -1,6 +1,7 @@
 namespace PetManager.Application.HealthRecords.Commands.AddAppointmentToHealthRecord;
 
-internal sealed class AddAppointmentToHealthRecordCommandValidator : AbstractValidator<AddAppointmentToHealthRecordCommand>
+internal sealed class
+    AddAppointmentToHealthRecordCommandValidator : AbstractValidator<AddAppointmentToHealthRecordCommand>
 {
     public AddAppointmentToHealthRecordCommandValidator()
     {

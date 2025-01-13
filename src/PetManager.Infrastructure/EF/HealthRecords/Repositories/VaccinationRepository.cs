@@ -28,7 +28,7 @@ internal class VaccinationRepository(PetManagerDbContext dbContext) : IVaccinati
                 .Include(a => a.HealthRecord)
                 .ThenInclude(hr => hr.Pet)
                 .ThenInclude(p => p.User)
-                .Where(x=>x.HealthRecord.Pet.UserId == userId)
+                .Where(x => x.HealthRecord.Pet.UserId == userId)
                 .AsSplitQuery()
                 .AsQueryable());
 

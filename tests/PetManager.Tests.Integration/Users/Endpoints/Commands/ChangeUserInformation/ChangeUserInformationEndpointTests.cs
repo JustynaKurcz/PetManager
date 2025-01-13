@@ -52,7 +52,7 @@ public class ChangeUserInformationEndpointTests : IntegrationTestBase
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.NoContent);
     }
-    
+
     [Fact]
     public async Task put_change_user_information_with_admin_role_should_return_204_status_code()
     {

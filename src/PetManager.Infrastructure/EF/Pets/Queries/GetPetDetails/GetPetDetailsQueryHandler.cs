@@ -10,7 +10,7 @@ internal sealed class GetPetDetailsQueryHandler(IPetRepository petRepository)
 {
     public async Task<PetDetailsDto> Handle(GetPetDetailsQuery query, CancellationToken cancellationToken)
     {
-        var pet = await petRepository.GetByIdAsync(x => x.Id == query.PetId, cancellationToken)
+        var pet = await petRepository.GetAsync(x => x.Id == query.PetId, cancellationToken)
                   ?? throw new PetNotFoundException(query.PetId);
 
         return pet.AsDetailsDto();

@@ -9,7 +9,7 @@ internal sealed class DeleteVaccinationToHealthRecordCommandHandler(IHealthRecor
     public async Task Handle(DeleteVaccinationToHealthRecordCommand command, CancellationToken cancellationToken)
     {
         var healthRecord =
-            await healthRecordRepository.GetByIdAsync(x => x.Id == command.HealthRecordId,
+            await healthRecordRepository.GetAsync(x => x.Id == command.HealthRecordId,
                 cancellationToken)
             ?? throw new HealthRecordNotFoundException(command.HealthRecordId);
 

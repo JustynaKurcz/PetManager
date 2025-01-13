@@ -11,7 +11,7 @@ internal static class EmailExtensions
     {
         var emailOptions = configuration.GetSection(SectionName).Get<EmailOptions>();
         services.AddSingleton(emailOptions);
-        
+
         services.AddSingleton<IEmailService, EmailService>();
 
         return services;

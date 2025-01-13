@@ -18,7 +18,7 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
         => await dbContext.SaveChangesAsync(cancellationToken);
 
-    public async Task<Pet?> GetByIdAsync(Expression<Func<Pet, bool>> predicate, CancellationToken cancellationToken,
+    public async Task<Pet?> GetAsync(Expression<Func<Pet, bool>> predicate, CancellationToken cancellationToken,
         bool asNoTracking = false)
     {
         var query = _pets
@@ -35,7 +35,7 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
 
     public async Task<IQueryable<Pet>> BrowseAsync(Guid userId, CancellationToken cancellationToken)
         => await Task.FromResult(_pets
-            .Where(x=>x.UserId == userId)
+            .Where(x => x.UserId == userId)
             .AsSplitQuery()
             .AsQueryable()
         );

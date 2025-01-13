@@ -25,7 +25,7 @@ public static class FormFileGenerator
     {
         var contentBytes = Encoding.UTF8.GetBytes(fileContent);
         var contentStream = new MemoryStream(contentBytes);
-        
+
         var testFile = new FormFile(
             baseStream: contentStream,
             baseStreamOffset: InitialStreamOffset,

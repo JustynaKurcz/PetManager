@@ -20,7 +20,7 @@ public sealed class SignInCommandHandlerTests
         var command = _userFactory.CreateSignInCommand();
 
         _userRepository
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
         // Act
@@ -33,13 +33,13 @@ public sealed class SignInCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         _passwordManager
             .DidNotReceive()
             .VerifyPassword(Arg.Any<string>(), Arg.Any<string>());
 
-        _authenticationManager
+        await _authenticationManager
             .DidNotReceive()
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
@@ -52,7 +52,7 @@ public sealed class SignInCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         _passwordManager
@@ -69,13 +69,13 @@ public sealed class SignInCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         _passwordManager
             .Received(1)
             .VerifyPassword(Arg.Any<string>(), Arg.Any<string>());
 
-        _authenticationManager
+        await _authenticationManager
             .DidNotReceive()
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
@@ -88,7 +88,7 @@ public sealed class SignInCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         _passwordManager
@@ -108,13 +108,13 @@ public sealed class SignInCommandHandlerTests
 
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
 
         _passwordManager
             .Received(1)
             .VerifyPassword(Arg.Any<string>(), Arg.Any<string>());
 
-        _authenticationManager
+        await _authenticationManager
             .Received(1)
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
@@ -128,7 +128,7 @@ public sealed class SignInCommandHandlerTests
         var user = _userFactory.CreateUser();
 
         _userRepository
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(user);
 
         _passwordManager
@@ -146,7 +146,7 @@ public sealed class SignInCommandHandlerTests
         response.ShouldNotBeNull();
         await _userRepository
             .Received(1)
-            .GetByEmailAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
+            .GetAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
     }
 
     private readonly IUserRepository _userRepository;
