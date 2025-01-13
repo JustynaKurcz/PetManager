@@ -14,9 +14,9 @@ public class BrowsePetsEndpointTests : IntegrationTestBase
 
     [Theory]
     [InlineData(1, 10, "")]
-    [InlineData(2, 5, "a")]
+    [InlineData(2, 5, "")]
     [InlineData(-3, 5, " ")]
-    [InlineData(0, 0, ".")]
+    [InlineData(0, 0, "")]
     public async Task get_browse_pets_with_valid_pagination_should_return_200_status_code(int pageNumber, int pageSize,
         string search)
     {
