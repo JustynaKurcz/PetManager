@@ -17,7 +17,7 @@ internal sealed class DeletePetEndpoint : IEndpointDefinition
                 return Results.NoContent();
             })
             .Produces(StatusCodes.Status204NoContent)
-            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

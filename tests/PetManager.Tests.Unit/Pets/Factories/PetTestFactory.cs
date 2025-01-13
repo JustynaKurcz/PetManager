@@ -1,3 +1,4 @@
+using PetManager.Application.Pets.Commands.AddImageToPet;
 using PetManager.Application.Pets.Commands.ChangePetInformation;
 using PetManager.Application.Pets.Commands.CreatePet;
 using PetManager.Application.Pets.Commands.DeletePet;
@@ -5,6 +6,7 @@ using PetManager.Application.Pets.Queries.GetPetDetails;
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Enums;
+using PetManager.Tests.Unit.Pets.Helpers;
 
 namespace PetManager.Tests.Unit.Pets.Factories;
 
@@ -29,4 +31,7 @@ internal sealed class PetTestFactory
 
     internal GetPetDetailsQuery GetPetDetailsQuery()
         => new(_faker.Random.Guid());
+    
+    internal AddImageToPetCommand AddImageToPetCommand()
+        => new(_faker.Random.Guid(), FormFileGenerator.CreateTestFileFaker().Generate());
 }

@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using PetManager.Core.Users.Entities;
+using PetManager.Core.Users.Enums;
 using PetManager.Core.Users.Repositories;
 using PetManager.Infrastructure.EF.DbContext;
 
@@ -31,6 +32,7 @@ internal class UserRepository(PetManagerDbContext dbContext) : IUserRepository
         => await Task.FromResult(
             _users
                 .Include(x => x.Pets)
+                .Where(x=>x.Role != UserRole.Admin)
                 .AsSplitQuery()
                 .AsQueryable()
         );

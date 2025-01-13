@@ -21,7 +21,7 @@ internal sealed class GetPetDetailsEndpoint : IEndpointDefinition
             })
             .Produces<PetDetailsDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
-            .Produces(StatusCodes.Status404NotFound)
+           .Produces(StatusCodes.Status400BadRequest)
             .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

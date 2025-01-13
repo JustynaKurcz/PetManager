@@ -18,7 +18,7 @@ internal sealed class GetGendersEndpoint : IEndpointDefinition
                 return Results.Ok(response);
             })
             .Produces<GendersDto>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status400BadRequest)
+           .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized)
             .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)

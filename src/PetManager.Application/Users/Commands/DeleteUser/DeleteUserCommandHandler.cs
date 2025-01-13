@@ -11,22 +11,17 @@ internal sealed class DeleteUserCommandHandler(
 {
     public async Task Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
+        var currentLoggedInUserId = context.UserId;
+
         var user = await userRepository.GetByIdAsync(x => x.Id == context.UserId, cancellationToken)
-                   ?? throw new UserNotFoundException(command.UserId);
+                   ?? throw new UserNotFoundException(context.UserId);
 
-        ValidateDeletePermissions(command.UserId);
-
-        await userRepository.DeleteAsync(user, cancellationToken);
-    }
-
-    private void ValidateDeletePermissions(Guid userToDeleteId)
-    {
-        var isOwnAccount = context.UserId == userToDeleteId;
-
-        if (context.IsAdmin && isOwnAccount)
+        if (context.IsAdmin)
             throw new AdminCannotDeleteOwnAccountException(context.UserId);
 
-        if (!context.IsAdmin && !isOwnAccount)
-            throw new UserCannotDeleteOtherUserException(context.UserId, userToDeleteId);
+        if (user.Id != currentLoggedInUserId)
+            throw new UserCannotDeleteOtherUserException(currentLoggedInUserId, user.Id);
+
+        await userRepository.DeleteAsync(user, cancellationToken);
     }
 }

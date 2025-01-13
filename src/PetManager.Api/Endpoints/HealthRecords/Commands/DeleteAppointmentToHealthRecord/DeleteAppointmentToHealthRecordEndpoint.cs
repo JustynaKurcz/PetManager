@@ -20,7 +20,7 @@ internal sealed class DeleteAppointmentToHealthRecordEndpoint : IEndpointDefinit
                 return Results.NoContent();
             })
             .Produces(StatusCodes.Status204NoContent)
-            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(HealthRecordEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

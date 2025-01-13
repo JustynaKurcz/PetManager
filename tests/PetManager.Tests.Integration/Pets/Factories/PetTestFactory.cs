@@ -6,6 +6,7 @@ using PetManager.Application.Pets.Queries.GetPetDetails;
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.Pets.Entities;
 using PetManager.Core.Pets.Enums;
+using PetManager.Tests.Integration.Pets.Helpers;
 
 namespace PetManager.Tests.Integration.Pets.Factories;
 
@@ -36,4 +37,6 @@ internal sealed class PetTestFactory
     internal DeletePetCommand DeletePetCommand()
         => new(_faker.Random.Guid());
     
+    internal AddImageToPetCommand AddImageToPetCommand()
+        => new(_faker.Random.Guid(), FormFileGenerator.CreateTestFileFaker().Generate());
 }

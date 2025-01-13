@@ -12,9 +12,16 @@ internal sealed class BrowseVaccinationsEndpoint : IEndpointDefinition
     {
         app.MapGet(HealthRecordEndpoints.BrowseVaccinations, async (
                 [FromServices] IMediator mediator,
-                [AsParameters] BrowseVaccinationsQuery query,
+                [AsParameters] BrowseVaccinationsEndpointRequest request,
                 CancellationToken cancellationToken) =>
             {
+                var query = new BrowseVaccinationsQuery
+                {
+                    HealthRecordId = request.HealthRecordId,
+                    Search = request.Search,
+                    PageNumber = request.PageNumber,
+                    PageSize = request.PageSize
+                };
                 var response = await mediator.Send(query, cancellationToken);
                 return Results.Ok(response);
             })

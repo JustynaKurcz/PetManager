@@ -20,7 +20,7 @@ internal sealed class AddImageToPetEndpoint : IEndpointDefinition
                 return Results.Ok(response);
             })
             .Produces(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status400BadRequest)
+           .Produces(StatusCodes.Status400BadRequest)
             .WithTags(PetEndpoints.Tag)
             .DisableAntiforgery()
             .Accepts<IFormFile>("multipart/form-data")

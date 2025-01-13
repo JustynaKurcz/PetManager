@@ -12,9 +12,17 @@ internal sealed class BrowseAppointmentsEndpoint : IEndpointDefinition
     {
         app.MapGet(HealthRecordEndpoints.BrowseAppointments, async (
                 [FromServices] IMediator mediator,
-                [AsParameters] BrowseAppointmentsQuery query,
+                [AsParameters] BrowseAppointmentsEndpointRequest request,
                 CancellationToken cancellationToken) =>
             {
+                var query = new BrowseAppointmentsQuery 
+                {
+                    Search = request.Search,
+                    PageNumber = request.PageNumber,
+                    PageSize = request.PageSize,
+                    HealthRecordId = request.HealthRecordId
+                };
+                
                 var response = await mediator.Send(query, cancellationToken);
                 return Results.Ok(response);
             })

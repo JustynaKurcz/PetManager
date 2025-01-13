@@ -15,6 +15,8 @@ public sealed class DeleteUserCommandHandlerTests
     [Fact]
     public async Task given_user_not_found_when_delete_user_then_should_throw_user_not_found_exception()
     {
+        var currentLoggedInUserId = Guid.NewGuid();
+        _context.UserId.Returns(currentLoggedInUserId);
         // Arrange
         var command = _userFactory.CreateDeleteUserCommand();
         _userRepository
@@ -27,7 +29,7 @@ public sealed class DeleteUserCommandHandlerTests
         // Assert
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<UserNotFoundException>();
-        exception.Message.ShouldBe($"User with id {command.UserId} was not found.");
+        exception.Message.ShouldBe($"User with id {currentLoggedInUserId} was not found.");
 
         await _userRepository
             .Received(1)
@@ -39,14 +41,34 @@ public sealed class DeleteUserCommandHandlerTests
     }
 
     [Fact]
-    public async Task
-        given_admin_trying_to_delete_own_account_then_should_throw_admin_cannot_delete_own_account_exception()
+    public async Task given_user_deleting_own_account_then_should_delete_user()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        _context.UserId.Returns(userId);
+        var user = _userFactory.CreateUser();
+        _context.IsAdmin.Returns(false);
+        _context.UserId.Returns(user.Id);
+        var command = _userFactory.CreateDeleteUserCommand();
+
+        _userRepository
+            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+            .Returns(user);
+
+        // Act
+        await Act(command);
+
+        // Assert
+        await _userRepository
+            .Received(1)
+            .DeleteAsync(user, Arg.Any<CancellationToken>());
+    }
+    
+    [Fact]
+    public async Task given_admin_deleting_own_account_then_should_throw_admin_cannot_delete_own_account_exception()
+    {
+        // Arrange
         _context.IsAdmin.Returns(true);
-        var command = new DeleteUserCommand(userId);
+        _context.UserId.Returns(Guid.NewGuid());
+        var command = new DeleteUserCommand();
         var user = _userFactory.CreateUser();
 
         _userRepository
@@ -62,23 +84,21 @@ public sealed class DeleteUserCommandHandlerTests
         exception.Message.ShouldBe($"Admin with ID {_context.UserId} cannot delete their own account.");
 
         await _userRepository
-            .Received(1)
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>());
-
-        await _userRepository
             .DidNotReceive()
             .DeleteAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
-
+    
     [Fact]
-    public async Task
-        given_regular_user_trying_to_delete_other_user_then_should_throw_user_cannot_delete_other_user_exception()
+    public async Task given_user_deleting_other_user_account_then_should_throw_user_cannot_delete_other_user_exception()
     {
         // Arrange
-        _context.IsAdmin.Returns(false);
-        var otherUserId = Guid.NewGuid();
-        var command = new DeleteUserCommand(otherUserId);
+        var currentUserId = Guid.NewGuid();
         var user = _userFactory.CreateUser();
+        // var otherUserId = Guid.NewGuid();
+        _context.IsAdmin.Returns(false);
+        _context.UserId.Returns(currentUserId);
+        var command = new DeleteUserCommand();
+        // var user = _userFactory.CreateUser(id: otherUserId);
 
         _userRepository
             .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
@@ -90,56 +110,13 @@ public sealed class DeleteUserCommandHandlerTests
         // Assert
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<UserCannotDeleteOtherUserException>();
-        exception.Message.ShouldBe($"User with ID {_context.UserId} cannot delete user with ID {otherUserId}.");
+        exception.Message.ShouldBe($"User with ID {currentUserId} cannot delete user with ID {user.Id}.");
 
         await _userRepository
             .DidNotReceive()
             .DeleteAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
-
-    [Fact]
-    public async Task given_admin_deleting_other_user_then_should_delete_user()
-    {
-        // Arrange
-        _context.IsAdmin.Returns(true);
-        var otherUserId = Guid.NewGuid();
-        var command = new DeleteUserCommand(otherUserId);
-        var user = _userFactory.CreateUser();
-
-        _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
-            .Returns(user);
-
-        // Act
-        await Act(command);
-
-        // Assert
-        await _userRepository
-            .Received(1)
-            .DeleteAsync(user, Arg.Any<CancellationToken>());
-    }
-
-    [Fact]
-    public async Task given_user_deleting_own_account_then_should_delete_user()
-    {
-        // Arrange
-        _context.IsAdmin.Returns(false);
-        var command = new DeleteUserCommand(_context.UserId);
-        var user = _userFactory.CreateUser();
-
-        _userRepository
-            .GetByIdAsync(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
-            .Returns(user);
-
-        // Act
-        await Act(command);
-
-        // Assert
-        await _userRepository
-            .Received(1)
-            .DeleteAsync(user, Arg.Any<CancellationToken>());
-    }
-
+    
     private readonly IUserRepository _userRepository;
     private readonly IContext _context;
     private readonly IRequestHandler<DeleteUserCommand> _handler;

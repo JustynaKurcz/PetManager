@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 
 namespace PetManager.Application.Common.Pagination;
 
@@ -22,12 +21,12 @@ public class PaginationResult<T>
 
     public bool HasNextPage => PageIndex < TotalPages;
 
-    public static async Task<PaginationResult<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize,
+    public static Task<PaginationResult<T>> CreateAsync(IEnumerable<T> source, int pageIndex, int pageSize,
         CancellationToken cancellationToken)
     {
-        var count = await source.CountAsync(cancellationToken);
-        var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
+        var count = source.ToList().Count;
+        var items =  source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
-        return new PaginationResult<T>(items, count, pageIndex, pageSize);
+        return Task.FromResult(new PaginationResult<T>(items, count, pageIndex, pageSize));
     }
 }

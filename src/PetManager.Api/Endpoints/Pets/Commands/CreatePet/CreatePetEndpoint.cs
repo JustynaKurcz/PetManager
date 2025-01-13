@@ -17,7 +17,7 @@ internal sealed class CreatePetEndpoint : IEndpointDefinition
                 return Results.Created(PetEndpoints.Base, response);
             })
             .Produces<CreatePetResponse>(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status400BadRequest)
+           .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized)
             .WithTags(PetEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)

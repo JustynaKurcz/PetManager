@@ -6,4 +6,5 @@ namespace PetManager.Application.HealthRecords.Queries.BrowseVaccinations;
 internal sealed class BrowseVaccinationsQuery : PaginationRequest, IRequest<PaginationResult<VaccinationDto>>
 {
     public string Search { get; set; }
+    public Guid HealthRecordId { get; init; }
 }

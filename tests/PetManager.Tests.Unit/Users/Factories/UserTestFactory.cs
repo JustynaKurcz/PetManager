@@ -1,3 +1,4 @@
+using PetManager.Application.Users.Admin.Commands.DeleteUser;
 using PetManager.Application.Users.Commands.ChangeUserInformation;
 using PetManager.Application.Users.Commands.DeleteUser;
 using PetManager.Application.Users.Commands.ForgotPassword;
@@ -13,8 +14,8 @@ internal sealed class UserTestFactory
 {
     private readonly Faker _faker = new();
 
-    internal User CreateUser()
-        => User.Create(_faker.Person.Email, _faker.Internet.Password(), _faker.PickRandom<UserRole>());
+    internal User CreateUser(UserRole role = UserRole.User)
+        => User.Create(_faker.Person.Email, _faker.Internet.Password(), role);
 
     internal SignUpCommand CreateSignUpCommand()
         => new(_faker.Person.Email, _faker.Internet.Password());
@@ -32,11 +33,14 @@ internal sealed class UserTestFactory
         => new(_faker.Person.FirstName, null);
 
     internal DeleteUserCommand CreateDeleteUserCommand()
-        => new(_faker.Random.Guid());
+        => new();
     
     internal ResetPasswordCommand CreateResetPasswordCommand()
         => new(_faker.Person.Email, _faker.Internet.Password());
     
     internal ForgotPasswordCommand CreateForgotPasswordCommand()
         => new(_faker.Person.Email);
+
+    internal DeleteUserByAdminCommand CreateDeleteUserByAdminCommand()
+        => new(_faker.Random.Guid());
 }

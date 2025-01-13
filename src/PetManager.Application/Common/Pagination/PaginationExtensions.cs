@@ -3,8 +3,8 @@ namespace PetManager.Application.Common.Pagination;
 public static class PaginationExtensions
 {
     public static Task<PaginationResult<TDestination>> PaginateAsync<TDestination>(
-        this IQueryable<TDestination> queryable, PaginationRequest req, CancellationToken cancellationToken = default)
+        this IEnumerable<TDestination> enumerable, PaginationRequest req, CancellationToken cancellationToken = default)
     {
-        return PaginationResult<TDestination>.CreateAsync(queryable, req.PageNumber, req.PageSize, cancellationToken);
+        return PaginationResult<TDestination>.CreateAsync(enumerable, req.PageNumber, req.PageSize, cancellationToken);
     }
 }

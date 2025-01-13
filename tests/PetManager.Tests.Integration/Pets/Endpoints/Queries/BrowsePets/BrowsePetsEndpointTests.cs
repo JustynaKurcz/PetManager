@@ -23,6 +23,7 @@ public class BrowsePetsEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
+        await Authenticate(user.Id, user.Role.ToString());
 
         var pets = _petFactory.CreatePets(user.Id, PetsToCreate);
         await AddRangeAsync(pets);
@@ -43,6 +44,7 @@ public class BrowsePetsEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
+        await Authenticate(user.Id, user.Role.ToString());
 
         // Act
         var response =

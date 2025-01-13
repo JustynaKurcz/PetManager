@@ -1,5 +1,5 @@
 using PetManager.Api.Common.Endpoints;
-using PetManager.Application.Users.Commands.DeleteUser;
+using PetManager.Application.Users.Admin.Commands.DeleteUser;
 using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Users.Admin.Commands.DeleteUser;
@@ -13,13 +13,13 @@ internal sealed class DeleteUserEndpoint : IEndpointDefinition
                 [FromServices] IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
-                await mediator.Send(new DeleteUserCommand(userId), cancellationToken);
+                await mediator.Send(new DeleteUserByAdminCommand(userId), cancellationToken);
                 return Results.NoContent();
             })
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden)
-            .Produces(StatusCodes.Status404NotFound)
+           .Produces(StatusCodes.Status400BadRequest)
             .WithTags(AdminEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

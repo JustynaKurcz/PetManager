@@ -20,7 +20,7 @@ internal sealed class GetHealthRecordDetailsEndpoint : IEndpointDefinition
                 return Results.Ok(response);
             })
             .Produces<HealthRecordDetailsDto>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(HealthRecordEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

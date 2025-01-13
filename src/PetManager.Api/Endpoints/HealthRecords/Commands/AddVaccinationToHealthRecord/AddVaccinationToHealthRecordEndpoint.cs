@@ -19,7 +19,7 @@ internal sealed class AddVaccinationToHealthRecordEndpoint : IEndpointDefinition
                 return Results.Created(HealthRecordEndpoints.Base, response);
             })
             .Produces<AddVaccinationToHealthRecordResponse>(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status400BadRequest)
+           .Produces(StatusCodes.Status400BadRequest)
             .WithTags(HealthRecordEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

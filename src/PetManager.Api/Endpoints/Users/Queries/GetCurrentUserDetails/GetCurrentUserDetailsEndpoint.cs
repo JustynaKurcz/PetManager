@@ -20,7 +20,7 @@ internal sealed class GetCurrentUserDetailsEndpoint : IEndpointDefinition
             })
             .Produces<CurrentUserDetailsDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
-            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(UserEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

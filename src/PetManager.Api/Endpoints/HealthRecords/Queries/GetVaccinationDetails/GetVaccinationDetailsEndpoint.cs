@@ -20,7 +20,7 @@ internal sealed class GetVaccinationDetailsEndpoint : IEndpointDefinition
                 return Results.Ok(response);
             })
             .Produces<VaccinationDetailsDto>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithTags(HealthRecordEndpoints.Tag)
             .WithOpenApi(o => new OpenApiOperation(o)
             {

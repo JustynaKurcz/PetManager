@@ -1,3 +1,4 @@
+using PetManager.Application.HealthRecords.Queries.BrowseAppointments;
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails;
 using PetManager.Core.HealthRecords.Entities;
 
@@ -13,4 +14,12 @@ internal sealed class AppointmentTestFactory
 
     internal GetAppointmentDetailsQuery GetAppointmentDetailsQuery()
         => new(_faker.Random.Guid(), _faker.Random.Guid());
+    
+    internal BrowseAppointmentsQuery BrowseAppointmentsQuery(Guid healthRecordId = default)
+        => new()
+        {
+            HealthRecordId = healthRecordId == default ? _faker.Random.Guid() : healthRecordId,
+            PageNumber = 1,
+            PageSize = 25,
+        };
 }
