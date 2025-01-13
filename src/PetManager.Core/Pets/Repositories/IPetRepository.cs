@@ -10,6 +10,6 @@ public interface IPetRepository
     Task<Pet?> GetAsync(Expression<Func<Pet, bool>> predicate, CancellationToken cancellationToken,
         bool asNoTracking = false);
 
-    Task<IQueryable<Pet>> BrowseAsync(Guid userId, CancellationToken cancellationToken);
+    Task<IEnumerable<Pet>> BrowseAsync(Guid userId, CancellationToken cancellationToken);
     Task DeleteAsync(Pet pet, CancellationToken cancellationToken);
 }

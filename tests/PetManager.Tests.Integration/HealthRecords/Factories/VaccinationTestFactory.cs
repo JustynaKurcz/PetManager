@@ -14,4 +14,10 @@ internal sealed class VaccinationTestFactory
 
     internal GetVaccinationDetailsQuery GetVaccinationDetailsQuery()
         => new(_faker.Random.Guid(), _faker.Random.Guid());
+
+    internal Task<IEnumerable<Vaccination>> CreateVaccinations(Guid healthRecordId, int count = 3)
+        => Task.FromResult(Enumerable
+            .Range(0, count)
+            .Select(_ => CreateVaccination(healthRecordId))
+        );
 }

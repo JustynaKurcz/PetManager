@@ -22,7 +22,7 @@ internal class VaccinationRepository(PetManagerDbContext dbContext) : IVaccinati
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IQueryable<Vaccination>> BrowseAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Vaccination>> BrowseAsync(Guid userId, CancellationToken cancellationToken)
         => await Task.FromResult(
             _vaccinations
                 .Include(a => a.HealthRecord)
@@ -30,7 +30,7 @@ internal class VaccinationRepository(PetManagerDbContext dbContext) : IVaccinati
                 .ThenInclude(p => p.User)
                 .Where(x => x.HealthRecord.Pet.UserId == userId)
                 .AsSplitQuery()
-                .AsQueryable());
+        );
 
     public async Task UpdateVaccinationAsync(Vaccination vaccination, CancellationToken cancellationToken)
         => await Task.FromResult(_vaccinations.Update(vaccination));

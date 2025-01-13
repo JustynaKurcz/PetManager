@@ -1,3 +1,4 @@
+using PetManager.Application.HealthRecords.Queries.BrowseVaccinations;
 using PetManager.Application.HealthRecords.Queries.GetVaccinationDetails;
 using PetManager.Core.HealthRecords.Entities;
 
@@ -15,4 +16,19 @@ internal sealed class VaccinationTestFactory
         Guid vaccinationId = default)
         => new(healthRecordId == default ? _faker.Random.Guid() : healthRecordId,
             vaccinationId == default ? _faker.Random.Guid() : vaccinationId);
+    
+    internal BrowseVaccinationsQuery BrowseVaccinationsQuery(Guid healthRecordId = default)
+        => new()
+        {
+            HealthRecordId = healthRecordId == default ? _faker.Random.Guid() : healthRecordId,
+            PageNumber = 1,
+            PageSize = 25,
+        };
+
+    internal Task<IQueryable<Vaccination>> CreateVaccinations(int vaccinationCount = 5)
+    => Task.FromResult(Enumerable
+        .Range(0, vaccinationCount)
+        .Select(_ => CreateVaccination())
+        .AsQueryable()
+    );
 }

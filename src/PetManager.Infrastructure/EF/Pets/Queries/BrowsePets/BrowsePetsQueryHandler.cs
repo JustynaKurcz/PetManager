@@ -19,12 +19,12 @@ internal sealed class BrowsePetsQueryHandler(
 
         pets = Search(query, pets);
 
-        return await pets.AsNoTracking()
+        return await pets
             .Select(x => new PetDto(x.Id, x.Name))
             .PaginateAsync(query, cancellationToken);
     }
 
-    private IQueryable<Pet> Search(BrowsePetsQuery query, IQueryable<Pet> pets)
+    private IEnumerable<Pet> Search(BrowsePetsQuery query, IEnumerable<Pet> pets)
     {
         if (string.IsNullOrWhiteSpace(query.Search)) return pets;
         var searchTxt = $"%{query.Search}%";

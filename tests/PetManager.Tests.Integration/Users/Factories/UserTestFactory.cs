@@ -29,4 +29,11 @@ internal sealed class UserTestFactory
 
     internal ChangeUserInformationCommand ChangeUserInformationCommand()
         => new(_faker.Person.FirstName, _faker.Person.LastName);
+
+    internal IEnumerable<User> CreateUsers(int count)
+    {
+        return Enumerable.Range(1, count)
+            .Select(i => User.Create($"unique_user{Guid.NewGuid()}@example.com", _faker.Internet.Password(), UserRole.User))
+            .ToList();
+    }
 }

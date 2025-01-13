@@ -25,7 +25,7 @@ internal sealed class AppointmentTestFactory
             PageSize = 25,
         };
 
-    public Task<IQueryable<Appointment>> CreateAppointments(int appointmentCount = 5)
+    internal Task<IQueryable<Appointment>> CreateAppointments(int appointmentCount = 5)
         => Task.FromResult(Enumerable
             .Range(0, appointmentCount)
             .Select(_ => CreateAppointment())

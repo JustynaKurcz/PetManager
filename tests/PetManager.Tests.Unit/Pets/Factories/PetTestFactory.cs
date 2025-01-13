@@ -35,4 +35,11 @@ internal sealed class PetTestFactory
 
     internal AddImageToPetCommand AddImageToPetCommand()
         => new(_faker.Random.Guid(), FormFileGenerator.CreateTestFileFaker().Generate());
+    
+    internal Task<IQueryable<Pet>> CreatePets(int petCount = 5)
+    => Task.FromResult(Enumerable
+        .Range(0, petCount)
+        .Select(_ => CreatePet())
+        .AsQueryable()
+    );
 }

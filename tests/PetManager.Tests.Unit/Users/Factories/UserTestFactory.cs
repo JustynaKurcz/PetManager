@@ -43,4 +43,11 @@ internal sealed class UserTestFactory
 
     internal DeleteUserByAdminCommand CreateDeleteUserByAdminCommand()
         => new(_faker.Random.Guid());
+    
+    internal Task<IQueryable<User>> CreateUsers(int userCount = 5)
+    => Task.FromResult(Enumerable
+        .Range(0, userCount)
+        .Select(_ => CreateUser())
+        .AsQueryable()
+    );
 }

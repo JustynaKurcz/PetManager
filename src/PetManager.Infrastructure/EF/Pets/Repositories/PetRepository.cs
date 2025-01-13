@@ -33,11 +33,10 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
             .FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public async Task<IQueryable<Pet>> BrowseAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Pet>> BrowseAsync(Guid userId, CancellationToken cancellationToken)
         => await Task.FromResult(_pets
             .Where(x => x.UserId == userId)
             .AsSplitQuery()
-            .AsQueryable()
         );
 
     public async Task DeleteAsync(Pet pet, CancellationToken cancellationToken)

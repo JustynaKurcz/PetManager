@@ -22,4 +22,10 @@ internal sealed class AppointmentTestFactory
             PageNumber = 1,
             PageSize = 25,
         };
+
+    internal Task<IEnumerable<Appointment>> CreateAppointments(Guid healthRecordId, int count = 3)
+        => Task.FromResult(Enumerable
+            .Range(0, count)
+            .Select(_ => CreateAppointment(healthRecordId))
+        );
 }
