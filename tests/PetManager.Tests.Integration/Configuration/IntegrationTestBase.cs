@@ -1,5 +1,5 @@
 using System.Net.Http.Headers;
-using PetManager.Application.Common.Security.Auth;
+using PetManager.Application.Common.Security.Authentication;
 using PetManager.Application.Common.Security.Passwords;
 using PetManager.Infrastructure.EF.DbContext;
 using PetManager.Tests.Integration.Users.Factories;
@@ -13,7 +13,7 @@ public abstract class IntegrationTestBase : IClassFixture<PetManagerTestFactory>
     protected readonly HttpClient _client;
     private readonly PetManagerDbContext _dbContext;
     protected readonly IPasswordManager _passwordManager;
-    private readonly IAuthManager _authManager;
+    private readonly IAuthenticationManager _authenticationManager;
     private readonly UserTestFactory _userFactory = new();
 
     protected IntegrationTestBase()
@@ -23,7 +23,7 @@ public abstract class IntegrationTestBase : IClassFixture<PetManagerTestFactory>
         _client = factory.CreateClient();
         _dbContext = _scope.ServiceProvider.GetRequiredService<PetManagerDbContext>();
         _passwordManager = _scope.ServiceProvider.GetRequiredService<IPasswordManager>();
-        _authManager = _scope.ServiceProvider.GetRequiredService<IAuthManager>();
+        _authenticationManager = _scope.ServiceProvider.GetRequiredService<IAuthenticationManager>();
     }
 
     public async Task InitializeAsync()
@@ -51,7 +51,7 @@ public abstract class IntegrationTestBase : IClassFixture<PetManagerTestFactory>
 
     protected async Task Authenticate(Guid userId, string role)
     {
-        var token = await _authManager.GenerateToken(userId, role);
+        var token = await _authenticationManager.GenerateToken(userId, role);
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 }

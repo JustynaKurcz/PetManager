@@ -5,7 +5,8 @@ using PetManager.Infrastructure.Common.Emails.Configuration;
 using PetManager.Infrastructure.Common.Exceptions;
 using PetManager.Infrastructure.Common.Integrations.BlobStorage;
 using PetManager.Infrastructure.Common.QuartzJobs.Configuration;
-using PetManager.Infrastructure.Common.Security.Auth;
+using PetManager.Infrastructure.Common.Security;
+using PetManager.Infrastructure.Common.Security.Authentication;
 using PetManager.Infrastructure.Common.Security.Passwords;
 using PetManager.Infrastructure.EF;
 using PetManager.Infrastructure.EF.DbContext;
@@ -27,8 +28,7 @@ internal static class Extensions
 
         services.AddDataAccess();
 
-        services.AddSecurity();
-        services.AddAuth(configuration);
+        services.AddSecurity(configuration);
         services.AddContext();
         services.AddEmails(configuration);
         services.AddBlobStorage(configuration);

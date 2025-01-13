@@ -28,7 +28,7 @@ public class DeleteUserEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.Id, UserRole.User.ToString());
+        await Authenticate(user.Id, UserRole.User.ToString());
 
         // Act
         var response =
@@ -43,7 +43,7 @@ public class DeleteUserEndpointTests : IntegrationTestBase
     {
         // Arrange
         var userId = Guid.NewGuid();
-        Authenticate(userId, UserRole.User.ToString());
+        await Authenticate(userId, UserRole.User.ToString());
 
         var user = _userFactory.CreateUser();
         await AddAsync(user);

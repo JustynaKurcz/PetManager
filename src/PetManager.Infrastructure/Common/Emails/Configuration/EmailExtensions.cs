@@ -1,4 +1,5 @@
 using PetManager.Application.Common.Emails;
+using PetManager.Infrastructure.Common.Emails.Configuration.Options;
 
 namespace PetManager.Infrastructure.Common.Emails.Configuration;
 

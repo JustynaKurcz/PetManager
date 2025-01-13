@@ -1,6 +1,7 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Queries.GetVaccinationDetails;
 using PetManager.Application.HealthRecords.Queries.GetVaccinationDetails.DTO;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.HealthRecords.Queries.GetVaccinationDetails;
 
@@ -26,6 +27,6 @@ internal sealed class GetVaccinationDetailsEndpoint : IEndpointDefinition
                 Summary = "Get vaccination details",
                 Description = "This endpoint allows users to get details of a vaccination.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

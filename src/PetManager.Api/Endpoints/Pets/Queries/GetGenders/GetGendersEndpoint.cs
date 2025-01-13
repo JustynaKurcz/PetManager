@@ -2,6 +2,7 @@ using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Pets.Queries.GetGenders.DTO;
 using PetManager.Core.Common.EnumHelper;
 using PetManager.Core.Pets.Enums;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Pets.Queries.GetGenders;
 
@@ -25,6 +26,6 @@ internal sealed class GetGendersEndpoint : IEndpointDefinition
                 Summary = "Get list of gender types",
                 Description = "This endpoint allows users to get a list of genders.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

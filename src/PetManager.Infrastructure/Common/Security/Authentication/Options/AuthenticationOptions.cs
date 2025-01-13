@@ -1,6 +1,6 @@
-namespace PetManager.Infrastructure.Common.Security.Auth;
+namespace PetManager.Infrastructure.Common.Security.Authentication.Options;
 
-public class AuthOptions
+public class AuthenticationOptions
 {
     public string Issuer { get; set; }
     public string Audience { get; set; }

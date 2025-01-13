@@ -1,5 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Commands.AddVaccinationToHealthRecord;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.HealthRecords.Commands.AddVaccinationToHealthRecord;
 
@@ -25,6 +26,6 @@ internal sealed class AddVaccinationToHealthRecordEndpoint : IEndpointDefinition
                 Summary = "Add a vaccination to a health record",
                 Description = "This endpoint allows users to add a vaccination to a health record.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

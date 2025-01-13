@@ -1,6 +1,7 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Pets.Queries.GetPetDetails;
 using PetManager.Application.Pets.Queries.GetPetDetails.DTO;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Pets.Queries.GetPetDetails;
 
@@ -27,6 +28,6 @@ internal sealed class GetPetDetailsEndpoint : IEndpointDefinition
                 Summary = "Get pet details",
                 Description = "This endpoint allows users to get details of a pet.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

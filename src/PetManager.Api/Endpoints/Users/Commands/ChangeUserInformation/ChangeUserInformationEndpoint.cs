@@ -1,5 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Users.Commands.ChangeUserInformation;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Users.Commands.ChangeUserInformation;
 
@@ -25,6 +26,6 @@ internal sealed class ChangeUserInformationEndpoint : IEndpointDefinition
                 Summary = "Change user information",
                 Description = "This endpoint allows users to change their information.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

@@ -1,5 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Users.Commands.DeleteUser;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Admin.Commands.DeleteUser;
 
@@ -25,6 +26,6 @@ internal sealed class DeleteUserEndpoint : IEndpointDefinition
                 Summary = "Delete a user",
                 Description = "This endpoint allows admin to delete a user.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireAdminRole);
     }
 }

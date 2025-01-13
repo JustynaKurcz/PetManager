@@ -28,7 +28,7 @@ public class ChangeUserInformationEndpointTests : IntegrationTestBase
         // Arrange
         var nonExistingUserId = Guid.NewGuid();
         var command = _userFactory.ChangeUserInformationCommand();
-        Authenticate(nonExistingUserId, UserRole.User.ToString());
+        await Authenticate(nonExistingUserId, UserRole.User.ToString());
 
         // Act
         var response = await _client.PutAsJsonAsync(UserEndpoints.ChangeUserInformation, command);
@@ -44,7 +44,23 @@ public class ChangeUserInformationEndpointTests : IntegrationTestBase
         var user = _userFactory.CreateUser();
         await AddAsync(user);
         var command = _userFactory.ChangeUserInformationCommand();
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
+
+        // Act
+        var response = await _client.PutAsJsonAsync(UserEndpoints.ChangeUserInformation, command);
+
+        // Assert
+        response.StatusCode.ShouldBe(HttpStatusCode.NoContent);
+    }
+    
+    [Fact]
+    public async Task put_change_user_information_with_admin_role_should_return_204_status_code()
+    {
+        // Arrange
+        var adminUser = _userFactory.CreateUser(role: UserRole.Admin);
+        await AddAsync(adminUser);
+        var command = _userFactory.ChangeUserInformationCommand();
+        await Authenticate(adminUser.Id, adminUser.Role.ToString());
 
         // Act
         var response = await _client.PutAsJsonAsync(UserEndpoints.ChangeUserInformation, command);

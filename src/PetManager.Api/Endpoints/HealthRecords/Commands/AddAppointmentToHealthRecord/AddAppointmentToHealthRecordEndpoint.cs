@@ -1,5 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Commands.AddAppointmentToHealthRecord;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.HealthRecords.Commands.AddAppointmentToHealthRecord;
 
@@ -25,6 +26,6 @@ internal sealed class AddAppointmentToHealthRecordEndpoint : IEndpointDefinition
                 Summary = "Add an appointment to a health record",
                 Description = "This endpoint allows users to add an appointment to a health record.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

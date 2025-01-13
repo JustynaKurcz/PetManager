@@ -1,4 +1,4 @@
-namespace PetManager.Infrastructure.Common.Integrations.BlobStorage;
+namespace PetManager.Infrastructure.Common.Integrations.BlobStorage.Options;
 
 public record AzureBlobStorageOptions
 {

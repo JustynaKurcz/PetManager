@@ -1,12 +1,13 @@
-using PetManager.Application.Common.Security.Auth;
+using PetManager.Application.Common.Security.Authentication;
+using PetManager.Infrastructure.Common.Security.Authentication.Options;
 
-namespace PetManager.Infrastructure.Common.Security.Auth;
+namespace PetManager.Infrastructure.Common.Security.Authentication.Services;
 
-internal sealed class AuthManager(AuthOptions authOptions) : IAuthManager
+internal sealed class AuthenticationManager(AuthenticationOptions authenticationOptions) : IAuthenticationManager
 {
-    private readonly string _key = authOptions.JwtKey;
-    private readonly string _issuer = authOptions.Issuer;
-    private readonly string _audience = authOptions.Audience;
+    private readonly string _key = authenticationOptions.JwtKey;
+    private readonly string _issuer = authenticationOptions.Issuer;
+    private readonly string _audience = authenticationOptions.Audience;
     
     public Task<string> GenerateToken(Guid userId, string role)
     {
@@ -22,7 +23,7 @@ internal sealed class AuthManager(AuthOptions authOptions) : IAuthManager
                 Encoding.UTF8.GetBytes(_key)),
             SecurityAlgorithms.HmacSha256);
 
-        var expires = DateTime.UtcNow.Add(authOptions.Expiry);
+        var expires = DateTime.UtcNow.Add(authenticationOptions.Expiry);
         var jwt = new JwtSecurityToken(_issuer, _audience, claims, DateTime.UtcNow, expires,
             signingCredentials);
         var token = tokenHandler.WriteToken(jwt);

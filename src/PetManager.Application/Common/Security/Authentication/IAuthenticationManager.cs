@@ -1,6 +1,6 @@
-namespace PetManager.Application.Common.Security.Auth;
+namespace PetManager.Application.Common.Security.Authentication;
 
-public interface IAuthManager
+public interface IAuthenticationManager
 {
     Task<string> GenerateToken(Guid userId, string role);
     string GeneratePasswordResetToken(string email);

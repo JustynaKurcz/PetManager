@@ -1,4 +1,4 @@
-using PetManager.Application.Common.Security.Auth;
+using PetManager.Application.Common.Security.Authentication;
 using PetManager.Application.Users.Queries.GetResetPasswordForm;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
@@ -6,7 +6,7 @@ using PetManager.Core.Users.Repositories;
 namespace PetManager.Infrastructure.EF.Users.Queries.GetResetPasswordForm;
 
 public class GetResetPasswordFormQueryHandler(
-    IAuthManager authManager,
+    IAuthenticationManager authenticationManager,
     IUserRepository userRepository
 ) : IRequestHandler<GetResetPasswordFormQuery, string>
 {
@@ -14,7 +14,7 @@ public class GetResetPasswordFormQueryHandler(
 
     public async Task<string> Handle(GetResetPasswordFormQuery query, CancellationToken cancellationToken)
     {
-        if (!authManager.VerifyPasswordResetToken(query.Token, out var email))
+        if (!authenticationManager.VerifyPasswordResetToken(query.Token, out var email))
         {
             throw new InvalidOperationException("Invalid password reset token.");
         }

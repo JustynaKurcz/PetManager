@@ -1,5 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Commands.DeleteVaccinationToHealthRecord;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.HealthRecords.Commands.DeleteVaccinationToHealthRecord;
 
@@ -26,6 +27,6 @@ internal sealed class DeleteVaccinationToHealthRecordEndpoint : IEndpointDefinit
                 Summary = "Delete a vaccination to a health record",
                 Description = "This endpoint allows users to delete a vaccination to a health record.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

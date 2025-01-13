@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using PetManager.Application.Common.Integrations.BlobStorage;
+using PetManager.Infrastructure.Common.Integrations.BlobStorage.Options;
 
 namespace PetManager.Infrastructure.Common.Integrations.BlobStorage;
 

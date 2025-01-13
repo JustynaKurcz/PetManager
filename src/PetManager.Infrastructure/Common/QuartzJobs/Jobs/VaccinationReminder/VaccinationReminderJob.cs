@@ -3,6 +3,7 @@ using PetManager.Application.Common.Emails.Models;
 using PetManager.Core.HealthRecords.Entities;
 using PetManager.Core.HealthRecords.Repositories;
 using PetManager.Infrastructure.Common.QuartzJobs.Base;
+using PetManager.Infrastructure.Common.QuartzJobs.Base.Options;
 
 namespace PetManager.Infrastructure.Common.QuartzJobs.Jobs.VaccinationReminder;
 

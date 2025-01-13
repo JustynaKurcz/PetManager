@@ -1,5 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Pets.Commands.AddImageToPet;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Pets.Commands.AddImageToPet;
 
@@ -28,6 +29,6 @@ internal sealed class AddImageToPetEndpoint : IEndpointDefinition
                 Summary = "Add image to pet",
                 Description = "This endpoint allows users to add an image to a pet.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

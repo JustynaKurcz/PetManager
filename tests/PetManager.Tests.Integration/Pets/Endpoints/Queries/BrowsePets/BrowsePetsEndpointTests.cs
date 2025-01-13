@@ -11,7 +11,7 @@ public class BrowsePetsEndpointTests : IntegrationTestBase
     private readonly PetTestFactory _petFactory = new();
 
     private const int PetsToCreate = 10;
-
+    
     [Theory]
     [InlineData(1, 10, "")]
     [InlineData(2, 5, "a")]
@@ -50,5 +50,15 @@ public class BrowsePetsEndpointTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
+    }
+    
+    [Fact]
+    public async Task get_browse_pets_without_being_authorized_should_return_401_status_code()
+    {
+        // Act
+        var response = await _client.GetAsync(PetEndpoints.BrowsePets);
+
+        // Assert
+        response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
     }
 }

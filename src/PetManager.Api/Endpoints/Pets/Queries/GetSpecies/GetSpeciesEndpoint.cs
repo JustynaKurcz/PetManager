@@ -2,6 +2,7 @@ using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Pets.Queries.GetSpecies.DTO;
 using PetManager.Core.Common.EnumHelper;
 using PetManager.Core.Pets.Enums;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Pets.Queries.GetSpecies;
 
@@ -25,6 +26,6 @@ internal sealed class GetSpeciesEndpoint : IEndpointDefinition
                 Summary = "Get list of species types",
                 Description = "This endpoint allows users to get a list of species.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

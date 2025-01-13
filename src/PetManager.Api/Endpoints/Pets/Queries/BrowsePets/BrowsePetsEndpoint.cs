@@ -2,6 +2,7 @@ using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Common.Pagination;
 using PetManager.Application.Pets.Queries.BrowsePets;
 using PetManager.Application.Pets.Queries.BrowsePets.DTO;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Pets.Queries.BrowsePets;
 
@@ -25,6 +26,7 @@ internal sealed class BrowsePetsEndpoint : IEndpointDefinition
             {
                 Summary = "Browse pets",
                 Description = "This endpoint allows users to browse pets.",
-            });
+            })
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

@@ -2,6 +2,7 @@ using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Admin.Queries.BrowseUsers;
 using PetManager.Application.Common.Pagination;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Admin.Queries.BrowseUsers;
 
@@ -25,6 +26,7 @@ internal sealed class BrowseUsersEndpoint : IEndpointDefinition
             {
                 Summary = "Browse users",
                 Description = "This endpoint allows admin to browse users.",
-            });
+            })
+            .RequireAuthorization(AuthorizationPolicies.RequireAdminRole);
     }
 }

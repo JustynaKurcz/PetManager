@@ -3,9 +3,9 @@ using PetManager.Core.Users.Entities;
 
 namespace PetManager.Infrastructure.Common.Security.Passwords;
 
-internal static class SecurityExtensions
+public static class PasswordExtensions
 {
-    public static IServiceCollection AddSecurity(this IServiceCollection services)
+    public static IServiceCollection AddPasswords(this IServiceCollection services)
     {
         services
             .AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>()

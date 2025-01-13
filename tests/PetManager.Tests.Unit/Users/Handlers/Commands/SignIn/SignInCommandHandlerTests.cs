@@ -1,4 +1,4 @@
-using PetManager.Application.Common.Security.Auth;
+using PetManager.Application.Common.Security.Authentication;
 using PetManager.Application.Common.Security.Passwords;
 using PetManager.Application.Users.Commands.SignIn;
 using PetManager.Core.Users.Entities;
@@ -39,7 +39,7 @@ public sealed class SignInCommandHandlerTests
             .DidNotReceive()
             .VerifyPassword(Arg.Any<string>(), Arg.Any<string>());
 
-        _authManager
+        _authenticationManager
             .DidNotReceive()
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
@@ -75,7 +75,7 @@ public sealed class SignInCommandHandlerTests
             .Received(1)
             .VerifyPassword(Arg.Any<string>(), Arg.Any<string>());
 
-        _authManager
+        _authenticationManager
             .DidNotReceive()
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
@@ -95,7 +95,7 @@ public sealed class SignInCommandHandlerTests
             .VerifyPassword(command.Password, user.Password)
             .Returns(true);
 
-        _authManager
+        _authenticationManager
             .GenerateToken(user.Id, user.Role.ToString())
             .Returns("token");
 
@@ -114,7 +114,7 @@ public sealed class SignInCommandHandlerTests
             .Received(1)
             .VerifyPassword(Arg.Any<string>(), Arg.Any<string>());
 
-        _authManager
+        _authenticationManager
             .Received(1)
             .GenerateToken(Arg.Any<Guid>(), Arg.Any<string>());
     }
@@ -135,7 +135,7 @@ public sealed class SignInCommandHandlerTests
             .VerifyPassword(command.Password, user.Password)
             .Returns(true);
 
-        _authManager
+        _authenticationManager
             .GenerateToken(user.Id, user.Role.ToString())
             .Returns("token");
 
@@ -151,7 +151,7 @@ public sealed class SignInCommandHandlerTests
 
     private readonly IUserRepository _userRepository;
     private readonly IPasswordManager _passwordManager;
-    private readonly IAuthManager _authManager;
+    private readonly IAuthenticationManager _authenticationManager;
     private readonly IRequestHandler<SignInCommand, SignInResponse> _handler;
     private readonly UserTestFactory _userFactory = new();
 
@@ -159,8 +159,8 @@ public sealed class SignInCommandHandlerTests
     {
         _userRepository = Substitute.For<IUserRepository>();
         _passwordManager = Substitute.For<IPasswordManager>();
-        _authManager = Substitute.For<IAuthManager>();
+        _authenticationManager = Substitute.For<IAuthenticationManager>();
 
-        _handler = new SignInCommandHandler(_userRepository, _passwordManager, _authManager);
+        _handler = new SignInCommandHandler(_userRepository, _passwordManager, _authenticationManager);
     }
 }

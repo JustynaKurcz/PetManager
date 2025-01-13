@@ -1,4 +1,5 @@
 using PetManager.Application.Common.Emails;
+using PetManager.Infrastructure.Common.QuartzJobs.Base.Options;
 using Quartz;
 
 namespace PetManager.Infrastructure.Common.QuartzJobs.Base;

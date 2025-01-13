@@ -31,7 +31,7 @@ public class CreatePetEndpointTests : IntegrationTestBase
         var command = _petFactory.CreatePetCommand();
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
 
         // Act
         var response = await _client.PostAsJsonAsync(PetEndpoints.CreatePet, command);
@@ -47,7 +47,7 @@ public class CreatePetEndpointTests : IntegrationTestBase
         // Arrange
         var command = _petFactory.CreatePetCommand();
         var user = _userFactory.CreateUser();
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
 
         // Act
         var response = await _client.PostAsJsonAsync(PetEndpoints.CreatePet, command);

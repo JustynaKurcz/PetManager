@@ -1,4 +1,4 @@
-namespace PetManager.Infrastructure.Common.QuartzJobs.Base;
+namespace PetManager.Infrastructure.Common.QuartzJobs.Base.Options;
 
 public record ReminderOptions
 {

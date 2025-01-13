@@ -1,5 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Commands.DeleteAppointmentToHealthRecord;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.HealthRecords.Commands.DeleteAppointmentToHealthRecord;
 
@@ -26,6 +27,6 @@ internal sealed class DeleteAppointmentToHealthRecordEndpoint : IEndpointDefinit
                 Summary = "Delete an appointment to a health record",
                 Description = "This endpoint allows users to delete an appointment to a health record.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

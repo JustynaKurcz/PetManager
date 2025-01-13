@@ -1,4 +1,4 @@
-using PetManager.Application.Common.Security.Auth;
+using PetManager.Application.Common.Security.Authentication;
 using PetManager.Application.Users.Commands.ForgotPassword.Events;
 using PetManager.Core.Users.Exceptions;
 using PetManager.Core.Users.Repositories;
@@ -7,7 +7,7 @@ namespace PetManager.Application.Users.Commands.ForgotPassword;
 
 internal sealed class ForgotPasswordCommandHandler(
     IUserRepository userRepository,
-    IAuthManager authManager,
+    IAuthenticationManager authenticationManager,
     IMediator mediator,
     IConfiguration configuration
 ) : IRequestHandler<ForgotPasswordCommand>
@@ -20,7 +20,7 @@ internal sealed class ForgotPasswordCommandHandler(
         var user = await userRepository.GetByEmailAsync(x => x.Email == email, cancellationToken)
                    ?? throw new UserNotFoundException(email);
 
-        var resetToken = authManager.GeneratePasswordResetToken(user.Email);
+        var resetToken = authenticationManager.GeneratePasswordResetToken(user.Email);
         
         var resetLink = BuildResetLink(resetToken);
         

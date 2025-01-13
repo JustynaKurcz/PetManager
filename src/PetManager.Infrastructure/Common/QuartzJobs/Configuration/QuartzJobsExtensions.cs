@@ -1,5 +1,6 @@
 using System.Reflection;
 using PetManager.Infrastructure.Common.QuartzJobs.Base;
+using PetManager.Infrastructure.Common.QuartzJobs.Base.Options;
 using Quartz;
 
 namespace PetManager.Infrastructure.Common.QuartzJobs.Configuration;

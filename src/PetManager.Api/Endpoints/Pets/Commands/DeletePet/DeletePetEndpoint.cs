@@ -1,5 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Pets.Commands.DeletePet;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Pets.Commands.DeletePet;
 
@@ -23,6 +24,6 @@ internal sealed class DeletePetEndpoint : IEndpointDefinition
                 Summary = "Delete a pet",
                 Description = "This endpoint allows users to delete a pet.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

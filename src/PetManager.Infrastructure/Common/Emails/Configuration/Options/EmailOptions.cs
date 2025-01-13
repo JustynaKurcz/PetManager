@@ -1,4 +1,4 @@
-namespace PetManager.Infrastructure.Common.Emails.Configuration;
+namespace PetManager.Infrastructure.Common.Emails.Configuration.Options;
 
 public record EmailOptions
 {

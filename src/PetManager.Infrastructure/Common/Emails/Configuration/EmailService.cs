@@ -2,6 +2,7 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using PetManager.Application.Common.Emails;
+using PetManager.Infrastructure.Common.Emails.Configuration.Options;
 
 namespace PetManager.Infrastructure.Common.Emails.Configuration;
 

@@ -25,7 +25,7 @@ public class GetSpeciesEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
 
         // Act
         var response = await _client.GetAsync(PetEndpoints.GetSpecies);

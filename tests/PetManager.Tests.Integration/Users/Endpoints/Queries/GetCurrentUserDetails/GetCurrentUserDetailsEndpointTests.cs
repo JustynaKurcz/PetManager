@@ -1,5 +1,6 @@
 using PetManager.Api.Endpoints.Users;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
+using PetManager.Core.Users.Enums;
 using PetManager.Tests.Integration.Configuration;
 using PetManager.Tests.Integration.Users.Factories;
 
@@ -25,9 +26,25 @@ public class GetCurrentUserDetailsEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
 
         // Act
+        var response = await _client.GetAsync(UserEndpoints.GetCurrentUser);
+
+        // Assert
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
+        await response.Content.ReadFromJsonAsync<CurrentUserDetailsDto>().ShouldNotBeNull();
+    }
+    
+    [Fact]
+    public async Task get_current_user_details_with_admin_role_should_return_200_status_code_and_user_details()
+    {
+        // Arrange
+        var adminUser = _userFactory.CreateUser(role: UserRole.Admin);
+        await AddAsync(adminUser);
+        await Authenticate(adminUser.Id, adminUser.Role.ToString());
+
+        // Act 
         var response = await _client.GetAsync(UserEndpoints.GetCurrentUser);
 
         // Assert

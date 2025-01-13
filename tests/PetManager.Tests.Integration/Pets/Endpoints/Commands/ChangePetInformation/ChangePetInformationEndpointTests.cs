@@ -52,7 +52,7 @@ public class ChangePetInformationEndpointTests : IntegrationTestBase
         await AddAsync(owner);
 
         var differentUser = _userFactory.CreateUser();
-        Authenticate(differentUser.Id, differentUser.Role.ToString());
+        await Authenticate(differentUser.Id, differentUser.Role.ToString());
 
         var pet = _petFactory.CreatePet(owner.Id);
         await AddAsync(pet);
@@ -74,7 +74,7 @@ public class ChangePetInformationEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
 
         var pet = _petFactory.CreatePet(user.Id);
         await AddAsync(pet);

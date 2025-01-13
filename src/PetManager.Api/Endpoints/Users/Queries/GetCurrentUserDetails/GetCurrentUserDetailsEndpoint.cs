@@ -1,6 +1,7 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Users.Queries.GetCurrentUserDetails;
 
@@ -26,6 +27,6 @@ internal sealed class GetCurrentUserDetailsEndpoint : IEndpointDefinition
                 Summary = "Get details of the currently logged user",
                 Description = "This endpoint allows users to get details of the logged in user.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

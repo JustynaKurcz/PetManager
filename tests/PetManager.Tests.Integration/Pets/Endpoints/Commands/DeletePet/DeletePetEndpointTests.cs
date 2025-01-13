@@ -31,7 +31,7 @@ public class DeletePetEndpointTests : IntegrationTestBase
         var command = _petFactory.DeletePetCommand();
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
 
         // Act
         var response =
@@ -47,7 +47,7 @@ public class DeletePetEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
 
         var pet = _petFactory.CreatePet(user.Id);
         await AddAsync(pet);

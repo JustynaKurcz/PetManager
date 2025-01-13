@@ -1,6 +1,7 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Queries.GetHealthRecordDetails;
 using PetManager.Application.HealthRecords.Queries.GetHealthRecordDetails.DTO;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.HealthRecords.Queries.GetHealthRecordDetails;
 
@@ -26,6 +27,6 @@ internal sealed class GetHealthRecordDetailsEndpoint : IEndpointDefinition
                 Summary = "Get health record details",
                 Description = "This endpoint allows users to get details of a health record.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

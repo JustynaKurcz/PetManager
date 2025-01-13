@@ -1,6 +1,7 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails;
 using PetManager.Application.HealthRecords.Queries.GetAppointmentDetails.DTO;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.HealthRecords.Queries.GetAppointmentDetails;
 
@@ -26,6 +27,6 @@ internal sealed class GetAppointmentDetailsEndpoint : IEndpointDefinition
                 Summary = "Get appointment details",
                 Description = "This endpoint allows users to get details of an appointment.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }

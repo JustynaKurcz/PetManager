@@ -28,11 +28,17 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
         if (asNoTracking)
             query = query.AsNoTracking();
 
-        return await query.SingleOrDefaultAsync(predicate, cancellationToken);
+        return await query
+            .AsSplitQuery()
+            .FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
     public async Task<IQueryable<Pet>> BrowseAsync(CancellationToken cancellationToken)
-        => _pets.AsQueryable();
+        => await Task.FromResult(_pets
+            .Include(q => q.User)
+            .AsSplitQuery()
+            .AsQueryable()
+        );
 
     public async Task DeleteAsync(Pet pet, CancellationToken cancellationToken)
     {

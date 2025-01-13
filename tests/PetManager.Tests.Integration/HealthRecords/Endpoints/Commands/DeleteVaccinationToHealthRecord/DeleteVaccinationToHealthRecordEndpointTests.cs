@@ -34,7 +34,7 @@ public class DeleteVaccinationToHealthRecordEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
 
         var pet = _petFactory.CreatePet(user.Id);
         await AddAsync(pet);
@@ -58,7 +58,7 @@ public class DeleteVaccinationToHealthRecordEndpointTests : IntegrationTestBase
         // Arrange
         var user = _userFactory.CreateUser();
         await AddAsync(user);
-        Authenticate(user.Id, user.Role.ToString());
+        await Authenticate(user.Id, user.Role.ToString());
 
         var nonExistingHealthRecordId = Guid.NewGuid();
         var vaccinationId = Guid.NewGuid();

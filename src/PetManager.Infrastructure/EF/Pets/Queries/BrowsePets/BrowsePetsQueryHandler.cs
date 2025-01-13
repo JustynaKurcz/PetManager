@@ -1,3 +1,4 @@
+using PetManager.Application.Common.Context;
 using PetManager.Application.Common.Pagination;
 using PetManager.Application.Pets.Queries.BrowsePets;
 using PetManager.Application.Pets.Queries.BrowsePets.DTO;
@@ -6,12 +7,17 @@ using PetManager.Core.Pets.Repositories;
 
 namespace PetManager.Infrastructure.EF.Pets.Queries.BrowsePets;
 
-internal sealed class BrowsePetsQueryHandler(IPetRepository petRepository)
-    : IRequestHandler<BrowsePetsQuery, PaginationResult<PetDto>>
+internal sealed class BrowsePetsQueryHandler(
+    IContext context,
+    IPetRepository petRepository
+) : IRequestHandler<BrowsePetsQuery, PaginationResult<PetDto>>
 {
     public async Task<PaginationResult<PetDto>> Handle(BrowsePetsQuery query, CancellationToken cancellationToken)
     {
+        var currentLoggedUserId = context.UserId;
         var pets = await petRepository.BrowseAsync(cancellationToken);
+        
+        pets = pets.Where(x => x.UserId == currentLoggedUserId);
 
         pets = Search(query, pets);
 

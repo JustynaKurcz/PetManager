@@ -1,5 +1,6 @@
 using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Pets.Commands.CreatePet;
+using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
 namespace PetManager.Api.Endpoints.Pets.Commands.CreatePet;
 
@@ -24,6 +25,6 @@ internal sealed class CreatePetEndpoint : IEndpointDefinition
                 Summary = "Create a pet",
                 Description = "This endpoint allows users to create a pet.",
             })
-            .RequireAuthorization();
+            .RequireAuthorization(AuthorizationPolicies.RequireUserRole);
     }
 }
