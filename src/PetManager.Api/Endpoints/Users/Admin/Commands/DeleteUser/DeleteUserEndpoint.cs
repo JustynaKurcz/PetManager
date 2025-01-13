@@ -2,7 +2,7 @@ using PetManager.Api.Common.Endpoints;
 using PetManager.Application.Users.Commands.DeleteUser;
 using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
-namespace PetManager.Api.Endpoints.Admin.Commands.DeleteUser;
+namespace PetManager.Api.Endpoints.Users.Admin.Commands.DeleteUser;
 
 internal sealed class DeleteUserEndpoint : IEndpointDefinition
 {

@@ -1,3 +1,4 @@
+using PetManager.Application.Pets.Commands.AddImageToPet;
 using PetManager.Application.Pets.Commands.ChangePetInformation;
 using PetManager.Application.Pets.Commands.CreatePet;
 using PetManager.Application.Pets.Commands.DeletePet;
@@ -34,4 +35,5 @@ internal sealed class PetTestFactory
 
     internal DeletePetCommand DeletePetCommand()
         => new(_faker.Random.Guid());
+    
 }

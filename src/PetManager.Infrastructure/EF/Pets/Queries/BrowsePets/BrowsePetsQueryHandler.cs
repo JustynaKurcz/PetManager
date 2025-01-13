@@ -15,12 +15,9 @@ internal sealed class BrowsePetsQueryHandler(
     public async Task<PaginationResult<PetDto>> Handle(BrowsePetsQuery query, CancellationToken cancellationToken)
     {
         var currentLoggedUserId = context.UserId;
-        var pets = await petRepository.BrowseAsync(cancellationToken);
+        var pets = await petRepository.BrowseAsync(currentLoggedUserId, cancellationToken);
         
-        pets = pets.Where(x => x.UserId == currentLoggedUserId);
-
         pets = Search(query, pets);
-
 
         return await pets.AsNoTracking()
             .Select(x => new PetDto(x.Id, x.Name))

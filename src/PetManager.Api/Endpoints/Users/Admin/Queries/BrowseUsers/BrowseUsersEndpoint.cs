@@ -1,10 +1,10 @@
 using PetManager.Api.Common.Endpoints;
-using PetManager.Application.Admin.Queries.BrowseUsers;
 using PetManager.Application.Common.Pagination;
+using PetManager.Application.Users.Admin.Queries.BrowseUsers;
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 using PetManager.Infrastructure.Common.Security.Authorization.Policies;
 
-namespace PetManager.Api.Endpoints.Admin.Queries.BrowseUsers;
+namespace PetManager.Api.Endpoints.Users.Admin.Queries.BrowseUsers;
 
 internal sealed class BrowseUsersEndpoint : IEndpointDefinition
 {

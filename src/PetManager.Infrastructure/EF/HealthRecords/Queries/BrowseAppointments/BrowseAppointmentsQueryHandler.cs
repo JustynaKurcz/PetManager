@@ -1,3 +1,4 @@
+using PetManager.Application.Common.Context;
 using PetManager.Application.Common.Pagination;
 using PetManager.Application.HealthRecords.Queries.BrowseAppointments;
 using PetManager.Application.HealthRecords.Queries.BrowseAppointments.DTO;
@@ -6,12 +7,15 @@ using PetManager.Core.HealthRecords.Repositories;
 
 namespace PetManager.Infrastructure.EF.HealthRecords.Queries.BrowseAppointments;
 
-internal sealed class BrowseAppointmentsQueryHandler(IAppointmentRepository appointmentRepository)
-    : IRequestHandler<BrowseAppointmentsQuery, PaginationResult<AppointmentDto>>
+internal sealed class BrowseAppointmentsQueryHandler(
+    IContext context,
+    IAppointmentRepository appointmentRepository
+    ) : IRequestHandler<BrowseAppointmentsQuery, PaginationResult<AppointmentDto>>
 {
     public async Task<PaginationResult<AppointmentDto>> Handle(BrowseAppointmentsQuery query, CancellationToken cancellationToken)
     {
-        var appointments = await appointmentRepository.BrowseAsync(cancellationToken);
+        var currentLoggedUserId = context.UserId;
+        var appointments = await appointmentRepository.BrowseAsync(currentLoggedUserId, cancellationToken);
 
         appointments = Search(query, appointments);
 

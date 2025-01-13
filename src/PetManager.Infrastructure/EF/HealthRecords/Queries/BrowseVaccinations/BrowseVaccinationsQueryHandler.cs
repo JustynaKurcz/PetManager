@@ -1,3 +1,4 @@
+using PetManager.Application.Common.Context;
 using PetManager.Application.Common.Pagination;
 using PetManager.Application.HealthRecords.Queries.BrowseVaccinations;
 using PetManager.Application.HealthRecords.Queries.BrowseVaccinations.DTO;
@@ -6,12 +7,16 @@ using PetManager.Core.HealthRecords.Repositories;
 
 namespace PetManager.Infrastructure.EF.HealthRecords.Queries.BrowseVaccinations;
 
-internal sealed class BrowseVaccinationsQueryHandler(IVaccinationRepository vaccinationRepository)
-    : IRequestHandler<BrowseVaccinationsQuery, PaginationResult<VaccinationDto>>
+internal sealed class BrowseVaccinationsQueryHandler(
+    IContext context,
+    IVaccinationRepository vaccinationRepository
+) : IRequestHandler<BrowseVaccinationsQuery, PaginationResult<VaccinationDto>>
 {
-    public async Task<PaginationResult<VaccinationDto>> Handle(BrowseVaccinationsQuery query, CancellationToken cancellationToken)
+    public async Task<PaginationResult<VaccinationDto>> Handle(BrowseVaccinationsQuery query,
+        CancellationToken cancellationToken)
     {
-        var vaccinations = await vaccinationRepository.BrowseAsync(cancellationToken);
+        var currentLoggedUserId = context.UserId;
+        var vaccinations = await vaccinationRepository.BrowseAsync(currentLoggedUserId, cancellationToken);
 
         vaccinations = Search(query, vaccinations);
 

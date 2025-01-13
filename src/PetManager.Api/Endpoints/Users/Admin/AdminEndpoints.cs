@@ -1,4 +1,4 @@
-namespace PetManager.Api.Endpoints.Admin;
+namespace PetManager.Api.Endpoints.Users.Admin;
 
 internal static class AdminEndpoints
 {

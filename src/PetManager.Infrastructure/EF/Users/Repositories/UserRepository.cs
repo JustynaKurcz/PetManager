@@ -27,6 +27,14 @@ internal class UserRepository(PetManagerDbContext dbContext) : IUserRepository
         => await _users
             .AnyAsync(predicate, cancellationToken);
 
+    public async Task<IQueryable<User>> BrowseAsync(CancellationToken cancellationToken)
+        => await Task.FromResult(
+            _users
+                .Include(x => x.Pets)
+                .AsSplitQuery()
+                .AsQueryable()
+        );
+
     public async Task DeleteAsync(User user, CancellationToken cancellationToken)
     {
         _users.Remove(user);

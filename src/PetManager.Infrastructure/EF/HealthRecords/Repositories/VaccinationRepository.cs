@@ -22,8 +22,15 @@ internal class VaccinationRepository(PetManagerDbContext dbContext) : IVaccinati
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IQueryable<Vaccination>> BrowseAsync(CancellationToken cancellationToken)
-        => await Task.FromResult(_vaccinations.AsQueryable());
+    public async Task<IQueryable<Vaccination>> BrowseAsync(Guid userId, CancellationToken cancellationToken)
+        => await Task.FromResult(
+            _vaccinations
+                .Include(a => a.HealthRecord)
+                .ThenInclude(hr => hr.Pet)
+                .ThenInclude(p => p.User)
+                .Where(x=>x.HealthRecord.Pet.UserId == userId)
+                .AsSplitQuery()
+                .AsQueryable());
 
     public async Task UpdateVaccinationAsync(Vaccination vaccination, CancellationToken cancellationToken)
         => await Task.FromResult(_vaccinations.Update(vaccination));
