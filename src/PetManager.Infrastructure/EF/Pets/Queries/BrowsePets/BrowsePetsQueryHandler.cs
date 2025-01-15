@@ -20,7 +20,7 @@ internal sealed class BrowsePetsQueryHandler(
         pets = Search(query, pets);
 
         return await pets
-            .Select(x => new PetDto(x.Id, x.Name))
+            .Select(x => new PetDto(x.Id, x.Name, x.Image?.BlobUrl))
             .PaginateAsync(query, cancellationToken);
     }
 

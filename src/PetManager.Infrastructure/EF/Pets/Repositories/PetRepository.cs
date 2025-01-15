@@ -35,6 +35,7 @@ internal class PetRepository(PetManagerDbContext dbContext) : IPetRepository
 
     public async Task<IEnumerable<Pet>> BrowseAsync(Guid userId, CancellationToken cancellationToken)
         => await Task.FromResult(_pets
+            .Include(x=>x.Image)
             .Where(x => x.UserId == userId)
             .AsSplitQuery()
         );

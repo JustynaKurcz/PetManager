@@ -15,6 +15,11 @@ internal sealed class GetResetPasswordFormEndpoint : IEndpointDefinition
                 var formHtml = await mediator.Send(new GetResetPasswordFormQuery(token), cancellationToken);
                 return Results.Content(formHtml, "text/html");
             })
-            .WithTags(UserEndpoints.Tag);
+            .WithTags(UserEndpoints.Tag)
+            .WithOpenApi(o => new OpenApiOperation(o)
+            {
+                Summary = "Get reset password form",
+                Description = "This endpoint allows users to get the reset password form.",
+            });
     }
 }

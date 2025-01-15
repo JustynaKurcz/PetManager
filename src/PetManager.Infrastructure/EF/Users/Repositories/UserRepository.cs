@@ -17,7 +17,9 @@ internal class UserRepository(PetManagerDbContext dbContext) : IUserRepository
     }
 
     public async Task<User?> GetAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
-        => await _users.SingleOrDefaultAsync(predicate, cancellationToken);
+        => await _users
+            .Include(x => x.Pets)
+            .SingleOrDefaultAsync(predicate, cancellationToken);
 
     public async Task<bool> ExistsAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
         => await _users

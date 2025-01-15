@@ -9,5 +9,6 @@ internal record CurrentUserDetailsDto(
     string Email,
     DateTimeOffset? LastChangePasswordDate,
     DateTimeOffset CreatedAt,
-    UserRole Role
+    string Role,
+    int PetsCount
 );

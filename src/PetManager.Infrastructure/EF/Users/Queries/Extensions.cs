@@ -1,5 +1,6 @@
 using PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 using PetManager.Core.Users.Entities;
+using PetManager.Infrastructure.EF.Pets.Queries;
 
 namespace PetManager.Infrastructure.EF.Users.Queries;
 
@@ -13,6 +14,7 @@ internal static class Extensions
             user.Email,
             user.LastChangePasswordDate,
             user.CreatedAt,
-            user.Role
+            user.Role.GetDisplayName(),
+            user.Pets.Count()
         );
 }

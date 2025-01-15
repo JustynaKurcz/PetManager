@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using PetManager.Application.Pets.Queries.GetPetDetails.DTO;
 using PetManager.Core.Pets.Entities;
 
@@ -9,11 +10,22 @@ internal static class Extensions
         => new(
             pet.Id,
             pet.Name,
-            pet.Species,
+            pet.Species.GetDisplayName(),
             pet.Breed,
-            pet.Gender,
+            pet.Gender.GetDisplayName(),
             pet.BirthDate,
             pet.UserId,
-            pet.HealthRecordId
+            pet.HealthRecordId,
+            pet.Image?.BlobUrl
         );
+    
+    public static string GetDisplayName(this Enum enumValue)
+    {
+        var displayAttribute = enumValue.GetType()
+            .GetField(enumValue.ToString())!
+            .GetCustomAttributes(typeof(DisplayAttribute), false)
+            .FirstOrDefault() as DisplayAttribute;
+
+        return displayAttribute?.Name ?? enumValue.ToString();
+    }
 }

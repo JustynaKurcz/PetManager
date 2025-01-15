@@ -1,14 +1,13 @@
-using PetManager.Core.Pets.Enums;
-
 namespace PetManager.Application.Pets.Queries.GetPetDetails.DTO;
 
 public record PetDetailsDto(
     Guid PetId,
     string Name,
-    Species Species,
+    string Species,
     string Breed,
-    Gender Gender,
+    string Gender,
     DateTimeOffset DateOfBirth,
     Guid UserId,
-    Guid? HealthRecordId
+    Guid? HealthRecordId,
+    string photoUrl
 );
