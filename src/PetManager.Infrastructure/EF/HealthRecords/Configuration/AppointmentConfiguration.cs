@@ -12,13 +12,13 @@ internal sealed class AppointmentConfiguration : IEntityTypeConfiguration<Appoin
             .IsRequired();
 
         builder.Property<string>("Diagnosis")
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property<DateTimeOffset>("AppointmentDate")
             .IsRequired();
 
         builder.Property<string>("Notes")
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property<bool>("IsNotificationSent")
             .IsRequired();

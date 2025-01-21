@@ -17,7 +17,7 @@ internal sealed class AddVaccinationToHealthRecordCommandHandler(
             ?? throw new HealthRecordNotFoundException(command.HealthRecordId);
 
         var vaccination = Vaccination.Create(command.VaccinationName, command.VaccinationDate,
-            command.NextVaccinationDate, healthRecord.Id);
+           command.NextVaccinationDate, healthRecord.Id);
 
         healthRecord.AddVaccination(vaccination);
 

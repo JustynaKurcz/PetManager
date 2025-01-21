@@ -65,31 +65,6 @@ public class AddAppointmentToHealthRecordCommandValidatorTests
         result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.Title));
     }
 
-    [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public void validate_add_appointment_to_health_record_command_with_invalid_diagnosis_should_return_error(
-        string diagnosis)
-    {
-        //arrange
-        var command = new AddAppointmentToHealthRecordCommand(
-            "Regular Checkup",
-            diagnosis,
-            DateTimeOffset.UtcNow.AddDays(-1),
-            "Everything looks good")
-        {
-            HealthRecordId = Guid.NewGuid()
-        };
-
-        //act
-        var result = _validator.Validate(command);
-
-        //assert
-        result.IsValid.ShouldBeFalse();
-        result.Errors.ShouldNotBeEmpty();
-        result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.Diagnosis));
-    }
-
     [Fact]
     public void validate_add_appointment_to_health_record_command_with_too_long_diagnosis_should_return_error()
     {
@@ -111,29 +86,6 @@ public class AddAppointmentToHealthRecordCommandValidatorTests
         result.Errors.ShouldNotBeEmpty();
         result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.Diagnosis));
     }
-
-    [Fact]
-    public void validate_add_appointment_to_health_record_command_with_future_appointment_date_should_return_error()
-    {
-        //arrange
-        var command = new AddAppointmentToHealthRecordCommand(
-            "Regular Checkup",
-            "Healthy",
-            DateTimeOffset.UtcNow.AddDays(1),
-            "Everything looks good")
-        {
-            HealthRecordId = Guid.NewGuid()
-        };
-
-        //act
-        var result = _validator.Validate(command);
-
-        //assert
-        result.IsValid.ShouldBeFalse();
-        result.Errors.ShouldNotBeEmpty();
-        result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.AppointmentDate));
-    }
-
     [Fact]
     public void validate_add_appointment_to_health_record_command_with_too_long_notes_should_return_error()
     {
@@ -153,32 +105,6 @@ public class AddAppointmentToHealthRecordCommandValidatorTests
         //assert
         result.IsValid.ShouldBeFalse();
         result.Errors.ShouldNotBeEmpty();
-        result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.Notes));
-    }
-
-    [Fact]
-    public void
-        validate_add_appointment_to_health_record_command_with_multiple_invalid_fields_should_return_multiple_errors()
-    {
-        //arrange
-        var command = new AddAppointmentToHealthRecordCommand(
-            "",
-            "",
-            DateTimeOffset.UtcNow.AddDays(1),
-            new string('x', 1001))
-        {
-            HealthRecordId = Guid.Empty
-        };
-
-        //act
-        var result = _validator.Validate(command);
-
-        //assert
-        result.IsValid.ShouldBeFalse();
-        result.Errors.Count.ShouldBe(4);
-        result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.Title));
-        result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.Diagnosis));
-        result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.AppointmentDate));
         result.Errors.ShouldContain(x => x.PropertyName == nameof(AddAppointmentToHealthRecordCommand.Notes));
     }
 

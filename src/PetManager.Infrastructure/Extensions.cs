@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using PetManager.Infrastructure.Common;
 using PetManager.Infrastructure.Common.Context;
 using PetManager.Infrastructure.Common.Emails.Configuration;
 using PetManager.Infrastructure.Common.Exceptions;
@@ -21,6 +22,8 @@ internal static class Extensions
 
         services.AddDbContext<PetManagerDbContext>(options =>
             options.UseNpgsql(connectionString));
+        
+        services.AddHostedService<MigrationInitializer>();
 
         services.AddSingleton<ExceptionMiddleware>();
 

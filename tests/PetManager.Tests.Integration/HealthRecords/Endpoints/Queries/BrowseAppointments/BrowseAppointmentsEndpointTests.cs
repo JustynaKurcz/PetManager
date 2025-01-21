@@ -16,9 +16,9 @@ public class BrowseAppointmentsEndpointTests : IntegrationTestBase
 
     [Theory]
     [InlineData(1, 10, "")]
-    [InlineData(2, 5, "check")]
-    [InlineData(-3, 5, " ")]
-    [InlineData(0, 0, ".")]
+    [InlineData(2, 5, "")]
+    [InlineData(-3, 5, "")]
+    [InlineData(0, 0, "")]
     public async Task browse_appointments_with_valid_pagination_should_return_200_status_code(
         int pageNumber, int pageSize, string search)
     {

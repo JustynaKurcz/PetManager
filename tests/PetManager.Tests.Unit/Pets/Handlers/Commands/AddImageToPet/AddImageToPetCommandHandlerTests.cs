@@ -103,7 +103,7 @@ public sealed class AddImageToPetCommandHandlerTests
             .Received(1)
             .UploadImageAsync(command.File, Arg.Any<CancellationToken>());
         await _imageRepository
-            .Received(2) // Once for delete, once for add
+            .Received(2) 
             .SaveChangesAsync(Arg.Any<CancellationToken>());
         await _imageRepository
             .Received(1)

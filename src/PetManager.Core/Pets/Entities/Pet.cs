@@ -13,11 +13,11 @@ public class Pet
     public Gender Gender { get; set; }
     public DateTimeOffset BirthDate { get; set; }
     public Guid UserId { get; private set; }
-    public virtual User User { get; private set; }
+    public User User { get; private set; }
     public Guid HealthRecordId { get; set; }
-    public virtual HealthRecord HealthRecord { get; set; }
+    public HealthRecord HealthRecord { get; set; }
     public Guid? ImageId { get; set; }
-    public virtual Image? Image { get; set; }
+    public Image? Image { get; set; }
 
     private Pet()
     {

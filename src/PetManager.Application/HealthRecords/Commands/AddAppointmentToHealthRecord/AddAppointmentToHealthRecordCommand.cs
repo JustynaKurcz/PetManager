@@ -2,9 +2,9 @@ namespace PetManager.Application.HealthRecords.Commands.AddAppointmentToHealthRe
 
 internal record AddAppointmentToHealthRecordCommand(
     string Title,
-    string Diagnosis,
+    string? Diagnosis,
     DateTimeOffset AppointmentDate,
-    string Notes
+    string? Notes
 ) : IRequest<AddAppointmentToHealthRecordResponse>
 {
     internal Guid HealthRecordId { get; init; }

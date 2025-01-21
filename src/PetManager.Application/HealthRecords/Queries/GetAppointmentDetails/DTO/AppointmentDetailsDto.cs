@@ -6,5 +6,6 @@ public record AppointmentDetailsDto(
     string Diagnosis,
     DateTimeOffset AppointmentDate,
     string Notes,
-    Guid HealthRecordId
+    Guid HealthRecordId,
+    bool IsNotificationSent
 );

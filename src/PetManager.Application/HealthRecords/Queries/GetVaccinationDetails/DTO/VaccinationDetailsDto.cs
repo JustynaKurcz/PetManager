@@ -5,5 +5,6 @@ public record VaccinationDetailsDto(
     string Name,
     DateTimeOffset VaccinationDate,
     DateTimeOffset NextVaccinationDate,
-    Guid HealthRecordId
+    Guid HealthRecordId,
+    bool IsNotificationSent
 );

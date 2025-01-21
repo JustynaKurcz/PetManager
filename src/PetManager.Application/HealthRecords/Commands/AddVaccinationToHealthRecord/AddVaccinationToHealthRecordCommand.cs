@@ -3,7 +3,7 @@ namespace PetManager.Application.HealthRecords.Commands.AddVaccinationToHealthRe
 internal record AddVaccinationToHealthRecordCommand(
     string VaccinationName,
     DateTimeOffset VaccinationDate,
-    DateTimeOffset NextVaccinationDate
+    DateTimeOffset? NextVaccinationDate
 ) : IRequest<AddVaccinationToHealthRecordResponse>
 {
     internal Guid HealthRecordId { get; init; }

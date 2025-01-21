@@ -92,7 +92,6 @@ public class AddImageToPetEndpointTests : IntegrationTestBase
         await AddAsync(existingImage);
 
         pet.SetImage(existingImage);
-        // await SaveChangesAsync();
 
         var command = new AddImageToPetCommand(pet.Id, FormFileGenerator.CreateTestFileFaker().Generate());
         var content = CreateMultipartContent(command.File);

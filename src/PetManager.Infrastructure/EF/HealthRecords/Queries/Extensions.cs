@@ -16,7 +16,8 @@ internal static class Extensions
             appointment.Diagnosis,
             appointment.AppointmentDate,
             appointment.Notes,
-            appointment.HealthRecordId
+            appointment.HealthRecordId,
+            appointment.IsNotificationSent
         );
 
     public static AppointmentDto AsAppointmentDto(this Appointment appointment)
@@ -32,8 +33,9 @@ internal static class Extensions
             vaccination.Id,
             vaccination.VaccinationName,
             vaccination.VaccinationDate,
-            vaccination.NextVaccinationDate,
-            vaccination.HealthRecordId
+            vaccination.NextVaccinationDate.GetValueOrDefault(),
+            vaccination.HealthRecordId,
+            vaccination.IsNotificationSent
         );
 
     public static VaccinationDto AsVaccinationDto(this Vaccination vaccination)
@@ -41,7 +43,7 @@ internal static class Extensions
             vaccination.Id,
             vaccination.VaccinationName,
             vaccination.VaccinationDate,
-            vaccination.NextVaccinationDate,
+            vaccination.NextVaccinationDate.GetValueOrDefault(),
             vaccination.IsNotificationSent
         );
 
