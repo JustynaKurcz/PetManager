@@ -22,13 +22,14 @@ internal class AppointmentRepository(PetManagerDbContext dbContext) : IAppointme
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Appointment>> BrowseAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Appointment>> BrowseAsync(Guid healthRecordId, Guid userId, CancellationToken cancellationToken)
         => await Task.FromResult(
             _appointments
                 .Include(a => a.HealthRecord)
                 .ThenInclude(hr => hr.Pet)
                 .ThenInclude(p => p.User)
                 .Where(x => x.HealthRecord.Pet.UserId == userId)
+                .Where(x => x.HealthRecordId == healthRecordId)
                 .AsSplitQuery()
         );
 

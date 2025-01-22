@@ -21,7 +21,7 @@ internal sealed class BrowseVaccinationsQueryHandler(
         if (healthRecord is null) throw new HealthRecordNotFoundException(query.HealthRecordId);
 
         var currentLoggedUserId = context.UserId;
-        var vaccinations = await vaccinationRepository.BrowseAsync(currentLoggedUserId, cancellationToken);
+        var vaccinations = await vaccinationRepository.BrowseAsync(query.HealthRecordId, currentLoggedUserId, cancellationToken);
 
         vaccinations = Search(query, vaccinations);
 

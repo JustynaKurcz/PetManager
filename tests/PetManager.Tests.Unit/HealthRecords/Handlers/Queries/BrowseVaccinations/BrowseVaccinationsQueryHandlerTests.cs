@@ -20,7 +20,7 @@ public sealed class BrowseVaccinationsQueryHandlerTests
     {
         // Arrange
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
-        var query = _vaccinationFactory.BrowseVaccinationsQuery();
+        var query = _vaccinationFactory.BrowseVaccinationsQuery(healthRecord.Id);
         var vaccinations = await _vaccinationFactory.CreateVaccinations();
         var userId = Guid.NewGuid();
 
@@ -30,7 +30,7 @@ public sealed class BrowseVaccinationsQueryHandlerTests
 
         _context.UserId.Returns(userId);
 
-        _vaccinationRepository.BrowseAsync(userId, Arg.Any<CancellationToken>())
+        _vaccinationRepository.BrowseAsync(healthRecord.Id, userId, Arg.Any<CancellationToken>())
             .Returns(vaccinations);
 
         // Act
@@ -55,7 +55,7 @@ public sealed class BrowseVaccinationsQueryHandlerTests
 
         _context.UserId.Returns(userId);
 
-        _vaccinationRepository.BrowseAsync(userId, Arg.Any<CancellationToken>())
+        _vaccinationRepository.BrowseAsync(healthRecord.Id, userId, Arg.Any<CancellationToken>())
             .Returns([]);
 
         // Act

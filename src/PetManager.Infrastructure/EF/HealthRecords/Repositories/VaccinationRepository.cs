@@ -22,13 +22,14 @@ internal class VaccinationRepository(PetManagerDbContext dbContext) : IVaccinati
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Vaccination>> BrowseAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Vaccination>> BrowseAsync(Guid healthRecordId, Guid userId, CancellationToken cancellationToken)
         => await Task.FromResult(
             _vaccinations
                 .Include(a => a.HealthRecord)
                 .ThenInclude(hr => hr.Pet)
                 .ThenInclude(p => p.User)
                 .Where(x => x.HealthRecord.Pet.UserId == userId)
+                .Where(x => x.HealthRecordId == healthRecordId)
                 .AsSplitQuery()
         );
 

@@ -21,7 +21,7 @@ internal sealed class BrowseAppointmentsQueryHandler(
         if (healthRecord is null) throw new HealthRecordNotFoundException(query.HealthRecordId);
 
         var currentLoggedUserId = context.UserId;
-        var appointments = await appointmentRepository.BrowseAsync(currentLoggedUserId, cancellationToken);
+        var appointments = await appointmentRepository.BrowseAsync(query.HealthRecordId, currentLoggedUserId, cancellationToken);
 
         appointments = Search(query, appointments);
 

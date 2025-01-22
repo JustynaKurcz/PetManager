@@ -20,7 +20,7 @@ public sealed class BrowseAppointmentsQueryHandlerTests
     {
         // Arrange
         var healthRecord = _healthRecordFactory.CreateHealthRecord();
-        var query = _appointmentFactory.BrowseAppointmentsQuery();
+        var query = _appointmentFactory.BrowseAppointmentsQuery(healthRecord.Id);
         var appointments = await _appointmentFactory.CreateAppointments();
         var userId = Guid.NewGuid();
 
@@ -30,7 +30,7 @@ public sealed class BrowseAppointmentsQueryHandlerTests
 
         _context.UserId.Returns(userId);
 
-        _appointmentRepository.BrowseAsync(userId, Arg.Any<CancellationToken>())
+        _appointmentRepository.BrowseAsync(healthRecord.Id, userId, Arg.Any<CancellationToken>())
             .Returns(appointments);
 
         // Act
@@ -55,7 +55,7 @@ public sealed class BrowseAppointmentsQueryHandlerTests
 
         _context.UserId.Returns(userId);
 
-        _appointmentRepository.BrowseAsync(userId, Arg.Any<CancellationToken>())
+        _appointmentRepository.BrowseAsync(healthRecord.Id, userId, Arg.Any<CancellationToken>())
             .Returns([]);
 
         // Act
