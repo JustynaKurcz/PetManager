@@ -1,5 +1,3 @@
-using PetManager.Core.Users.Enums;
-
 namespace PetManager.Application.Users.Queries.GetCurrentUserDetails.DTO;
 
 internal record CurrentUserDetailsDto(
