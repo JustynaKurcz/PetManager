@@ -10,7 +10,7 @@ public class SignInEndpointTests : IntegrationTestBase
     private readonly UserTestFactory _userFactory = new();
 
     [Fact]
-    public async Task post_sign_in_with_valid_credentials_should_return_200_status_code()
+    public async Task Post_Sign_In_With_Valid_Credentials_Should_Return_200_Status_Code()
     {
         // Arrange
         var command = _userFactory.CreateSignInCommand();

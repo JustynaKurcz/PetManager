@@ -25,7 +25,7 @@ public class CreatePetEndpointTests : IntegrationTestBase
     }
 
     [Fact]
-    public async Task create_pet_given_valid_command_should_return_201_status_code()
+    public async Task Create_Pet_Given_Valid_Command_Should_Return_201_Status_Code()
     {
         // Arrange
         var command = _petFactory.CreatePetCommand();

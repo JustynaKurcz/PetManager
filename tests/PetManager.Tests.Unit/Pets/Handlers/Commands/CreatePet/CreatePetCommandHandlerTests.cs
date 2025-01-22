@@ -37,7 +37,7 @@ public sealed class CreatePetCommandHandlerTests
     }
 
     [Fact]
-    public async Task given_valid_data_when_create_pet_then_should_return_pet_id()
+    public async Task Given_Valid_Data_When_Create_Pet_Then_Should_Create_Pet()
     {
         // Arrange
         var command = _petFactory.CreatePetCommand();

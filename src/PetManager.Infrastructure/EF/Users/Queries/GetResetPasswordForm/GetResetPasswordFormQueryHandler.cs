@@ -11,7 +11,7 @@ public class GetResetPasswordFormQueryHandler(
 ) : IRequestHandler<GetResetPasswordFormQuery, string>
 {
     private const string ResetPasswordFormPath =
-        "PetManager.Infrastructure.Shared.Emails.Templates.Views.ResetPasswordForm.html";
+        "PetManager.Infrastructure.Common.Emails.Templates.Views.ResetPasswordForm.html";
 
     public async Task<string> Handle(GetResetPasswordFormQuery query, CancellationToken cancellationToken)
     {
