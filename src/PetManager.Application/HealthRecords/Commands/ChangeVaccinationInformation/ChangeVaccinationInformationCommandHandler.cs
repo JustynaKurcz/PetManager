@@ -18,7 +18,6 @@ internal sealed class ChangeVaccinationInformationCommandHandler(
         
         vaccination.ChangeInformation(command.NextVaccinationDate);
         
-        await healthRecordRepository.UpdateAsync(healthRecord, cancellationToken);
         await healthRecordRepository.SaveChangesAsync(cancellationToken);
     }
 }

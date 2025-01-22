@@ -18,7 +18,6 @@ internal sealed class ChangeAppointmentInformationCommandHandler(
 
         appointment.ChangeInformation(command.Diagnosis, command.Notes);
         
-        await healthRecordRepository.UpdateAsync(healthRecord, cancellationToken);
         await healthRecordRepository.SaveChangesAsync(cancellationToken);
     }
 }
