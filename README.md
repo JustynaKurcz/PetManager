@@ -1,4 +1,5 @@
-# Testowanie i Jakość Oprogramowania
+
+# Praca inżynierska
 
 ## Autor
 
@@ -6,19 +7,11 @@ Justyna Kurcz
 
 ## Temat projektu
 
-Testowanie aplikacji wspomagającej opiekę nad zwierzętami domowymi
+Projekt i implementacja aplikacji webowej wspomagającej opiekę nad zwierzętami domowymi
 
-## Opis projektu
+## Opis tematu (zakres pracy)
 
-Implementacja aplikacji webowej, która pozwala użytkownikom na dodawanie i zarządzanie informacjami o swoich zwierzakach.
-
-Aplikacja umożliwia:
-
-- Dodawanie zwierząt oraz edytowanie informacji o nich,
-- Śledzenie historii zdrowotnej zwierzęcia,
-- Generowanie powiadomień dotyczących ważnych terminów, takich jak wizyty czy szczepienia.
-
-Projekt obejmuje również implementację testów jednostkowych i integracyjnych.
+W ramach pracy inżynierskiej zaprojektowano i zaimplementowano aplikację webową, która umożliwia użytkownikom wspomaganie opieki nad swoimi zwierzętami domowymi. Aplikacja pozwala na dodawanie i edytowanie informacji o zwierzętach, takich jak dane osobowe, historia zdrowotna oraz kalendarze szczepień. Dodatkowo, użytkownicy otrzymują powiadomienia o nadchodzących terminach, takich jak wizyty kontrolne czy szczepienia. Projekt obejmował również implementację testów jednostkowych oraz integracyjnych, aby zapewnić wysoką jakość i niezawodność oprogramowania.
 
 ## Uruchomienie projektu
 
@@ -36,6 +29,8 @@ Projekt obejmuje również implementację testów jednostkowych i integracyjnych
     dotnet run
     ```
 
+   Backend uruchomi się domyślnie pod adresem `http://localhost:5062`.
+
 ### Frontend
 
 1. Przejdź do katalogu:
@@ -44,66 +39,77 @@ Projekt obejmuje również implementację testów jednostkowych i integracyjnych
     cd PetManagerClient/src
     ```
 
-2. Wykonaj polecenie:
+2. Zainstaluj wymagane zależności:
+
+    ```bash
+    npm install
+    ```
+
+3. Następnie uruchom aplikację:
 
     ```bash
     ng serve
     ```
 
-3. W przeglądarce wpisz:
+4. W przeglądarce wpisz adres:
 
     ```bash
-    localhost:4200
+    http://localhost:4200
     ```
 
-Frontend uruchomi się domyślnie pod tym adresem.
+   Frontend uruchomi się domyślnie pod tym adresem.
 
 ## Testy
 
-### Testy jednostkowe
+### Uruchamianie testów jednostkowych
 
-Testy jednostkowe znajdują się w lokalizacji:
+Testy jednostkowe sprawdzają poprawność poszczególnych jednostek kodu, takich jak metody czy klasy.
 
-- **PetManager/tests/PetManager.Tests.Unit**
+#### Krok 1: Wejdź do katalogu z testami jednostkowymi
 
-Podzielone na foldery w zależności od kategorii:
+W terminalu przejdź do katalogu, w którym znajdują się testy jednostkowe:
 
-- **Users**
-- **Pets**
-- **HealthRecords**
+```bash
+cd PetManager/tests/PetManager.Tests.Unit
+```
 
-### Testy integracyjne
+#### Krok 2: Uruchom testy jednostkowe
 
-Testy integracyjne znajdują się w lokalizacji:
+Aby uruchomić testy jednostkowe, użyj polecenia:
 
-- **PetManager/tests/PetManager.Tests.Integration**
+```bash
+dotnet test
+```
 
-Podzielone na foldery w zależności od kategorii:
+To polecenie uruchomi testy, a w terminalu zobaczysz wyniki testów. Jeśli testy zakończą się sukcesem, będziesz miał informację o ich poprawnym przebiegu.
 
-- **Users**
-- **Pets**
-- **HealthRecords**
+### Uruchamianie testów integracyjnych
+
+Testy integracyjne sprawdzają, jak poszczególne części systemu współpracują ze sobą, np. komunikację między frontendem a backendem.
+
+#### Krok 1: Wejdź do katalogu z testami integracyjnymi
+
+W terminalu przejdź do katalogu, w którym znajdują się testy integracyjne:
+
+```bash
+cd PetManager/tests/PetManager.Tests.Integration
+```
+
+#### Krok 2: Uruchom testy integracyjne
+
+Aby uruchomić testy integracyjne, użyj tego samego polecenia, co dla testów jednostkowych:
+
+```bash
+dotnet test
+```
+
+Podobnie jak w przypadku testów jednostkowych, wynik testów zostanie wyświetlony w terminalu.
 
 ## Dokumentacja API
 
-Po uruchomieniu projektu (backendu), dokumentacja API dostępna jest pod adresem:
+Po uruchomieniu backendu dokumentacja API dostępna jest pod adresem:
 
 - [http://localhost:5062/swagger/index.html](http://localhost:5062/swagger/index.html)
-
-## Scenariusze testowe dla testera manualnego
-
-| Test Case ID | Tytuł                                | Warunki wstępne                              | Kroki testowe                                                                                   | Oczekiwany rezultat                                          |
-|--------------|--------------------------------------|----------------------------------------------|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
-| TC-001       | Rejestracja nowego użytkownika       | Otwarta aplikacja                            | 1. Wciśnij przycisk 'Zarejestruj się'<br>2. Wypełnij wszystkie pola<br>3. Wciśnij przycisk "Załóż konto" | Nastąpi przekierowanie na stronę logowania                  |
-| TC-002       | Rejestracja z użytym już mailem      | Aplikacja otwarta                            | 1. Wciśnij przycisk 'Zarejestruj się'<br>2. Wprowadź wcześniej użyty email<br>3. Kliknij "Załóż konto" | Serwer zwróci błąd i uniemożliwi utworzenie konta            |
-| TC-003       |Resestowanie hasła            | Stroan resetowania hasła otwarta                           | 1. Wprowadź adres e-mail. 2. Kliknij "Wyślij link".          | Link do resetowania hasła zostaje wysłany na e-mail  |
-| TC-004       | Hasło niespełniające wymagań        | Aplikacja otwarta                            | 1. Wciśnij 'Zarejestruj się'<br>2. Podaj hasło krótsze niż 6 znaków<br>3. Kliknij "Załóż konto" | Wyświetla się informacja o niespełnieniu wymagań hasła       |
-| TC-005       | Uzupełnianie danych opcjonalnych               | Użytkownik jest zalogowany, otwarta strona moje konto              | 1. Kliknij "Edytuj". 2. Dodaj brakujące dane opcjonalne. 3. Zapisz zmiany.                                          |Dane zostaną uzupełnione             |
-| TC-006       | Wylogowanie z systemu               | Użytkownik zalogowany                        | 1. Wciśnij przycisk "Wyloguj się"                                                               | Nastąpi przekierowanie na stronę główną                     |
-| TC-007       | Dostęp do chronionych zasobów       | Użytkownik niezalogowany                     | 1. Wklej URL do chronionych zasobów w pasku adresu                                              | Nastąpi przekierowanie na stronę główną aplikacji           |
-| TC-008       | Przeglądanie dodanych zwierząt      | Użytkownik posiada dodane zwierzęta          | 1. Zaloguj się                                                                                  | Wyświetla się lista zwierząt dodanych przez użytkownika      |
-| TC-009       | Dodanie nowego zwierzaka            | Użytkownik zalogowany                        | 1. Kliknij "Dodaj zwierzę"<br>2. Wypełnij formularz<br>3. Kliknij "Zapisz"                      | Na liście pojawia się nowy zwierzak                         |
-| TC-010       | Wyświetlenie szczegółów zwierzaka   | Użytkownik posiada dodane zwierzęta          | 1. Kliknij "Zobacz Więcej" na karcie zwierzaka                                                 | Wyświetlane są szczegóły wybranego zwierzaka                |
 
 ## Technologie użyte w projekcie
 
