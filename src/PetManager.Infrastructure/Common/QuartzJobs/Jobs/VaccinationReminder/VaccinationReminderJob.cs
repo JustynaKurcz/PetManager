@@ -34,7 +34,7 @@ public class VaccinationReminderJob(
             PetName = vaccination.HealthRecord.Pet.Name,
             Species = vaccination.HealthRecord.Pet.Species,
             VaccinationName = vaccination.VaccinationName,
-            VaccinationDate = vaccination.NextVaccinationDate.GetValueOrDefault()
+            VaccinationDate = vaccination.NextVaccinationDate.GetValueOrDefault().ToString("dd-MM-yyyy HH:mm"),
         };
 
         await emailService.SendEmailAsync(

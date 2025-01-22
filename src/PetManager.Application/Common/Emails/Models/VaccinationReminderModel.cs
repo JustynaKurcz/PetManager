@@ -8,5 +8,5 @@ public record VaccinationReminderModel
     public string PetName { get; init; }
     public Species Species { get; init; }
     public string VaccinationName { get; init; }
-    public DateTimeOffset VaccinationDate { get; init; }
+    public string VaccinationDate { get; init; }
 }

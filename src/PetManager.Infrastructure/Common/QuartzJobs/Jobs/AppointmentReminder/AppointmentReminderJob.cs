@@ -33,7 +33,7 @@ public class AppointmentReminderJob(
             Email = appointment.HealthRecord.Pet.User.Email,
             PetName = appointment.HealthRecord.Pet.Name,
             Title = appointment.Title,
-            AppointmentDate = appointment.AppointmentDate,
+            AppointmentDate = appointment.AppointmentDate.ToString("dd-MM-yyyy HH:mm"),
             Notes = appointment.Notes
         };
 
