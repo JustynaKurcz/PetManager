@@ -27,6 +27,7 @@ internal sealed class BrowseVaccinationsQueryHandler(
 
         return await vaccinations
             .Select(x => x.AsVaccinationDto())
+            .OrderByDescending(x=>x.VaccinationDate)
             .PaginateAsync(query, cancellationToken);
     }
 

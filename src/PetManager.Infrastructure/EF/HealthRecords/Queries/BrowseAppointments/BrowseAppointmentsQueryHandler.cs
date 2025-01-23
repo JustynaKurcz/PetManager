@@ -27,6 +27,7 @@ internal sealed class BrowseAppointmentsQueryHandler(
 
         return await appointments
             .Select(x => x.AsAppointmentDto())
+            .OrderByDescending(x=>x.AppointmentDate)
             .PaginateAsync(query, cancellationToken);
     }
 
