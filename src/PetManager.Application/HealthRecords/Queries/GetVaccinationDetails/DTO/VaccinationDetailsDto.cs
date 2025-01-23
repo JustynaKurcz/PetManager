@@ -4,7 +4,7 @@ public record VaccinationDetailsDto(
     Guid VaccinationId,
     string Name,
     DateTimeOffset VaccinationDate,
-    DateTimeOffset NextVaccinationDate,
+    DateTimeOffset? NextVaccinationDate,
     Guid HealthRecordId,
     bool IsNotificationSent
 );

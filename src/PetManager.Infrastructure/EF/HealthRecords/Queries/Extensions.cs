@@ -33,7 +33,7 @@ internal static class Extensions
             vaccination.Id,
             vaccination.VaccinationName,
             vaccination.VaccinationDate,
-            vaccination.NextVaccinationDate.GetValueOrDefault(),
+            vaccination.NextVaccinationDate?.DateTime,
             vaccination.HealthRecordId,
             vaccination.IsNotificationSent
         );
@@ -43,7 +43,7 @@ internal static class Extensions
             vaccination.Id,
             vaccination.VaccinationName,
             vaccination.VaccinationDate,
-            vaccination.NextVaccinationDate.GetValueOrDefault(),
+            vaccination.NextVaccinationDate?.DateTime,
             vaccination.IsNotificationSent
         );
 
